@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="ko" layout:decorate="~{/base/layout}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=0, user-scalable=0, initial-scale=1">
+    <title>게시판 - 분리ㅅㄱ</title>
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://blisgo.up.railway.app/templates/community/board.html">
+    <meta property="og:url" content="https://blisgo.up.railway.app/templates/community/board.html">
+    <meta name="twitter:description" content="분리배출 도우미 사전">
+    <meta name="twitter:image" content="https://blisgo.up.railway.app/assets/img/favicon/512x512.png">
+    <meta name="twitter:title" content="분리ㅅㄱ">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:type" content="website">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:image" content="https://blisgo.up.railway.app/assets/img/favicon/512x512.png">
+    <meta name="description" content="분리배출 도우미">
+    <script>
+        (function() {
+
+            // JavaScript snippet handling Dark/Light mode switching
+
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
+            const forcedTheme = document.documentElement.getAttribute('data-bss-forced-theme');
+
+            const getPreferredTheme = () => {
+
+                if (forcedTheme) return forcedTheme;
+
+                const storedTheme = getStoredTheme();
+                if (storedTheme) {
+                    return storedTheme;
+                }
+
+                const pageTheme = document.documentElement.getAttribute('data-bs-theme');
+
+                if (pageTheme) {
+                    return pageTheme;
+                }
+
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+
+            const setTheme = theme => {
+                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme);
+                }
+            }
+
+            setTheme(getPreferredTheme());
+
+            const showActiveTheme = (theme, focus = false) => {
+                const themeSwitchers = [].slice.call(document.querySelectorAll('.theme-switcher'));
+
+                if (!themeSwitchers.length) return;
+
+                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                    element.classList.remove('active');
+                    element.setAttribute('aria-pressed', 'false');
+                });
+
+                for (const themeSwitcher of themeSwitchers) {
+
+                    const btnToActivate = themeSwitcher.querySelector('[data-bs-theme-value="' + theme + '"]');
+
+                    if (btnToActivate) {
+                        btnToActivate.classList.add('active');
+                        btnToActivate.setAttribute('aria-pressed', 'true');
+                    }
+                }
+            }
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                const storedTheme = getStoredTheme();
+                if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                    setTheme(getPreferredTheme());
+                }
+            });
+
+            window.addEventListener('DOMContentLoaded', () => {
+                showActiveTheme(getPreferredTheme());
+
+                document.querySelectorAll('[data-bs-theme-value]')
+                    .forEach(toggle => {
+                        toggle.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const theme = toggle.getAttribute('data-bs-theme-value');
+                            setStoredTheme(theme);
+                            setTheme(theme);
+                            showActiveTheme(theme);
+                        })
+                    })
+            });
+        })();
+    </script>
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/img/favicon/180x180.png?h=d280b01977b791714694a40e9963be0a">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/16x16.png?h=d874033a3f038e5f02e1958d00a60eff">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/32x32.png?h=7dcd0a3651302a768c6a9f0105ac2408">
+    <link rel="icon" type="image/png" sizes="180x180" href="/assets/img/favicon/180x180.png?h=d280b01977b791714694a40e9963be0a">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/192x192.png?h=6c592fa58710f02e35cca41f7e883cff">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon/512x512.png?h=3ab5991783761ea87ccc35c8e55a58ba">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/cmmn/style.css?h=a64769832829539ed2c6fd0f96af741e">
+<link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+</head>
+
+<body>
+    <main class="container" layout:fragment="main">
+        <article>
+            <div class="list-group border-0 list-group-flush scrollarea" id="posts" th:fragment="posts"><a class="list-group-item list-group-item-action p-2" id="post" th:each="post: ${posts?.getContent()}" aria-current="true" th:href="@{~/community/{postId}(postId=${post.postId})}">
+                    <div class="hstack">
+                        <div class="vstack text-truncate px-2 pt-2">
+                            <h4 class="text-truncate fw-bold" th:text="${post.title}">제목</h4>
+                            <p class="text-truncate text-break" rows="2" th:text="${#strings.isEmpty(post.content.preview)} ? '미리보기가 없습니다.' : ${post.content.preview}">글내용</p><div class="hstack gap-1 text-muted"><img class="img-fluid border rounded border-0 d-none d-sm-inline" data-bss-hover-animate="pulse" src="https://i.pravatar.cc/200?mg=2" width="30px" alt="프로필이미지" th:src="${post.author.picture.url}"><small th:text="${post.author.name}">작성자</small><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. --><path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"></path></svg><small th:text="${#temporals.format(post?.modifiedDate, 'yyyy-MM-dd')}">작성일</small><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. --><path d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z"></path></svg><small th:text="${post.likes}">좋아요</small><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. --><path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"></path></svg><small th:text="${post.replies}">댓글</small></div></div><img th:src="${post.content.thumbnail.url}" width="120px" src="https://via.placeholder.com/120" loading="auto" height="120px" th:if="${post.content.thumbnail.url != null}"></div></a><!-- Start: hx-get --><a class="list-group-item list-group-item-action border-0 p-0" th:attr="hx-get='/posts?lastPostId='+${posts?.getNumberOfElements() > 0 ? posts.getContent().get(posts.getNumberOfElements()-1).postId() : ''}" hx-trigger="revealed" hx-swap="beforeend" th:if="${posts==null || posts?.hasNext()}" hx-target="#posts"></a><!-- End: hx-get --></div></article><!-- Start: Absolute Btn --><a class="btn btn-primary border rounded-circle shadow d-flex justify-content-center align-items-center position-fixed bottom-0 end-0 translate-middle p-3 m-2 border-0" role="button" data-bs-toggle="tooltip" data-bss-tooltip="" sec:authorize="isAuthenticated()" th:href="@{~/community/write}" title="새 글을 작성합니다"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-plus-lg fs-3" id="float-btn-icon">
+  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"></path>
+</svg></a><!-- End: Absolute Btn --></main><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script><script src="/assets/js/bs-init.js?h=81d18e10772fe19d112aee494afb554c"></script></body></html>

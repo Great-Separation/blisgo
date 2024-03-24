@@ -1,0 +1,9 @@
+bootJar.mainClass = 'blisgo.app.BlisgoApplication'
+bootJar.enabled = true
+
+dependencies {
+    implementation project(':usecase')
+    implementation project(':infrastructure:internal')
+    implementation project(':infrastructure:external')
+    implementation project(':domain')
+}

@@ -1,0 +1,14 @@
+server:
+  servlet:
+    session:
+      cookie:
+        path: /
+        name: JSESSIONID
+        http-only: true
+        secure: true
+      timeout: 3600
+
+spring:
+  session:
+    redis:
+      namespace: spring:session

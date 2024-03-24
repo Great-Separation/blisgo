@@ -1,0 +1,90 @@
+plugins {
+    id 'org.springdoc.openapi-gradle-plugin' version '+'
+    id 'io.swagger.swaggerhub' version '+'
+}
+
+bootJar.enabled = false
+jar.enabled = true
+
+dependencies {
+    implementation project(':domain')
+    implementation project(':usecase')
+
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // hibernate & jakarta validator
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // querydsl
+    implementation 'com.querydsl:querydsl-jpa:5.+:jakarta'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.+:jakarta'
+
+    // mysql
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // jakarta
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+
+    // auth0 security
+    implementation 'com.okta.spring:okta-spring-boot-starter:+'
+
+    //spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // 게시판 json 글 저장용
+    implementation 'com.fasterxml.jackson.core:jackson-databind:+'
+
+    // documentation
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:+'
+
+    // htmx + thymeleaf support
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:+'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:+'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:+'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // flyway
+    implementation 'org.flywaydb:flyway-core:+'
+    implementation 'org.flywaydb:flyway-mysql:+'
+}
+
+def querydslDir = "${project.projectDir}/build/generated/querydsl"
+
+sourceSets {
+    main.java.srcDirs += [querydslDir]
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
+clean.doLast {
+    file(querydslDir).deleteDir()
+}
+
+openApi {
+    apiDocsUrl.set('http://localhost:8080/v3/api-docs.yaml')
+    outputDir.set(file("${project.rootDir}/build/docs"))
+    outputFileName.set('swagger.yaml')
+    waitTimeInSeconds.set(10)
+    customBootRun {
+        args.set(['--spring.profiles.active=dev'])
+    }
+}
+
+import java.text.SimpleDateFormat
+
+swaggerhubUpload {
+    def dateVersion = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
+
+    api 'blisgo'
+    owner 'okjaeook'
+    version dateVersion
+    format 'yaml'
+    inputFile "${project.rootDir}/build/docs/swagger.yaml"
+    token System.getenv('SWAGGERHUB_API_KEY')
+}

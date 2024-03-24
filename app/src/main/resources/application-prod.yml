@@ -1,0 +1,36 @@
+spring:
+  data:
+    redis:
+      host: ${REDISHOST}
+      username: ${REDISUSER}
+      password: ${REDISPASSWORD}
+      port: ${REDISPORT}
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:${MYSQL_URL}"
+    username: ${MYSQLUSER}
+    password: ${MYSQLPASSWORD}
+
+  thymeleaf:
+    cache: true
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: on
+    locations: classpath:db/migration
+    url: "jdbc:${MYSQL_URL}"
+    user: ${MYSQLUSER}
+    password: ${MYSQLPASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  servlet:
+    session:
+      cookie:
+        domain: blisgo.up.railway.app

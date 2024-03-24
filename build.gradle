@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:+")
+    }
+}
+
+subprojects {
+    if (name == 'infrastructure' || name == 'interfaces') return
+
+    group = 'blisgo'
+    version = 'V4'
+
+    apply {
+        plugin 'java'
+        plugin 'org.springframework.boot'
+        plugin 'io.spring.dependency-management'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+        // componentScan
+        implementation 'org.springframework.boot:spring-boot-autoconfigure'
+
+        // configuration processor
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+        // minimal web
+        implementation 'org.springframework.boot:spring-boot-starter:+'
+
+        // spring-data-commons(ex. pageable)
+        implementation 'org.springframework.data:spring-data-commons'
+
+        // ddd hexagonal
+        implementation 'org.jmolecules:jmolecules-hexagonal-architecture:+'
+
+        // lombok
+        implementation 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        // modelmapper
+        implementation 'org.modelmapper:modelmapper:+'
+        implementation 'org.modelmapper:modelmapper-module-record:+'
+
+        // docker
+        developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

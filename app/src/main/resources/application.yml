@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    include:
+      common, thymeleaf, oauth, redis
+    active: ${APP_PROFILE}
