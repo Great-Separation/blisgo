@@ -1,15 +1,18 @@
 package blisgo.infrastructure.internal.persistence.common;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,7 +22,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity extends BaseTimeEntity {
 
-    @Embedded
-    @LastModifiedBy
+    @Transient
     protected JpaAuthor author;
+
+    @LastModifiedBy
+    @Comment("회원 Id")
+    protected UUID memberId;
 }

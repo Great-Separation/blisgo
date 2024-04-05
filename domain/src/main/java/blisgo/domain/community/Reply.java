@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 public class Reply {
     private ReplyId replyId;
     private PostId postId;
-    private Author author;
     private String content;
+    private Author author;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 }

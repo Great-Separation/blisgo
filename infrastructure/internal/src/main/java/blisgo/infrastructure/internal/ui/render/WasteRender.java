@@ -33,7 +33,7 @@ public class WasteRender extends Router {
             @RequestParam(required = false) Long wasteId
     ) {
         if (wasteId == null) {
-            GetWaste query = GetWaste.builder()
+            var query = GetWaste.builder()
                     .pageable(pageable)
                     .lastWasteId(lastWasteId)
                     .build();

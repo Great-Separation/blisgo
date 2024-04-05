@@ -3,6 +3,10 @@ plugins {
     id 'io.swagger.swaggerhub' version '+'
 }
 
+ext {
+    springCloudVersion = "2023.0.1"
+}
+
 bootJar.enabled = false
 jar.enabled = true
 

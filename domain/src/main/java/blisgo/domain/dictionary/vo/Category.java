@@ -25,5 +25,5 @@ public enum Category {
     CAUTION("주의"),
     PRO_FACILITY("전문시설");
 
-    final String tag;
+    private final String tag;
 }

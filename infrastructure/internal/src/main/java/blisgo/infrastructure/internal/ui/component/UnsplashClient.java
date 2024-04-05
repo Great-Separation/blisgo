@@ -1,71 +1,68 @@
 package blisgo.infrastructure.internal.ui.component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
 
-@Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Component
 public class UnsplashClient {
-    static final String HOST = "https://api.unsplash.com/photos/random";
-    static final String QUERY = "waste,garbage,trash,recycling";
-    static final String OPTIONS = "&fm=webp&w=1500&q=50&blur=50";
-    static final String CLIENT_ID = "CTW7rq3n5wwaqHphLTlv47RsPHweBqy4QWe7_YVCvk8";
+    private static final RestClient restClient = RestClient.create();
 
-    public static void changeWallpaper() throws IOException, InterruptedException {
-        Optional<String> imageUrl = Optional.of(getImageUrl());
-        replaceImage(imageUrl.get());
+    @Value("${unsplash.host}")
+    private String host;
+
+    @Value("${unsplash.path}")
+    private String path;
+
+    @Value("${unsplash.query}")
+    private String query;
+
+    @Value("${unsplash.client-id}")
+    private String clientId;
+
+    @Value("${unsplash.options}")
+    private String options;
+
+    public byte[] bringImage() throws JsonProcessingException {
+        String imageUrl = bringImageUrl();
+
+        URI uri = UriComponentsBuilder.fromUriString(imageUrl)
+                .queryParam("options", options)
+                .build()
+                .toUri();
+
+        var response = restClient.get()
+                .uri(uri)
+                .retrieve();
+
+        return response.body(byte[].class);
     }
 
+    private String bringImageUrl() throws JsonProcessingException {
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("https")
+                .host(host)
+                .path(path)
+                .queryParam("query", query)
+                .queryParam("client_id", clientId)
+                .build()
+                .toUri();
 
-    public static String getImageUrl() throws IOException, InterruptedException {
-        String link = String.format(HOST + "?query=" + QUERY + "&client_id=" + CLIENT_ID);
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(link)).method("GET", HttpRequest.BodyPublishers.noBody()).build();
+        var response = restClient.get()
+                .uri(uri)
+                .retrieve();
 
-        try (HttpClient client = HttpClient.newHttpClient()) {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        JsonNode jsonObj = new ObjectMapper().readTree(response.body(String.class));
 
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode jsonObj = mapper.readTree(response.body());
-            jsonObj = jsonObj.get("urls");
-
-            return jsonObj.get("raw").asText().concat(OPTIONS);
-        }
-    }
-
-    private static void replaceImage(String editedImageLink) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(editedImageLink))
-                .build();
-
-        try (HttpClient client = HttpClient.newHttpClient()) {
-            HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
-
-            ReadableByteChannel rbc = Channels.newChannel(response.body());
-            Resource resource = new ClassPathResource("static/assets/img/index_wallpaper.webp");
-            Path wallpaperDir = Paths.get(resource.getURI());
-            log.info("파일 위치>" + wallpaperDir);
-
-            try (FileOutputStream fos = new FileOutputStream(wallpaperDir.toFile())) {
-                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            }
-        }
+        return jsonObj.get("urls")
+                .get("raw")
+                .asText()
+                .concat(options);
     }
 }

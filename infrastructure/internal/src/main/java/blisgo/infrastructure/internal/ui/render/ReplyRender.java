@@ -24,43 +24,37 @@ public class ReplyRender extends Router {
     private final ReplyQuery queryUsecase;
     private final ReplyMapper mapper;
 
-
-    @GetMapping("/{postId}")
+    @GetMapping
     public ModelAndView replies(
-            @PathVariable Long postId,
-            @PageableDefault(sort = "createdDate", direction = ASC) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "0") Long lastReplyId
+            @RequestParam Long postId,
+            @RequestParam(required = false, defaultValue = "0") Long lastReplyId,
+            @PageableDefault(sort = "createdDate", direction = ASC) Pageable pageable
     ) {
-        GetReply query = GetReply.builder()
+        var query = GetReply.builder()
                 .postId(postId)
                 .lastReplyId(lastReplyId)
                 .pageable(pageable)
                 .build();
 
+        var replies = queryUsecase.getReplies(query);
+
         return new ModelAndView(
                 routes(Router.Folder.COMMUNITY, Router.Page.CONTENT) + fragment(Router.Fragment.REPLIES),
-                Map.of("replies", queryUsecase.getReplies(query)
-                        .map(mapper::toDTO)
-                        .map(ReplyDTO::withTimeDiff)
+                Map.ofEntries(
+                        Map.entry("replies", replies.map(mapper::toDTO).map(ReplyDTO::withTimeDiff)),
+                        Map.entry("postId", postId)
                 )
         );
     }
 
-    @PostMapping("/{postId}")
+    @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView create(
-            @PathVariable Long postId,
-            @RequestParam String content
-    ) {
-        AddReply command = AddReply.builder()
-                .postId(postId)
-                .content(content)
-                .build();
-
+    public ModelAndView create(AddReply command) {
         commandUsecase.addReply(command);
 
         return new ModelAndView(
-                routes(Router.Folder.COMMUNITY, Router.Page.CONTENT) + fragment(Router.Fragment.REPLIES)
+                routes(Router.Folder.COMMUNITY, Router.Page.CONTENT) + fragment(Router.Fragment.REPLIES),
+                Map.of("postId", command.postId())
         );
     }
 

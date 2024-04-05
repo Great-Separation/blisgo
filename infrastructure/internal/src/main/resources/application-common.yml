@@ -1,0 +1,6 @@
+unsplash:
+  host: 'api.unsplash.com'
+  path: '/photos/random'
+  query: 'waste,garbage,trash,recycling'
+  options: '&fm=webp&w=1500&q=50&blur=50'
+  client-id: 'CTW7rq3n5wwaqHphLTlv47RsPHweBqy4QWe7_YVCvk8'

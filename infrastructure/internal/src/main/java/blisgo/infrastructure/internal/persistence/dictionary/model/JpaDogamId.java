@@ -13,9 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class JpaDogamId implements Serializable {
-    @Comment("회원 memberId(FK)")
+    @Comment("회원 번호(PK, FK)")
     private UUID memberId;
 
-    @Comment("폐기물 wasteId(FK)")
+    @Comment("폐기물 번호(PK, FK)")
     private Long wasteId;
 }

@@ -1,0 +1,16 @@
+# 허용된 플랫폼 별 검색 bot
+User-agent: *
+
+# 파일 확장자 제한
+Disallow: /*.html$
+Disallow: /*.css$
+Disallow: /*.js$
+Disallow: /*.txt$
+
+# 특정 페이지 제한
+Disallow: /account/
+Disallow: /board/
+Allow: /dictionary/
+
+# 사이트맵 지정
+Sitemap: https://blisgo.up.railway.app/sitemap.xml

@@ -2,11 +2,9 @@ package blisgo.usecase.request.dogam;
 
 import lombok.Builder;
 
-import java.util.UUID;
-
-@Builder
+@Builder(toBuilder = true)
 public record RemoveDogam(
-        UUID memberId,
+        String email,
         Long wasteId
-)  {
+) {
 }

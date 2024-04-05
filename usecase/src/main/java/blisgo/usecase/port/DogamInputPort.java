@@ -4,10 +4,7 @@ import blisgo.domain.dictionary.Dogam;
 import blisgo.domain.dictionary.vo.DogamId;
 import blisgo.domain.dictionary.vo.WasteId;
 import blisgo.domain.member.vo.MemberId;
-import blisgo.usecase.request.dogam.AddDogam;
-import blisgo.usecase.request.dogam.DogamCommand;
-import blisgo.usecase.request.dogam.DogamQuery;
-import blisgo.usecase.request.dogam.RemoveDogam;
+import blisgo.usecase.request.dogam.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +17,7 @@ public class DogamInputPort implements DogamCommand, DogamQuery {
 
     @Override
     public boolean addDogam(AddDogam command) {
-        MemberId memberId = MemberId.of(command.memberId());
+        MemberId memberId = MemberId.of(command.email());
         WasteId wasteId = WasteId.of(command.wasteId());
 
         Dogam dogam = Dogam.create(memberId, wasteId);
@@ -30,14 +27,19 @@ public class DogamInputPort implements DogamCommand, DogamQuery {
 
     @Override
     public boolean removeDogam(RemoveDogam command) {
-        MemberId memberId = MemberId.of(command.memberId());
+        MemberId memberId = MemberId.of(command.email());
         WasteId wasteId = WasteId.of(command.wasteId());
 
-        DogamId dogamId = DogamId.builder()
-                .memberId(memberId)
-                .wasteId(wasteId)
-                .build();
+        DogamId dogamId = DogamId.of(memberId, wasteId);
 
         return port.delete(dogamId);
+    }
+
+    @Override
+    public boolean checkThatWasteRegisteredFromDogam(GetDogam query) {
+        MemberId memberId = MemberId.of(query.email());
+        WasteId wasteId = WasteId.of(query.wasteId());
+
+        return port.readExists(memberId, wasteId);
     }
 }

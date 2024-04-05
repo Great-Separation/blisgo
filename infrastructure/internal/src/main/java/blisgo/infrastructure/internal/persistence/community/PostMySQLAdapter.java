@@ -1,8 +1,8 @@
 package blisgo.infrastructure.internal.persistence.community;
 
 import blisgo.domain.community.Post;
-import blisgo.infrastructure.internal.persistence.community.model.JpaPost;
 import blisgo.infrastructure.internal.persistence.community.mapper.PostMapper;
+import blisgo.infrastructure.internal.persistence.community.model.JpaPost;
 import blisgo.infrastructure.internal.persistence.community.repository.PostCustomRepository;
 import blisgo.infrastructure.internal.persistence.community.repository.PostJpaRepository;
 import blisgo.usecase.port.PostOutputPort;
@@ -34,7 +34,7 @@ public class PostMySQLAdapter implements PostOutputPort {
 
     @Override
     public Post read(Long postId) {
-        return jpaRepository.findById(postId)
+        return customRepository.findByIdWithReplies(postId)
                 .map(mapper::toDomain)
                 .orElse(null);
     }
@@ -50,14 +50,8 @@ public class PostMySQLAdapter implements PostOutputPort {
     @Override
     @Transactional
     public boolean update(Post domain) {
-        if (domain.postId().id() == null) {
-            jpaRepository.save(mapper.toEntity(domain));
-            return true;
-        }
-
-        jpaRepository.findById(domain.postId().id()).ifPresentOrElse(
-                existingPost -> existingPost.updateInfo(mapper.toEntity(domain)),
-                () -> jpaRepository.save(mapper.toEntity(domain))
+        jpaRepository.findById(domain.postId().id()).ifPresent(
+                existingPost -> existingPost.updateInfo(mapper.toEntity(domain))
         );
 
         return true;

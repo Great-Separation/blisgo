@@ -39,7 +39,7 @@ public class JpaMember extends BaseTimeEntity {
     private JpaPicture picture;
 
     public void updateInfo(JpaMember jpaMember) {
-        this.name = jpaMember.name();
-        this.picture = jpaMember.picture();
+        this.name = name == null ? jpaMember.name() : name;
+        this.picture = picture == null ? jpaMember.picture() : picture;
     }
 }

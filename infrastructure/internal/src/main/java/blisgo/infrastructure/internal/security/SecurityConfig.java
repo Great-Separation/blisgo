@@ -43,7 +43,6 @@ public class SecurityConfig {
 
         http.oauth2Login(oauth2Login -> oauth2Login
                 .loginPage("/oauth2/authorization/okta")
-                .defaultSuccessUrl("/", false)
                 .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
                         .oidcUserService(customOidcUserService)
                 )

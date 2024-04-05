@@ -111,7 +111,7 @@
 <body>
     <main class="container" layout:fragment="main" onselectstart="return false">
         <section id="post" th:fragment="post">
-            <form id="form" th:method="post" th:action="@{~/posts}">
+            <form id="form" th:method="${post?.postId != null} ? 'patch' : 'post'" th:action="${post?.postId != null} ? @{~/posts/{postId}(postId=${post?.postId})} : @{~/posts}">
                 <div class="card shadow-sm border-0 mx-1 .post" style="background: #ffeb7d;">
                     <div class="card-header border-0">
                         <div class="row d-flex align-items-center">

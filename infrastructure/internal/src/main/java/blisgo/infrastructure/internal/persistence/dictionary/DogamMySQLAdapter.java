@@ -2,6 +2,8 @@ package blisgo.infrastructure.internal.persistence.dictionary;
 
 import blisgo.domain.dictionary.Dogam;
 import blisgo.domain.dictionary.vo.DogamId;
+import blisgo.domain.dictionary.vo.WasteId;
+import blisgo.domain.member.vo.MemberId;
 import blisgo.infrastructure.internal.persistence.dictionary.mapper.DogamMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.mapper.WasteMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.model.JpaDogamId;
@@ -37,5 +39,14 @@ public class DogamMySQLAdapter implements DogamOutputPort {
     public boolean create(Dogam domain) {
         jpaRepository.save(mapper.toEntity(domain));
         return true;
+    }
+
+    @Override
+    public boolean readExists(MemberId memberId, WasteId wasteId) {
+        JpaDogamId dogamId = JpaDogamId.of(
+                memberId.id(),
+                wasteId.id()
+        );
+        return jpaRepository.existsByDogamId(dogamId);
     }
 }

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public record GetDogam(
         String email,
         Pageable pageable,
-        LocalDateTime lastDogamCreatedDate
+        LocalDateTime lastDogamCreatedDate,
+        Long wasteId
 ) {
 }

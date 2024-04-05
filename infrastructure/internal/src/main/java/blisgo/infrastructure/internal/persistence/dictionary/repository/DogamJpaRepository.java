@@ -15,4 +15,6 @@ public interface DogamJpaRepository extends JpaRepository<JpaDogam, Long> {
     Slice<JpaDogam> findByDogamIdMemberId(UUID memberId, Pageable pageable);
 
     boolean deleteByDogamId(JpaDogamId dogamId);
+
+    boolean existsByDogamId(JpaDogamId dogamId);
 }

@@ -27,11 +27,20 @@ public class WasteCustomRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public Slice<JpaWaste> findWastesByMemberIdFromDogam(UUID memberId, Pageable pageable, LocalDateTime lastDogamCreatedDate) {
-        var results = jpaQueryFactory.selectFrom(jpaWaste)
+        var fields = Projections.fields(
+                JpaWaste.class,
+                jpaWaste.wasteId,
+                jpaWaste.name,
+                jpaWaste.picture,
+                jpaDogam.createdDate
+        );
+
+        var results = jpaQueryFactory.select(fields)
+                .from(jpaWaste)
                 .join(jpaDogam).on(jpaWaste.wasteId.eq(jpaDogam.dogamId.wasteId))
                 .where(jpaDogam.dogamId.memberId.eq(memberId))
-                .where(jpaWaste.createdDate.lt(lastDogamCreatedDate))
-                .orderBy(jpaWaste.createdDate.desc())
+                .where(jpaDogam.createdDate.lt(lastDogamCreatedDate))
+                .orderBy(jpaDogam.createdDate.desc())
                 .limit(pageable.getPageSize() + 1L)
                 .fetch();
 

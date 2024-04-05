@@ -1,14 +1,16 @@
 package blisgo.infrastructure.internal.persistence.community.model;
 
+import blisgo.infrastructure.internal.persistence.base.ContentConverter;
 import blisgo.infrastructure.internal.persistence.common.BaseEntity;
 import blisgo.infrastructure.internal.persistence.common.JpaContent;
-import blisgo.infrastructure.internal.persistence.base.ContentConverter;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @DynamicInsert
 @DynamicUpdate
@@ -40,7 +42,7 @@ public class JpaPost extends BaseEntity {
     @Comment("좋아요")
     private long likes;
 
-    @Formula("(SELECT count(*) FROM reply r WHERE r.post_id = post_id)")
+    @Transient
     private long replies;
 
     @Version
