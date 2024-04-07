@@ -8,7 +8,7 @@ import blisgo.infrastructure.internal.persistence.dictionary.mapper.WasteMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.GuideJpaRepository;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.WasteCustomRepository;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.WasteJpaRepository;
-import blisgo.usecase.port.WasteOutputPort;
+import blisgo.usecase.port.domain.WasteOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

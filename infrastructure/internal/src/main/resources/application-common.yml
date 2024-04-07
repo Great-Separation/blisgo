@@ -1,6 +1,11 @@
 unsplash:
-  host: 'api.unsplash.com'
-  path: '/photos/random'
-  query: 'waste,garbage,trash,recycling'
-  options: '&fm=webp&w=1500&q=50&blur=50'
-  client-id: 'CTW7rq3n5wwaqHphLTlv47RsPHweBqy4QWe7_YVCvk8'
+  host: ${UNSPLASH_HOST}
+  path: ${UNSPLASH_PATH}
+  query: ${UNSPLASH_QUERY}
+  options: ${UNSPLASH_OPTIONS}
+  client-id: ${UNSPLASH_CLIENT_ID}
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}

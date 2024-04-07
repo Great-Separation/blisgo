@@ -81,22 +81,4 @@ public class DogamRender extends Router {
                 Map.of("dogams", dogams.map(wasteMapper::toDTO))
         );
     }
-
-    @GetMapping("/{wasteId}")
-    @ResponseStatus(HttpStatus.OK)
-    public boolean dogam(
-            @AuthenticationPrincipal DefaultOidcUser oidcUser,
-            @PathVariable Long wasteId
-    ) {
-        if (oidcUser == null) {
-            return false;
-        }
-
-        var query = GetDogam.builder()
-                .email(oidcUser.getEmail())
-                .wasteId(wasteId)
-                .build();
-
-        return dogamQuery.checkThatWasteRegisteredFromDogam(query);
-    }
 }

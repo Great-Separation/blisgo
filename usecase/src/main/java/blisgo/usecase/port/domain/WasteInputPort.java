@@ -1,4 +1,4 @@
-package blisgo.usecase.port;
+package blisgo.usecase.port.domain;
 
 import blisgo.domain.dictionary.Waste;
 import blisgo.domain.dictionary.vo.Category;
@@ -43,5 +43,10 @@ public class WasteInputPort implements WasteQuery {
     @Override
     public List<Waste> getWastesRelated(List<Category> categories) {
         return port.readWastesRelated(categories);
+    }
+
+    @Override
+    public List<Waste> getWastesRelated(GetWaste query) {
+        return port.readWastesRelated(query.categories());
     }
 }

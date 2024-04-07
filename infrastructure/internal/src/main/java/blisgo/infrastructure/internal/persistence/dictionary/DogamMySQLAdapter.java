@@ -9,7 +9,7 @@ import blisgo.infrastructure.internal.persistence.dictionary.mapper.WasteMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.model.JpaDogamId;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.DogamCustomRepository;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.DogamJpaRepository;
-import blisgo.usecase.port.DogamOutputPort;
+import blisgo.usecase.port.domain.DogamOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

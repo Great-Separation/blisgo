@@ -1,6 +1,7 @@
 package blisgo.infrastructure.internal.ui.render;
 
 import blisgo.infrastructure.internal.persistence.community.mapper.PostMapper;
+import blisgo.infrastructure.internal.ui.base.ContentParser;
 import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.usecase.request.post.*;
 import lombok.RequiredArgsConstructor;
@@ -54,8 +55,7 @@ public class PostRender extends Router {
         return new ModelAndView(
                 routes(Folder.COMMUNITY, Page.CONTENT) + fragment(Fragment.POST),
                 Map.ofEntries(
-                        Map.entry("post", mapper.toDTO(post)),
-                        Map.entry("readOnly", true)
+                        Map.entry("post", mapper.toDTO(post))
                 )
         );
     }
@@ -63,6 +63,15 @@ public class PostRender extends Router {
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     public RedirectView addPost(AddPost command) {
+        var json = ContentParser.toJson(command.content());
+        String thumbnail = ContentParser.parseFirstImageUrl(json);
+        String preview = ContentParser.parseFirstParagraph(json);
+
+        command = command.toBuilder()
+                .thumbnail(thumbnail)
+                .preview(preview)
+                .build();
+
         commandUsecase.addPost(command);
 
         return new RedirectView(routes(Folder.COMMUNITY), false);
@@ -71,6 +80,15 @@ public class PostRender extends Router {
     @PatchMapping("/{postId}")
     @PreAuthorize("isAuthenticated()")
     public RedirectView updatePost(UpdatePost command) {
+        var json = ContentParser.toJson(command.content());
+        String thumbnail = ContentParser.parseFirstImageUrl(json);
+        String preview = ContentParser.parseFirstParagraph(json);
+
+        command = command.toBuilder()
+                .thumbnail(thumbnail)
+                .preview(preview)
+                .build();
+
         commandUsecase.updatePost(command);
 
         return new RedirectView(routes(Folder.COMMUNITY, command.postId()), true);

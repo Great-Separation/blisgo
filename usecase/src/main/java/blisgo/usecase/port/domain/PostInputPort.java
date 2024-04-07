@@ -1,5 +1,7 @@
-package blisgo.usecase.port;
+package blisgo.usecase.port.domain;
 
+import blisgo.domain.common.Content;
+import blisgo.domain.common.Picture;
 import blisgo.domain.community.Post;
 import blisgo.usecase.base.Events;
 import blisgo.usecase.event.PostViewedEvent;
@@ -19,9 +21,15 @@ public class PostInputPort implements PostCommand, PostQuery {
 
     @Override
     public boolean addPost(AddPost command) {
+        Content content = Content.of(
+                command.content(),
+                Picture.of(command.thumbnail()),
+                command.preview()
+        );
+
         var post = Post.create(
                 command.title(),
-                command.content()
+                content
         );
 
         return port.create(post);
@@ -29,10 +37,16 @@ public class PostInputPort implements PostCommand, PostQuery {
 
     @Override
     public boolean updatePost(UpdatePost command) {
+        Content content = Content.of(
+                command.content(),
+                Picture.of(command.thumbnail()),
+                command.preview()
+        );
+
         var post = Post.create(
                 command.postId(),
                 command.title(),
-                command.content()
+                content
         );
 
         return port.update(post);

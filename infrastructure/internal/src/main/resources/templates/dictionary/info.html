@@ -123,7 +123,7 @@ var sdictionary= [[${dictionary}]];
                                     <li class="breadcrumb-item"><a><span th:text="${waste?.type}">대분류</span></a></li>
                                     <li class="breadcrumb-item"><a><span th:text="${waste?.wasteId}">도감 번호</span></a></li>
                                 </ol>
-                                <div class="btn-group float-end" role="group" id="bookmark" sec:authorize="isAuthenticated()" th:fragment="bookmark"><button class="btn btn-link d-xxl-flex align-items-center" data-bs-toggle="toast" data-bss-tooltip="" id="btn-toast" type="button" value="${dogamCheck}" hx-post="/dogams" title="도감에 추가하기" th:attr="hx-vals='{&quot;wasteId&quot;: '+${waste?.wasteId} + '}'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
+                                <div class="btn-group float-end" role="group" id="bookmark" sec:authorize="isAuthenticated()"><button class="btn btn-link d-xxl-flex align-items-center" data-bs-toggle="toast" data-bss-tooltip="" id="btn-toast" type="button" hx-post="/dogams" title="도감에 추가하기" th:attr="hx-vals='{&quot;wasteId&quot;: '+${waste?.wasteId} + '}'" th:if="${dogamExists != null &amp;&amp; dogamExists==false}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
                                             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
                                             <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"></path>
                                         </svg></button></div>
@@ -175,7 +175,7 @@ var sdictionary= [[${dictionary}]];
                     </div>
                 </div>
             </article><!-- Start: hx-get -->
-            <div th:attr="hx-get='/wastes?wasteId='+${wasteId}" th:if="${waste==null}" hx-trigger="revealed" hx-swap="outerHTML" hx-target="#waste"></div><!-- End: hx-get -->
+            <div th:attr="hx-get='/wastes/' + ${wasteId}" th:if="${waste==null}" hx-trigger="revealed" hx-swap="outerHTML" hx-target="#waste"></div><!-- End: hx-get -->
         </section>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>

@@ -6,9 +6,11 @@ import blisgo.infrastructure.internal.InternalRoot;
 import blisgo.usecase.UseCaseRoot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.util.TimeZone;
 
+@EnableConfigurationProperties
 @SpringBootApplication(scanBasePackageClasses = {
         InternalRoot.class,
         DomainRoot.class,

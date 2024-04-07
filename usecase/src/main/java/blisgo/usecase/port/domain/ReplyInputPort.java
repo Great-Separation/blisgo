@@ -1,4 +1,4 @@
-package blisgo.usecase.port;
+package blisgo.usecase.port.domain;
 
 import blisgo.domain.community.Reply;
 import blisgo.domain.community.vo.PostId;

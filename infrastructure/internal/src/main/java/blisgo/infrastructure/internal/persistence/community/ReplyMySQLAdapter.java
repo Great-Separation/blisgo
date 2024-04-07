@@ -4,7 +4,7 @@ import blisgo.domain.community.Reply;
 import blisgo.infrastructure.internal.persistence.community.mapper.ReplyMapper;
 import blisgo.infrastructure.internal.persistence.community.repository.ReplyCustomRepository;
 import blisgo.infrastructure.internal.persistence.community.repository.ReplyJpaRepository;
-import blisgo.usecase.port.ReplyOutputPort;
+import blisgo.usecase.port.domain.ReplyOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -34,17 +34,5 @@ public class ReplyMySQLAdapter implements ReplyOutputPort {
     public Slice<Reply> read(Long postId, Pageable pageable, Long lastReplyId) {
         return customRepository.find(pageable, postId, lastReplyId)
                 .map(mapper::toDomain);
-    }
-
-    @Override
-    public boolean update(Reply domain) {
-        var jpaReply = mapper.toEntity(domain);
-
-        jpaRepository.findById(jpaReply.replyId()).ifPresentOrElse(
-                existingReply -> existingReply.updateInfo(jpaReply),
-                () -> jpaRepository.save(jpaReply)
-        );
-
-        return true;
     }
 }

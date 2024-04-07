@@ -6,6 +6,8 @@ import lombok.Builder;
 public record UpdatePost(
         Long postId,
         String title,
-        String content
+        String content,
+        String thumbnail,
+        String preview
 )  {
 }

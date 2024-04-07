@@ -1,4 +1,4 @@
-package blisgo.usecase.port;
+package blisgo.usecase.port.domain;
 
 import blisgo.domain.dictionary.Waste;
 import blisgo.domain.dictionary.vo.Category;

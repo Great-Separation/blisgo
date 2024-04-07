@@ -3,12 +3,10 @@ plugins {
     id 'io.swagger.swaggerhub' version '+'
 }
 
-ext {
-    springCloudVersion = "2023.0.1"
-}
-
 bootJar.enabled = false
 jar.enabled = true
+
+description = 'infra 내부요소로 spring framework과 직결되는 자원을 이곳에 위치시킨다'
 
 dependencies {
     implementation project(':domain')
@@ -50,10 +48,6 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:+'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    // flyway
-    implementation 'org.flywaydb:flyway-core:+'
-    implementation 'org.flywaydb:flyway-mysql:+'
 }
 
 def querydslDir = "${project.projectDir}/build/generated/querydsl"

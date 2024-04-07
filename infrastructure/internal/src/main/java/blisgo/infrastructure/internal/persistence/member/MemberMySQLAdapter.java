@@ -4,7 +4,7 @@ import blisgo.domain.member.Member;
 import blisgo.infrastructure.internal.persistence.member.mapper.MemberMapper;
 import blisgo.infrastructure.internal.persistence.member.repository.MemberCustomRepository;
 import blisgo.infrastructure.internal.persistence.member.repository.MemberJpaRepository;
-import blisgo.usecase.port.MemberOutputPort;
+import blisgo.usecase.port.domain.MemberOutputPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

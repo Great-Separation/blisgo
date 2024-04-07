@@ -1,4 +1,4 @@
-package blisgo.usecase.port;
+package blisgo.usecase.port.domain;
 
 import blisgo.domain.member.Member;
 import blisgo.usecase.request.member.*;

@@ -2,6 +2,7 @@ package blisgo.infrastructure.internal.persistence.community.repository;
 
 import blisgo.infrastructure.internal.persistence.base.NoOffsetSliceHelper;
 import blisgo.infrastructure.internal.persistence.common.JpaAuthor;
+import blisgo.infrastructure.internal.persistence.common.JpaContent;
 import blisgo.infrastructure.internal.persistence.community.model.JpaPost;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,20 +23,24 @@ import static blisgo.infrastructure.internal.persistence.member.model.QJpaMember
 @RequiredArgsConstructor
 public class PostCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
-    private final JdbcTemplate jdbcTemplate;
 
     public Slice<JpaPost> find(Pageable pageable, long lastPostId) {
-        var joinMember = Projections.fields(JpaAuthor.class,
+        var memberField = Projections.fields(JpaAuthor.class,
                 jpaMember.email,
                 jpaMember.name,
                 jpaMember.picture.as("picture")
         );
 
+        var contentField = Projections.fields(JpaContent.class,
+                jpaPost.content.thumbnail,
+                jpaPost.content.preview
+        );
+
         var fields = Projections.fields(JpaPost.class,
                 jpaPost.postId,
                 jpaPost.title,
-                jpaPost.content,
-                joinMember.as("author"),
+                contentField.as("content"),
+                memberField.as("author"),
                 jpaPost.views,
                 jpaPost.likes,
                 jpaPost.modifiedDate,
@@ -85,17 +89,21 @@ public class PostCustomRepository {
     }
 
     public Optional<JpaPost> findByIdWithReplies(Long postId) {
-        var joinMember = Projections.fields(JpaAuthor.class,
+        var memberField = Projections.fields(JpaAuthor.class,
                 jpaMember.email,
                 jpaMember.name,
                 jpaMember.picture.as("picture")
         );
 
+        var contentField = Projections.fields(JpaContent.class,
+                jpaPost.content.text
+        );
+
         var fields = Projections.fields(JpaPost.class,
                 jpaPost.postId,
                 jpaPost.title,
-                jpaPost.content,
-                joinMember.as("author"),
+                contentField.as("content"),
+                memberField.as("author"),
                 jpaPost.views,
                 jpaPost.likes,
                 jpaPost.modifiedDate,

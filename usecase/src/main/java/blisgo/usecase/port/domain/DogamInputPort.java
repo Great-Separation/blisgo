@@ -1,4 +1,4 @@
-package blisgo.usecase.port;
+package blisgo.usecase.port.domain;
 
 import blisgo.domain.dictionary.Dogam;
 import blisgo.domain.dictionary.vo.DogamId;

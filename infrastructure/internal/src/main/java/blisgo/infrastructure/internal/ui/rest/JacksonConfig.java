@@ -1,4 +1,4 @@
-package blisgo.infrastructure.internal.rest;
+package blisgo.infrastructure.internal.ui.rest;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

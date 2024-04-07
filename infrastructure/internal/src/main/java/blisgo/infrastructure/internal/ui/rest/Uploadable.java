@@ -1,4 +1,4 @@
-package blisgo.infrastructure.internal.rest;
+package blisgo.infrastructure.internal.ui.rest;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

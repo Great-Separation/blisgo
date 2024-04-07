@@ -1,7 +1,7 @@
 package blisgo.infrastructure.internal.security;
 
 import blisgo.domain.member.Member;
-import blisgo.usecase.port.MemberInputPort;
+import blisgo.usecase.port.domain.MemberInputPort;
 import blisgo.usecase.request.member.GetMember;
 import blisgo.usecase.request.member.UpdateMember;
 import lombok.RequiredArgsConstructor;

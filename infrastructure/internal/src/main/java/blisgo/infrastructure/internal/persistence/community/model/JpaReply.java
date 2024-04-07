@@ -29,8 +29,4 @@ public class JpaReply extends BaseEntity {
     @Lob
     @Comment("내용")
     private String content;
-
-    public void updateInfo(JpaReply jpaReply) {
-        this.content = jpaReply.content;
-    }
 }

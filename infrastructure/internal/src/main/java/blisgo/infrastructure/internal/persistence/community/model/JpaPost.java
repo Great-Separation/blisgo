@@ -1,6 +1,5 @@
 package blisgo.infrastructure.internal.persistence.community.model;
 
-import blisgo.infrastructure.internal.persistence.base.ContentConverter;
 import blisgo.infrastructure.internal.persistence.common.BaseEntity;
 import blisgo.infrastructure.internal.persistence.common.JpaContent;
 import jakarta.persistence.*;
@@ -29,9 +28,7 @@ public class JpaPost extends BaseEntity {
     @Comment("제목")
     private String title;
 
-    @Comment("내용")
-    @Column(name = "content", columnDefinition = "JSON")
-    @Convert(converter = ContentConverter.class)
+    @Embedded
     private JpaContent content;
 
     @ColumnDefault("0")

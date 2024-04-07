@@ -5,7 +5,7 @@ import blisgo.infrastructure.internal.persistence.community.mapper.PostMapper;
 import blisgo.infrastructure.internal.persistence.community.model.JpaPost;
 import blisgo.infrastructure.internal.persistence.community.repository.PostCustomRepository;
 import blisgo.infrastructure.internal.persistence.community.repository.PostJpaRepository;
-import blisgo.usecase.port.PostOutputPort;
+import blisgo.usecase.port.domain.PostOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

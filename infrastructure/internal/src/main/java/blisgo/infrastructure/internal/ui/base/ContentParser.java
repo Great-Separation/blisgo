@@ -1,15 +1,14 @@
-package blisgo.infrastructure.internal.persistence.base;
+package blisgo.infrastructure.internal.ui.base;
 
-import blisgo.infrastructure.internal.persistence.common.JpaPicture;
-import blisgo.infrastructure.internal.persistence.common.JpaContent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
+import lombok.experimental.UtilityClass;
 
-@Converter(autoApply = true)
-public class ContentConverter implements AttributeConverter<JpaContent, String> {
+import java.util.Optional;
+
+@UtilityClass
+public class ContentParser {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final String TYPE = "type";
@@ -19,32 +18,23 @@ public class ContentConverter implements AttributeConverter<JpaContent, String> 
     private static final String URL = "url";
     private static final String IMAGE = "image";
     private static final String PARAGRAPH = "paragraph";
+    private static final String FILE = "file";
 
-    @Override
-    public String convertToDatabaseColumn(JpaContent content) {
-        return content.text();
-    }
-
-    @Override
-    public JpaContent convertToEntityAttribute(String dbData) {
+    public static JsonNode toJson(String content) {
         JsonNode json;
-        String thumbnail, preview;
 
-        dbData = dbData == null ? "" : dbData;
+        String text = Optional.ofNullable(content).orElse("");
 
         try {
-            json = objectMapper.readTree(dbData);
+            json = objectMapper.readTree(text);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        thumbnail = parseFirstImageUrl(json);
-        preview = parseFirstParagraph(json);
-
-        return JpaContent.of(dbData, JpaPicture.of(thumbnail), preview);
+        return json;
     }
 
-    private String parseFirstParagraph(JsonNode json) {
+    public static String parseFirstParagraph(JsonNode json) {
         JsonNode blocksNode = json.get(BLOCKS);
 
         if (blocksNode == null) {
@@ -60,7 +50,7 @@ public class ContentConverter implements AttributeConverter<JpaContent, String> 
         return null;
     }
 
-    private String parseFirstImageUrl(JsonNode json) {
+    public static String parseFirstImageUrl(JsonNode json) {
         JsonNode blocksNode = json.get(BLOCKS);
 
         if (blocksNode == null) {
@@ -69,7 +59,7 @@ public class ContentConverter implements AttributeConverter<JpaContent, String> 
 
         for (JsonNode blockNode : blocksNode) {
             if (IMAGE.equals(blockNode.get(TYPE).asText())) {
-                return blockNode.get(DATA).get(URL).asText();
+                return blockNode.get(DATA).get(FILE).get(URL).asText();
             }
         }
 

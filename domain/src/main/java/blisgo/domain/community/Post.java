@@ -26,23 +26,19 @@ public class Post {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static Post create(Long postId, String title, String content) {
+    public static Post create(Long postId, String title, Content content) {
         return Post.builder()
                 .postId(PostId.of(postId))
                 .title(title)
-                .content(Content.of(content))
+                .content(content)
                 .build();
     }
 
-    public static Post create(String title, String content) {
+    public static Post create(String title, Content content) {
         return Post.builder()
                 .title(title)
-                .content(Content.of(content))
+                .content(content)
                 .build();
-    }
-
-    public void likePost() {
-        this.likes++;
     }
 
     public boolean isAuthor(String email) {

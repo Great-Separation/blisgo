@@ -20,4 +20,6 @@ public interface WasteQuery {
     Slice<Waste> getWastesFromDogam(GetDogam query);
 
     List<Waste> getWastesRelated(List<Category> categories);
+
+    List<Waste> getWastesRelated(GetWaste query);
 }

@@ -1,8 +1,6 @@
 bootJar.enabled = false
 jar.enabled = true
 
-description = 'redis 를 사용하여 세션관리'
-
 dependencies {
     implementation project(':usecase')
     implementation project(':infrastructure:internal')
@@ -10,4 +8,12 @@ dependencies {
     implementation 'org.springframework.session:spring-session-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+    // flyway migration
+    implementation 'org.flywaydb:flyway-core:+'
+    implementation 'org.flywaydb:flyway-mysql:+'
+
+    // file uploader
+    implementation 'com.cloudinary:cloudinary-core:+'
+    implementation 'com.cloudinary:cloudinary-http45:+'
 }

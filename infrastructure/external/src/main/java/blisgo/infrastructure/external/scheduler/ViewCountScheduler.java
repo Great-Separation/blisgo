@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Description("캐시에 저장된 조회수를 DB에 업데이트하는 스케줄러")
+@Description("캐시에 저장된 조회수를 DB에 갱신하는 스케줄러")
 public class ViewCountScheduler {
     private final ViewCountCache viewCountCache;
     private final PostMySQLAdapter postMySQLAdapter;

@@ -1,4 +1,4 @@
-package blisgo.usecase.port;
+package blisgo.usecase.port.domain;
 
 import blisgo.domain.community.Reply;
 import org.jmolecules.architecture.hexagonal.SecondaryPort;
@@ -12,6 +12,4 @@ public interface ReplyOutputPort {
     boolean create(Reply domain);
 
     Slice<Reply> read(Long postId, Pageable pageable, Long lastReplyId);
-
-    boolean update(Reply domain);
 }

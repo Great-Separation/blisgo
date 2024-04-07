@@ -35,8 +35,7 @@ public class CommunityView extends Router {
         return new ModelAndView(
                 routes(Folder.COMMUNITY, Page.CONTENT),
                 Map.ofEntries(
-                        Map.entry("postId", postId),
-                        Map.entry("readOnly", false)
+                        Map.entry("postId", postId)
                 )
         );
     }
@@ -57,7 +56,6 @@ public class CommunityView extends Router {
 
             if (post != null && post.isAuthor(oidcUser.getEmail())) {
                 model.addAttribute("post", mapper.toDTO(post));
-                model.addAttribute("readOnly", false);
             }
         }
 
