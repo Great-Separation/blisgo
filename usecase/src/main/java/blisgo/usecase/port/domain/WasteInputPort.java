@@ -4,6 +4,8 @@ import blisgo.domain.dictionary.Waste;
 import blisgo.domain.dictionary.vo.Category;
 import blisgo.domain.dictionary.vo.Guide;
 import blisgo.domain.member.vo.MemberId;
+import blisgo.usecase.base.Events;
+import blisgo.usecase.event.WasteViewedEvent;
 import blisgo.usecase.request.dogam.GetDogam;
 import blisgo.usecase.request.waste.GetWaste;
 import blisgo.usecase.request.waste.WasteQuery;
@@ -27,6 +29,7 @@ public class WasteInputPort implements WasteQuery {
 
     @Override
     public Waste getWaste(GetWaste query) {
+        Events.raise(new WasteViewedEvent(query.wasteId()));
         return port.read(query.wasteId());
     }
 

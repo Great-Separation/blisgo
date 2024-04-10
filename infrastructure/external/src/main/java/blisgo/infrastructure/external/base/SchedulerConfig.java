@@ -1,4 +1,4 @@
-package blisgo.infrastructure.external.redis;
+package blisgo.infrastructure.external.base;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;

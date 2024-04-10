@@ -7,6 +7,9 @@
         <loc>https://blisgo.up.railway.app/templates/base/layout.html</loc>
     </url>
     <url>
+        <loc>https://blisgo.up.railway.app/templates/base/toast.html</loc>
+    </url>
+    <url>
         <loc>https://blisgo.up.railway.app/templates/community/board.html</loc>
     </url>
     <url>
@@ -20,6 +23,9 @@
     </url>
     <url>
         <loc>https://blisgo.up.railway.app/templates/dictionary/info.html</loc>
+    </url>
+    <url>
+        <loc>https://blisgo.up.railway.app/templates/error/404.html</loc>
     </url>
     <url>
         <loc>https://blisgo.up.railway.app/templates/member/profile.html</loc>

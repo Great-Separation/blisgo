@@ -1,5 +1,5 @@
 spring:
   profiles:
     include:
-      common, thymeleaf, oauth, redis
+      client, infra, ui
     active: ${APP_PROFILE}

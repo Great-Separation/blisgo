@@ -2,12 +2,12 @@ package blisgo.infrastructure.external.scheduler;
 
 import blisgo.infrastructure.external.redis.ViewCountCache;
 import blisgo.infrastructure.internal.persistence.community.PostMySQLAdapter;
+import blisgo.infrastructure.internal.persistence.dictionary.WasteMySQLAdapter;
+import blisgo.usecase.port.infra.ViewCountable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -15,15 +15,20 @@ import java.util.List;
 public class ViewCountScheduler {
     private final ViewCountCache viewCountCache;
     private final PostMySQLAdapter postMySQLAdapter;
+    private final WasteMySQLAdapter wasteMySQLAdapter;
 
     @Scheduled(fixedRate = 60000)
     public void updateViewCounts() {
-        List<Long> postIds = postMySQLAdapter.findPostIds();
+        handleViewCount(postMySQLAdapter, "post");
+        handleViewCount(wasteMySQLAdapter, "waste");
+    }
 
-        for (Long postId : postIds) {
-            long viewCount = viewCountCache.getViewCount(postId);
-            if (viewCount > 0 && (postMySQLAdapter.updateViewCount(postId, viewCount))) {
-                viewCountCache.remove(postId);
+    private void handleViewCount(ViewCountable updater, String domain) {
+        for (var id : updater.findIds()) {
+            long viewCount = viewCountCache.getViewCount(id, domain);
+
+            if (viewCount > 0 && updater.updateViewCount(id, viewCount)) {
+                viewCountCache.remove(id, domain);
             }
         }
     }

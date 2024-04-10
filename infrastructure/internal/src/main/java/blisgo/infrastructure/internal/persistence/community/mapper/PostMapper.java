@@ -27,7 +27,7 @@ public class PostMapper implements PersistenceMapper<Post, JpaPost, PostDTO> {
     public PostDTO toDTO(Post domain) {
         return mapper.map(domain, PostDTO.class);
     }
-    
+
     public Post toDomain(PostDTO dto) {
         return mapper.map(dto, Post.class);
     }

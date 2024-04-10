@@ -3,6 +3,7 @@ package blisgo.infrastructure.internal.ui.base;
 import java.util.StringJoiner;
 
 public class Router {
+
     protected String routes(Object... strings) {
         StringJoiner sj = new StringJoiner("/", "/", "");
 
@@ -17,16 +18,20 @@ public class Router {
         return "::" + target.toString().toLowerCase();
     }
 
+    protected String routesToast() {
+        return routes(Folder.BASE, Page.TOAST) + fragment(Fragment.TOAST);
+    }
+
     protected enum Folder {
-        COMMUNITY, DICTIONARY, MEMBER
+        COMMUNITY, DICTIONARY, BASE, MEMBER
     }
 
     protected enum Page {
-        INDEX, PROFILE, CATALOGUE, INFO, BOARD, CONTENT, WRITE, EDIT
+        INDEX, PROFILE, CATALOGUE, INFO, BOARD, CONTENT, WRITE, LAYOUT, TOAST, EDIT
     }
 
     public enum Fragment {
-        POSTS, DOGAMS, MEMBER, POST, DICTIONARIES, WASTE, WASTES, WASTE_RELATED, REPLIES
+        POSTS, DOGAMS, MEMBER, POST, DICTIONARIES, WASTE, WASTES, WASTE_RELATED, TOAST, REPLIES
     }
 
 }

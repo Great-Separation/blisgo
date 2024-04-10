@@ -1,6 +1,8 @@
 bootJar.mainClass = 'blisgo.app.BlisgoApplication'
 bootJar.enabled = true
 
+description = 'bootstrap 으로 실행환경과 관련된 라이브러리만 추가한다'
+
 dependencies {
     implementation project(':usecase')
     implementation project(':infrastructure:internal')

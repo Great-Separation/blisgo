@@ -9,6 +9,7 @@ import blisgo.infrastructure.internal.persistence.dictionary.repository.GuideJpa
 import blisgo.infrastructure.internal.persistence.dictionary.repository.WasteCustomRepository;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.WasteJpaRepository;
 import blisgo.usecase.port.domain.WasteOutputPort;
+import blisgo.usecase.port.infra.ViewCountable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @Component
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class WasteMySQLAdapter implements WasteOutputPort {
+public class WasteMySQLAdapter implements WasteOutputPort, ViewCountable {
     private final WasteJpaRepository wasteJpaRepository;
     private final WasteCustomRepository wasteCustomRepository;
     private final GuideJpaRepository guideJpaRepository;
@@ -56,5 +57,25 @@ public class WasteMySQLAdapter implements WasteOutputPort {
     @Override
     public List<Waste> readWastesRelated(List<Category> categories) {
         return wasteMapper.toDomains(wasteCustomRepository.findWastesByCategories(categories));
+    }
+
+    @Transactional
+    public boolean updatePopularity() {
+        return wasteCustomRepository.updatePopularity();
+    }
+
+    @Override
+    public List<Long> findIds() {
+        return wasteCustomRepository.findWasteIds();
+    }
+
+    @Override
+    @Transactional
+    public boolean updateViewCount(Long wasteId, Long views) {
+        return wasteCustomRepository.updateViewCount(wasteId, views);
+    }
+
+    public List<Waste> read() {
+        return wasteMapper.toDomains(wasteJpaRepository.findAll());
     }
 }

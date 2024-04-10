@@ -9,3 +9,8 @@ cloudinary:
   cloud-name: ${CLOUDINARY_CLOUD_NAME}
   api-key: ${CLOUDINARY_API_KEY}
   api-secret: ${CLOUDINARY_API_SECRET}
+
+algolia:
+  application-id: ${ALGOLIA_APPLICATION_ID}
+  api-key: ${ALGOLIA_API_KEY}
+  index-name: ${ALGOLIA_INDEX_NAME}

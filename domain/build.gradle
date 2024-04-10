@@ -1,5 +1,4 @@
 bootJar.enabled = false
 jar.enabled = true
 
-dependencies {
-}
+description = '도메인 모델 용어 정리 지원을 위한 라이브러리만 추가한다'

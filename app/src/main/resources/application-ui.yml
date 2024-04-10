@@ -4,7 +4,6 @@ spring:
       filter:
         enabled: true
   thymeleaf:
-    prefix: classpath:/templates
     check-template-location: true
     suffix: .html
     mode: HTML
@@ -12,6 +11,8 @@ spring:
     multipart:
       maxRequestSize: 10MB
       maxFileSize: 10MB
+  messages:
+    encoding: UTF-8
 
 server:
   servlet:
@@ -28,6 +29,9 @@ server:
   error:
     include-stacktrace: ALWAYS
     include-exception: true
+    path: /error
+    whitelabel:
+      enabled: true
   compression:
     min-response-size: 512
     mime-types: text/html,text/plain,text/xml,text/css,application/javascript,application/json

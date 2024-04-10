@@ -1,13 +1,15 @@
 bootJar.enabled = false
 jar.enabled = true
 
+description = 'infra 외부요소로 프레임워크에 귀속되지 않고 확장/축소시 분리 가능한 라이브러리만 추가한다'
+
 dependencies {
     implementation project(':usecase')
+    implementation project(':domain')
     implementation project(':infrastructure:internal')
 
     implementation 'org.springframework.session:spring-session-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
     // flyway migration
     implementation 'org.flywaydb:flyway-core:+'
@@ -16,4 +18,13 @@ dependencies {
     // file uploader
     implementation 'com.cloudinary:cloudinary-core:+'
     implementation 'com.cloudinary:cloudinary-http45:+'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // search engine
+    implementation 'com.algolia:algoliasearch-core:+'
+    implementation 'com.algolia:algoliasearch-java-net:+'
+
+    // 테스트코드
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

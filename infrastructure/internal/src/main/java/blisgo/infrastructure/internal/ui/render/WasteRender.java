@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
@@ -31,44 +32,6 @@ public class WasteRender extends Router {
     private final WasteMapper wasteMapper;
     private final GuideMapper guideMapper;
     private final DogamQuery dogamQueryUsecase;
-
-/*    @GetMapping
-    public ModelAndView wastes(
-            @PageableDefault(size = 24, sort = "wasteId", direction = ASC) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "0") Long lastWasteId,
-            @RequestParam(required = false) Long wasteId
-    ) {
-        if (wasteId == null) {
-            var query = GetWaste.builder()
-                    .pageable(pageable)
-                    .lastWasteId(lastWasteId)
-                    .build();
-
-            var wastes = queryUsecase.getWastes(query);
-
-            return new ModelAndView(
-                    routes(Folder.DICTIONARY, Page.CATALOGUE) + fragment(Fragment.WASTES),
-                    Map.of("wastes", wastes.map(wasteMapper::toDTO))
-            );
-        } else {
-            var query = GetWaste.builder()
-                    .wasteId(wasteId)
-                    .build();
-
-            var waste = queryUsecase.getWaste(query);
-            var guides = queryUsecase.getGuides(waste.categories());
-            var relatedWastes = queryUsecase.getWastesRelated(waste.categories());
-
-            return new ModelAndView(
-                    routes(Folder.DICTIONARY, Page.INFO) + fragment(Fragment.WASTE),
-                    Map.ofEntries(
-                            Map.entry("waste", wasteMapper.toDTO(waste)),
-                            Map.entry("guides", guideMapper.toDTOs(guides)),
-                            Map.entry("relatedWastes", wasteMapper.toDTOs(relatedWastes))
-                    )
-            );
-        }
-    }*/
 
     @GetMapping
     public ModelAndView getWastes(
@@ -101,21 +64,25 @@ public class WasteRender extends Router {
         var guides = queryUsecase.getGuides(waste.categories());
         var relatedWastes = queryUsecase.getWastesRelated(waste.categories());
 
-        var dogamQuery = GetDogam.builder()
-                .email(oidcUser.getEmail())
-                .wasteId(wasteId)
-                .build();
+        var map = new HashMap<>(Map.ofEntries(
+                Map.entry("waste", wasteMapper.toDTO(waste)),
+                Map.entry("guides", guideMapper.toDTOs(guides)),
+                Map.entry("relatedWastes", wasteMapper.toDTOs(relatedWastes)))
+        );
 
-        var dogamExists = dogamQueryUsecase.checkThatWasteRegisteredFromDogam(dogamQuery);
+        if (oidcUser != null) {
+            var dogamQuery = GetDogam.builder()
+                    .email(oidcUser.getEmail())
+                    .wasteId(wasteId)
+                    .build();
+
+            var dogamExists = dogamQueryUsecase.checkThatWasteRegisteredFromDogam(dogamQuery);
+            map.put("dogamExists", dogamExists);
+        }
 
         return new ModelAndView(
                 routes(Folder.DICTIONARY, Page.INFO) + fragment(Fragment.WASTE),
-                Map.ofEntries(
-                        Map.entry("waste", wasteMapper.toDTO(waste)),
-                        Map.entry("guides", guideMapper.toDTOs(guides)),
-                        Map.entry("relatedWastes", wasteMapper.toDTOs(relatedWastes)),
-                        Map.entry("dogamExists", dogamExists)
-                )
+                map
         );
     }
 }

@@ -2,12 +2,12 @@ package blisgo.infrastructure.internal.ui.render;
 
 import blisgo.infrastructure.internal.persistence.dictionary.mapper.WasteMapper;
 import blisgo.infrastructure.internal.ui.base.Router;
+import blisgo.infrastructure.internal.ui.base.UIToast;
 import blisgo.usecase.request.dogam.*;
 import blisgo.usecase.request.waste.WasteQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -28,11 +28,11 @@ public class DogamRender extends Router {
     private final DogamCommand dogamCommand;
     private final WasteQuery wasteQuery;
     private final WasteMapper wasteMapper;
+    private final UIToast toast;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
-    public void createDogam(
+    public ModelAndView createDogam(
             @AuthenticationPrincipal DefaultOidcUser oidcUser,
             AddDogam command
     ) {
@@ -40,13 +40,22 @@ public class DogamRender extends Router {
                 .email(oidcUser.getEmail())
                 .build();
 
-        dogamCommand.addDogam(command);
+        if (dogamCommand.addDogam(command)) {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.success("toast.dogam.create.success")
+            );
+        } else {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.error("toast.dogam.create.error")
+            );
+        }
     }
 
     @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
-    public void deleteDogam(
+    public ModelAndView deleteDogam(
             @AuthenticationPrincipal DefaultOidcUser oidcUser,
             RemoveDogam command
     ) {
@@ -54,7 +63,17 @@ public class DogamRender extends Router {
                 .email(oidcUser.getEmail())
                 .build();
 
-        dogamCommand.removeDogam(command);
+        if (dogamCommand.removeDogam(command)) {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.success("toast.dogam.delete.success")
+            );
+        } else {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.error("toast.dogam.delete.error")
+            );
+        }
     }
 
     @GetMapping

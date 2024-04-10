@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="auto" lang="ko" layout:decorate="~{/base/layout}">
+<html data-bs-theme="dark" lang="ko" layout:decorate="~{/base/layout}">
 
 <head>
     <meta charset="utf-8">
@@ -16,95 +16,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:image" content="https://blisgo.up.railway.app/assets/img/favicon/512x512.png">
     <meta name="description" content="분리배출 도우미">
-    <script>
-        (function() {
-
-            // JavaScript snippet handling Dark/Light mode switching
-
-            const getStoredTheme = () => localStorage.getItem('theme');
-            const setStoredTheme = theme => localStorage.setItem('theme', theme);
-            const forcedTheme = document.documentElement.getAttribute('data-bss-forced-theme');
-
-            const getPreferredTheme = () => {
-
-                if (forcedTheme) return forcedTheme;
-
-                const storedTheme = getStoredTheme();
-                if (storedTheme) {
-                    return storedTheme;
-                }
-
-                const pageTheme = document.documentElement.getAttribute('data-bs-theme');
-
-                if (pageTheme) {
-                    return pageTheme;
-                }
-
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-
-            const setTheme = theme => {
-                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.setAttribute('data-bs-theme', 'dark');
-                } else {
-                    document.documentElement.setAttribute('data-bs-theme', theme);
-                }
-            }
-
-            setTheme(getPreferredTheme());
-
-            const showActiveTheme = (theme, focus = false) => {
-                const themeSwitchers = [].slice.call(document.querySelectorAll('.theme-switcher'));
-
-                if (!themeSwitchers.length) return;
-
-                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-                    element.classList.remove('active');
-                    element.setAttribute('aria-pressed', 'false');
-                });
-
-                for (const themeSwitcher of themeSwitchers) {
-
-                    const btnToActivate = themeSwitcher.querySelector('[data-bs-theme-value="' + theme + '"]');
-
-                    if (btnToActivate) {
-                        btnToActivate.classList.add('active');
-                        btnToActivate.setAttribute('aria-pressed', 'true');
-                    }
-                }
-            }
-
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                const storedTheme = getStoredTheme();
-                if (storedTheme !== 'light' && storedTheme !== 'dark') {
-                    setTheme(getPreferredTheme());
-                }
-            });
-
-            window.addEventListener('DOMContentLoaded', () => {
-                showActiveTheme(getPreferredTheme());
-
-                document.querySelectorAll('[data-bs-theme-value]')
-                    .forEach(toggle => {
-                        toggle.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            const theme = toggle.getAttribute('data-bs-theme-value');
-                            setStoredTheme(theme);
-                            setTheme(theme);
-                            showActiveTheme(theme);
-                        })
-                    })
-            });
-        })();
-    </script>
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/img/favicon/180x180.png?h=d280b01977b791714694a40e9963be0a">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/16x16.png?h=d874033a3f038e5f02e1958d00a60eff">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/32x32.png?h=7dcd0a3651302a768c6a9f0105ac2408">
-    <link rel="icon" type="image/png" sizes="180x180" href="/assets/img/favicon/180x180.png?h=d280b01977b791714694a40e9963be0a">
-    <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/192x192.png?h=6c592fa58710f02e35cca41f7e883cff">
-    <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon/512x512.png?h=3ab5991783761ea87ccc35c8e55a58ba">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/cmmn/style.css?h=a64769832829539ed2c6fd0f96af741e">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/img/favicon/180x180.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/32x32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="/assets/img/favicon/180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon/512x512.png">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    <link rel="stylesheet" href="/assets/css/cmmn/style.css">
 <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
 </head>
 
@@ -118,4 +38,4 @@
                 <div class="col align-self-center ps-2">
                     <div class="vstack">
                         <h4 id="name" th:text="${member?.name}">옥재욱</h4>
-                        <h6 class="text-muted" id="email" th:text="${member?.email}">okjaeook98@gmail.com</h6><small th:text="'Since. ' + ${#temporals.format(member?.createdDate, 'yyyy-MM-dd')}">since. 2020-03-01</small></div></div></div><!-- Start: hx-get member --><div hx-get="/members" hx-trigger="load" hx-swap="outerHTML" hx-target="#member"></div><!-- End: hx-get member --></section><section><div><ul class="nav nav-underline nav-fill mb-2" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="underline" href="#tab-dogam">도감</a></li></ul><div class="tab-content"><div class="tab-pane active" role="tabpanel" id="tab-dogam"><div class="row g-0" th:fragment="dogams"><div class="col-auto"><!-- Start: hx-get dogam --><div th:attr="hx-get='/dogams?lastDogamCreatedDate=' + ${dogams?.getNumberOfElements() > 0 ? dogams.getContent().get(dogams.getNumberOfElements()-1).createdDate() : '' }" th:if="${dogams==null || dogams?.hasNext()}" hx-trigger="revealed" hx-swap="beforeend" hx-target="#tab-dogam"></div><!-- End: hx-get dogam --></div><div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 p-1" th:each="dogam: ${dogams?.getContent()}"><figure class="figure position-relative mb-0" data-aos="zoom-in"><a th:href="@{~/dictionary/{wasteId}(wasteId=${dogam.wasteId})}"><img class="img-fluid" src="https://via.placeholder.com/640" width="640px" height="640px" alt="사전 이미지" th:src="${dogam.picture.url}"></a><figcaption class="figure-caption text-center bg-black bg-opacity-50 p-1 text-white position-absolute bottom-0 translate-middle-x start-50 w-100" th:text="${dogam.name}">품명</figcaption></figure></div></div></div></div></div></section></main><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script><script src="/assets/js/bs-init.js?h=81d18e10772fe19d112aee494afb554c"></script></body></html>
+                        <h6 class="text-muted" id="email" th:text="${member?.email}">okjaeook98@gmail.com</h6><small th:text="'Since. ' + ${#temporals.format(member?.createdDate, 'yyyy-MM-dd')}">since. 2020-03-01</small></div></div></div><!-- Start: hx-get member --><div hx-get="/members" hx-trigger="load" hx-swap="outerHTML" hx-target="#member"></div><!-- End: hx-get member --></section><section><div><ul class="nav nav-underline nav-fill mb-2" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="underline" href="#tab-dogam" th:text="#{member.profile.tabs.dogam}">도감</a></li></ul><div class="tab-content"><div class="tab-pane active" role="tabpanel" id="tab-dogam"><div class="row g-0" th:fragment="dogams"><div class="col-auto"><!-- Start: hx-get dogam --><div th:attr="hx-get='/dogams?lastDogamCreatedDate=' + ${dogams?.getNumberOfElements() > 0 ? dogams.getContent().get(dogams.getNumberOfElements()-1).createdDate() : '' }" th:if="${dogams==null || dogams?.hasNext()}" hx-trigger="revealed" hx-swap="beforeend" hx-target="#tab-dogam"></div><!-- End: hx-get dogam --></div><div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 p-1" th:each="dogam: ${dogams?.getContent()}"><figure class="figure position-relative mb-0" data-aos="zoom-in"><a th:href="@{~/dictionary/{wasteId}(wasteId=${dogam.wasteId})}"><img class="img-fluid" src="https://via.placeholder.com/640" width="640px" height="640px" alt="사전 이미지" th:src="${dogam.picture.url}"></a><figcaption class="figure-caption text-center bg-black bg-opacity-50 p-1 text-white position-absolute bottom-0 translate-middle-x start-50 w-100" th:text="${dogam.name}">품명</figcaption></figure></div></div></div></div></div></section></main><script src="/assets/js/jquery.min.js"></script><script src="/assets/bootstrap/js/bootstrap.min.js"></script><script src="/assets/js/bs-init.js"></script></body></html>

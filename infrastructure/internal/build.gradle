@@ -6,7 +6,7 @@ plugins {
 bootJar.enabled = false
 jar.enabled = true
 
-description = 'infra 내부요소로 spring framework과 직결되는 자원을 이곳에 위치시킨다'
+description = 'infra 내부요소로 프레임워크과 직결되는 라이브러리만 추가한다'
 
 dependencies {
     implementation project(':domain')
@@ -32,7 +32,7 @@ dependencies {
     // auth0 security
     implementation 'com.okta.spring:okta-spring-boot-starter:+'
 
-    //spring security
+    // spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // 게시판 json 글 저장용

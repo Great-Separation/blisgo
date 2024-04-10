@@ -26,7 +26,7 @@ const debounced = debouncePromise((items) => Promise.resolve(items), 250);
 
 $(autocomplete({
   container: '#autocomplete',
-  placeholder: '그릇, 가방...',
+  placeholder: '🛠️,👕, ...',
   openOnFocus: false,
   getSources({ query }) {
     return debounced([
@@ -49,7 +49,7 @@ $(autocomplete({
           return "dictionary/" + item.dicNo;
         },
         templates: {
-          detachedCancelButtonText: "asd",
+          detachedCancelButtonText: "X",
           item({ item, components, html }) {
             return html`
             <a href="dictionary/${item.dicNo}" class="text-decoration-none text-body">
@@ -74,7 +74,7 @@ $(autocomplete({
             `;
           },
           noResults() {
-            return '일치하는 검색결과가 없습니다.';
+            return '｡ﾟ(ﾟ´ω`ﾟ)ﾟ｡💦';
           }
         }
       }

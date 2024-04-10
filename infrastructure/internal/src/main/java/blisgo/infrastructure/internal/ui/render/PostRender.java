@@ -3,11 +3,11 @@ package blisgo.infrastructure.internal.ui.render;
 import blisgo.infrastructure.internal.persistence.community.mapper.PostMapper;
 import blisgo.infrastructure.internal.ui.base.ContentParser;
 import blisgo.infrastructure.internal.ui.base.Router;
+import blisgo.infrastructure.internal.ui.base.UIToast;
 import blisgo.usecase.request.post.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +25,7 @@ public class PostRender extends Router {
     private final PostCommand commandUsecase;
     private final PostQuery queryUsecase;
     private final PostMapper mapper;
+    private final UIToast toast;
 
     @GetMapping
     public ModelAndView posts(
@@ -54,9 +55,7 @@ public class PostRender extends Router {
 
         return new ModelAndView(
                 routes(Folder.COMMUNITY, Page.CONTENT) + fragment(Fragment.POST),
-                Map.ofEntries(
-                        Map.entry("post", mapper.toDTO(post))
-                )
+                Map.of("post", mapper.toDTO(post))
         );
     }
 
@@ -105,26 +104,44 @@ public class PostRender extends Router {
     }
 
     @PostMapping("/{postId}/like")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
-    public void like(@PathVariable Long postId) {
+    public ModelAndView like(@PathVariable Long postId) {
         var command = PostLike.builder()
                 .postId(postId)
                 .isLike(true)
                 .build();
 
-        commandUsecase.like(command);
+        if (commandUsecase.like(command)) {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.success("toast.post.like.success")
+            );
+        } else {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.error("toast.post.like.error")
+            );
+        }
     }
 
     @PostMapping("/{postId}/dislike")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
-    public void dislike(@PathVariable Long postId) {
+    public ModelAndView unlike(@PathVariable Long postId) {
         var command = PostLike.builder()
                 .postId(postId)
                 .isLike(false)
                 .build();
 
-        commandUsecase.like(command);
+        if (commandUsecase.like(command)) {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.success("toast.post.unlike.success")
+            );
+        } else {
+            return new ModelAndView(
+                    routesToast(),
+                    toast.error("toast.post.unlike.error")
+            );
+        }
     }
 }

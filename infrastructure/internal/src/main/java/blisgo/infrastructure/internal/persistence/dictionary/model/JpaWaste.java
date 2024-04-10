@@ -1,6 +1,7 @@
 package blisgo.infrastructure.internal.persistence.dictionary.model;
 
 import blisgo.domain.dictionary.vo.Category;
+import blisgo.infrastructure.internal.persistence.base.I18nConverter;
 import blisgo.infrastructure.internal.persistence.common.BaseTimeEntity;
 import blisgo.infrastructure.internal.persistence.common.JpaPicture;
 import jakarta.persistence.*;
@@ -26,11 +27,13 @@ public class JpaWaste extends BaseTimeEntity {
     @Comment("폐기물 Id")
     private Long wasteId;
 
-    @Column(length = 45)
+    @Column(columnDefinition = "json")
+    @Convert(converter = I18nConverter.class)
     @Comment("이름")
     private String name;
 
-    @Column(length = 45)
+    @Column(columnDefinition = "json")
+    @Convert(converter = I18nConverter.class)
     @Comment("유형")
     private String type;
 
@@ -38,11 +41,11 @@ public class JpaWaste extends BaseTimeEntity {
     @AttributeOverride(name = "url", column = @Column(name = "picture"))
     private JpaPicture picture;
 
-    @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "json")
+    @Convert(converter = I18nConverter.class)
     @Comment("처리 안내")
     private String treatment;
-
 
     @Range(min = 1, max = 10)
     @ColumnDefault("5")

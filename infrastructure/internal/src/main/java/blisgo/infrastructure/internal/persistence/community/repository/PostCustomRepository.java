@@ -62,29 +62,23 @@ public class PostCustomRepository {
         return new SliceImpl<>(results, pageable, hasNext);
     }
 
-    public List<Long> findAllPostIds() {
-        var qJpaPost = jpaPost;
-
-        return jpaQueryFactory.select(qJpaPost.postId)
-                .from(qJpaPost)
+    public List<Long> findPostIds() {
+        return jpaQueryFactory.select(jpaPost.postId)
+                .from(jpaPost)
                 .fetch();
     }
 
-    public boolean updateViewCount(Long postId, Long views) {
-        var qJpaPost = jpaPost;
-
-        return jpaQueryFactory.update(qJpaPost)
-                .set(qJpaPost.views, views)
-                .where(qJpaPost.postId.eq(postId))
+    public boolean updateViewCount(Long postId, Long increment) {
+        return jpaQueryFactory.update(jpaPost)
+                .set(jpaPost.views, jpaPost.views.add(increment))
+                .where(jpaPost.postId.eq(postId))
                 .execute() > 0;
     }
 
     public boolean updateLike(Long postId, Boolean isLike) {
-        var qJpaPost = jpaPost;
-
-        return jpaQueryFactory.update(qJpaPost)
-                .set(qJpaPost.likes, qJpaPost.likes.add(Boolean.TRUE.equals(isLike) ? 1 : -1))
-                .where(qJpaPost.postId.eq(postId))
+        return jpaQueryFactory.update(jpaPost)
+                .set(jpaPost.likes, jpaPost.likes.add(Boolean.TRUE.equals(isLike) ? 1 : -1))
+                .where(jpaPost.postId.eq(postId))
                 .execute() > 0;
     }
 

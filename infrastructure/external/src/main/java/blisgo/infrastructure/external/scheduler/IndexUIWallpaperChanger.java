@@ -1,9 +1,11 @@
-package blisgo.infrastructure.internal.ui.component;
+package blisgo.infrastructure.external.scheduler;
 
+import blisgo.infrastructure.external.client.UnsplashClient;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -19,11 +21,11 @@ import java.nio.file.Paths;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WallpaperChanger {
+public class IndexUIWallpaperChanger {
     private final UnsplashClient client;
 
-    /*@PostConstruct*/
-    public void changeWallpaper() throws IOException {
+    @Scheduled(zone = "UTC", cron = "0 0 0 * * *")
+    public void changeWallpaperDaily() throws IOException {
         byte[] imageBytes = client.bringImage();
 
         ClassPathResource resource = new ClassPathResource("static/assets/img/index_wallpaper.webp");

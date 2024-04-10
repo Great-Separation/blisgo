@@ -26,7 +26,10 @@ public class WasteCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
     private final JdbcTemplate jdbcTemplate;
 
-    public Slice<JpaWaste> findWastesByMemberIdFromDogam(UUID memberId, Pageable pageable, LocalDateTime lastDogamCreatedDate) {
+    public Slice<JpaWaste> findWastesByMemberIdFromDogam(
+            UUID memberId, Pageable pageable,
+            LocalDateTime lastDogamCreatedDate
+    ) {
         var fields = Projections.fields(
                 JpaWaste.class,
                 jpaWaste.wasteId,
@@ -85,4 +88,25 @@ public class WasteCustomRepository {
                 .fetch();
     }
 
+    public boolean updatePopularity() {
+        var sql = "UPDATE waste "
+                + "JOIN (SELECT waste_id, NTILE(10) OVER (ORDER BY views) AS star FROM waste) AS w2 "
+                + "SET popularity = w2.star "
+                + "WHERE waste.waste_id = w2.waste_id";
+        jdbcTemplate.update(sql);
+        return true;
+    }
+
+    public List<Long> findWasteIds() {
+        return jpaQueryFactory.select(jpaWaste.wasteId)
+                .from(jpaWaste)
+                .fetch();
+    }
+
+    public boolean updateViewCount(Long wasteId, Long increment) {
+        return jpaQueryFactory.update(jpaWaste)
+                .set(jpaWaste.views, jpaWaste.views.add(increment))
+                .where(jpaWaste.wasteId.eq(wasteId))
+                .execute() > 0;
+    }
 }
