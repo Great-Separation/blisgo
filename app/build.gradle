@@ -8,4 +8,7 @@ dependencies {
     implementation project(':infrastructure:internal')
     implementation project(':infrastructure:external')
     implementation project(':domain')
+
+    // flyway migration
+    implementation 'org.flywaydb:flyway-core:+'
 }

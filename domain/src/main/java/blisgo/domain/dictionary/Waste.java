@@ -25,6 +25,7 @@ public class Waste {
     private Short popularity;
     private Long views;
     private List<Category> categories;
+    private List<String> hashtags;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 }

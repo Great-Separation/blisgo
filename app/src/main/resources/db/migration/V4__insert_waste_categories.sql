@@ -1,4 +1,4 @@
-INSERT INTO waste_categories (categories, waste_id)
+INSERT IGNORE INTO waste_categories (categories, waste_id)
 VALUES ('PAPER', 1001),
        ('BULKY', 1002),
        ('PAY_AS_YOU_GO_BAG', 1003),

@@ -31,6 +31,10 @@ public class JpaPost extends BaseEntity {
     @Embedded
     private JpaContent content;
 
+    @ColumnDefault("'#CCCCCC'")
+    @Comment("글 배경색")
+    private String color;
+
     @ColumnDefault("0")
     @Comment("조회수")
     private long views;
@@ -43,11 +47,13 @@ public class JpaPost extends BaseEntity {
     private long replies;
 
     @Version
+    @ColumnDefault("1")
     @Comment("좋아요 동시성 해결을 위한 낙관적 락")
     private Long version;
 
     public void updateInfo(JpaPost entity) {
         this.title = entity.title;
         this.content = entity.content;
+        this.color = entity.color;
     }
 }

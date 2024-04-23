@@ -1,6 +1,6 @@
 package blisgo.infrastructure.external.scheduler;
 
-import blisgo.infrastructure.internal.persistence.dictionary.WasteMySQLAdapter;
+import blisgo.infrastructure.external.repository.WasteDirectDBAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Description;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Description("쓰레기 인기도를 갱신하는 스케줄러")
 public class WastePopularityScheduler {
-    private final WasteMySQLAdapter wasteMySQLAdapter;
+    private final WasteDirectDBAdapter wasteMySQLAdapter;
 
     @Scheduled(zone = "UTC", cron = "0 */1 * * * *")
     public void updateWastePopularity() {

@@ -1,4 +1,4 @@
-package blisgo.usecase.port.infra;
+package blisgo.infrastructure.external.repository;
 
 import java.util.List;
 

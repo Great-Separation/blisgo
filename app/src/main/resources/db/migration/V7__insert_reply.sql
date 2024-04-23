@@ -1,6 +1,6 @@
 SET @member_id = UNHEX(REPLACE('4c29cb26-d2f3-38d8-9d02-a9da30c7ad99', '-', ''));
 
-INSERT INTO reply (post_id, content, member_id)
+INSERT IGNORE INTO reply (post_id, content, member_id)
 VALUES (1, 'comment 1.', @member_id),
        (1, 'comment 2.', @member_id),
        (1, 'comment 3.', @member_id),

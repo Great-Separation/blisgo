@@ -2,9 +2,11 @@ package blisgo.infrastructure.internal.persistence.dictionary.model;
 
 import blisgo.domain.dictionary.vo.Category;
 import blisgo.infrastructure.internal.persistence.base.I18nConverter;
+import blisgo.infrastructure.internal.persistence.base.I18nListConverter;
 import blisgo.infrastructure.internal.persistence.common.BaseTimeEntity;
 import blisgo.infrastructure.internal.persistence.common.JpaPicture;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @Entity
@@ -59,6 +62,13 @@ public class JpaWaste extends BaseTimeEntity {
     @ElementCollection
     @CollectionTable(name = "waste_categories", joinColumns = @JoinColumn(name = "waste_id"))
     @Enumerated(EnumType.STRING)
-    @Comment("폐기 분류")
+    @Comment("폐기물 분류")
     private final List<Category> categories = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "waste_hashtags", joinColumns = @JoinColumn(name = "waste_id"))
+    @Column(columnDefinition = "json")
+    @Convert(converter = I18nListConverter.class)
+    @Comment("폐기물 해시태그")
+    private final List<String> hashtags = new ArrayList<>();
 }

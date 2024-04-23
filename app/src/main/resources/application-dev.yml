@@ -16,20 +16,15 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
+        enable_lazy_load_no_trans: true
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
       ejb:
         naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
-    defer-datasource-initialization: true
-
-  sql:
-    init:
-      mode: always
-
   thymeleaf:
     cache: false
 
@@ -39,7 +34,9 @@ spring:
       port: 6379
 
   flyway:
-    enabled: false
+    enabled: true
+    baseline-on-migrate: true
+    init-sqls: "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'blisgo';"
 
 server:
   servlet:

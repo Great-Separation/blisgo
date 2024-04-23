@@ -23,23 +23,21 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon/512x512.png">
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
     <link rel="stylesheet" href="/assets/css/cmmn/style.css">
-<link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
 </head>
 
 <body>
     <main class="container" layout:fragment="main">
         <section id="post">
             <form id="form" th:method="${post?.postId != null} ? 'patch' : 'post'" th:action="${post?.postId != null} ? @{~/posts/{postId}(postId=${post?.postId})} : @{~/posts}">
-                <div class="card shadow-sm border-0 mx-1 .post">
+                <div class="card shadow-sm border-0 mx-1 .post" th:style="${'background: ' + post?.color + ';'}">
                     <div class="card-header bg-light bg-opacity-50 border-0">
                         <div class="row d-flex align-items-center">
                             <div class="col"><input class="bg-transparent border-0 shadow-none form-control form-control-lg px-0 fw-bold fs-3" type="text" placeholder="제목" name="title" autocomplete="off" required="" th:value="${post?.title}" data-bs-theme="light" th:placeholder="#{community.write.heading.input.placeholder}"></div>
-                            <div class="col-auto"><input class="form-control form-control-color float-end p-1" type="color" data-bs-toggle="tooltip" data-bss-tooltip="" id="post-color" value="#ffeb7d" name="color" title="게시글 배경색 지정"></div>
+                            <div class="col-auto"><input class="form-control form-control-color float-end p-1" type="color" data-bs-toggle="tooltip" data-bss-tooltip="" id="post-color" name="color" title="게시글 배경색 지정" value="#000000"></div>
                         </div>
                     </div>
-                    <div class="card-body fs-5 text-black bg-light bg-opacity-75 border rounded border-0 p-1">
+                    <div class="card-body fs-5 text-black bg-light bg-opacity-75 border-0 p-1">
                         <div id="editorjs"></div><input class="form-control" type="hidden" id="editorjs-content" name="content"><input class="form-control" type="hidden" id="postId" th:value="${post?.postId}" name="postId">
                     </div>
                 </div><button class="btn btn-success border rounded-circle shadow d-flex justify-content-center align-items-center position-fixed bottom-0 end-0 translate-middle p-3 m-2 border-0" data-bs-toggle="tooltip" data-bss-tooltip="" id="save-button" title="등록" sec:authorize="isAuthenticated()" type="button" th:title="#{community.write.fab.submit.title}"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-send-fill fs-3" id="float-btn-icon">

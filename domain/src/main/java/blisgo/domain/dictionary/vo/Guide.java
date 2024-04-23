@@ -1,6 +1,5 @@
 package blisgo.domain.dictionary.vo;
 
-import blisgo.domain.common.Picture;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class Guide {
     private Category category;
     private String content;
-    private Picture picture;
+    private String docs;
 }

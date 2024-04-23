@@ -20,24 +20,27 @@ public class Post {
     private String title;
     private Author author;
     private Content content;
+    private String color;
     private long views;
     private long likes;
     private long replies;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public static Post create(Long postId, String title, Content content) {
+    public static Post create(Long postId, String title, Content content, String color) {
         return Post.builder()
                 .postId(PostId.of(postId))
                 .title(title)
                 .content(content)
+                .color(color)
                 .build();
     }
 
-    public static Post create(String title, Content content) {
+    public static Post create(String title, Content content, String color) {
         return Post.builder()
                 .title(title)
                 .content(content)
+                .color(color)
                 .build();
     }
 

@@ -6,20 +6,18 @@ import blisgo.infrastructure.internal.persistence.community.model.JpaPost;
 import blisgo.infrastructure.internal.persistence.community.repository.PostCustomRepository;
 import blisgo.infrastructure.internal.persistence.community.repository.PostJpaRepository;
 import blisgo.usecase.port.domain.PostOutputPort;
-import blisgo.usecase.port.infra.ViewCountable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
 
 @Component
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class PostMySQLAdapter implements PostOutputPort, ViewCountable {
+public class PostPersistenceAdapter implements PostOutputPort {
     private final PostJpaRepository jpaRepository;
     private final PostCustomRepository customRepository;
     private final PostMapper mapper;
@@ -67,16 +65,5 @@ public class PostMySQLAdapter implements PostOutputPort, ViewCountable {
     @Transactional
     public boolean updateLike(Long postId, Boolean isLike) {
         return customRepository.updateLike(postId, isLike);
-    }
-
-    @Override
-    public List<Long> findIds() {
-        return customRepository.findPostIds();
-    }
-
-    @Override
-    @Transactional
-    public boolean updateViewCount(Long postId, Long views) {
-        return customRepository.updateViewCount(postId, views);
     }
 }

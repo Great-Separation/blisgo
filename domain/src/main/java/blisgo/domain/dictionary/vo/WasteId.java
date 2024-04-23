@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class WasteId {
     private Long id;
+
+    public static WasteId of(String string) {
+        return new WasteId(Long.parseLong(string));
+    }
 }

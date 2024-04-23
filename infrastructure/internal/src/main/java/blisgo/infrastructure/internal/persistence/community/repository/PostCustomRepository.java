@@ -98,6 +98,7 @@ public class PostCustomRepository {
                 jpaPost.title,
                 contentField.as("content"),
                 memberField.as("author"),
+                jpaPost.color,
                 jpaPost.views,
                 jpaPost.likes,
                 jpaPost.modifiedDate,

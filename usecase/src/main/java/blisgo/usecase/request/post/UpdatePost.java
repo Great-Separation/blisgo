@@ -7,7 +7,8 @@ public record UpdatePost(
         Long postId,
         String title,
         String content,
+        String color,
         String thumbnail,
         String preview
-)  {
+) {
 }

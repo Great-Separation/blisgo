@@ -87,26 +87,4 @@ public class WasteCustomRepository {
                 .limit(4)
                 .fetch();
     }
-
-    public boolean updatePopularity() {
-        var sql = "UPDATE waste "
-                + "JOIN (SELECT waste_id, NTILE(10) OVER (ORDER BY views) AS star FROM waste) AS w2 "
-                + "SET popularity = w2.star "
-                + "WHERE waste.waste_id = w2.waste_id";
-        jdbcTemplate.update(sql);
-        return true;
-    }
-
-    public List<Long> findWasteIds() {
-        return jpaQueryFactory.select(jpaWaste.wasteId)
-                .from(jpaWaste)
-                .fetch();
-    }
-
-    public boolean updateViewCount(Long wasteId, Long increment) {
-        return jpaQueryFactory.update(jpaWaste)
-                .set(jpaWaste.views, jpaWaste.views.add(increment))
-                .where(jpaWaste.wasteId.eq(wasteId))
-                .execute() > 0;
-    }
 }

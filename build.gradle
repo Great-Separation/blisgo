@@ -52,6 +52,9 @@ subprojects {
 
         // docker
         developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+        // test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 
     test {

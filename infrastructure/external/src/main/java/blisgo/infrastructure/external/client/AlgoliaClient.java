@@ -1,23 +1,28 @@
 package blisgo.infrastructure.external.client;
 
 import blisgo.domain.dictionary.Waste;
-import blisgo.domain.dictionary.vo.Category;
-import blisgo.infrastructure.external.base.WasteIndex;
+import blisgo.infrastructure.external.search.WasteIndex;
+import blisgo.infrastructure.external.search.WasteIndexMapper;
 import com.algolia.search.DefaultSearchClient;
 import com.algolia.search.SearchClient;
 import com.algolia.search.SearchIndex;
-import com.algolia.search.models.indexing.Query;
 import com.algolia.search.models.settings.IndexSettings;
-import jakarta.annotation.PostConstruct;
+import com.algolia.search.models.settings.TypoTolerance;
+import com.algolia.search.models.synonyms.Synonym;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AlgoliaClient {
     @Value("${algolia.application-id}")
     private String applicationId;
@@ -28,44 +33,49 @@ public class AlgoliaClient {
     @Value("${algolia.index-name}")
     private String indexName;
 
+    private final WasteIndexMapper mapper;
+
     private SearchIndex<WasteIndex> wasteSearchIndex;
 
-    @PostConstruct
-    private void init() throws IOException {
+    private static final int MIN_SYNONYM_REQUIRED = 2;
+
+    private void init(Locale locale) {
         try (SearchClient client = DefaultSearchClient.create(applicationId, apiKey)) {
-            wasteSearchIndex = client.initIndex(indexName, WasteIndex.class);
+            String localedIndexName = indexName + "_" + locale.getLanguage();
+            wasteSearchIndex = client.initIndex(localedIndexName, WasteIndex.class);
             wasteSearchIndex.setSettings(new IndexSettings()
-                    .setRanking(List.of("desc(views)", "desc(popularity)"))
+                    .setSearchableAttributes(List.of("name"))
+                    .setQueryLanguages(List.of(locale.getLanguage()))
+                    .setTypoTolerance(TypoTolerance.of("min"))
             );
+        } catch (IOException e) {
+            log.error("Failed to initialize Algolia client", e);
         }
     }
 
-    public void updateOrSaveIndex(List<Waste> wastes) {
+    public void batchUpdate(List<Waste> wastes, Locale locale) {
+        init(locale);
+
+        var indexes = wastes.stream()
+                .map(mapper::toIndex)
+                .toList();
+
+        wasteSearchIndex.partialUpdateObjectsAsync(indexes, true);
+
+        List<Synonym> synonyms = new ArrayList<>();
         for (var waste : wastes) {
-            var index = convertToWasteIndex(waste);
-            wasteSearchIndex.searchAsync(new Query(String.valueOf(waste.wasteId().id()))).thenAccept(result -> {
-                if (result.getHits().isEmpty()) {
-                    wasteSearchIndex.saveObjectAsync(index);
-                    log.info("Saved waste: {}", waste);
-                } else {
-                    wasteSearchIndex.partialUpdateObjectAsync(index);
-                    log.info("Updated waste: {}", index);
-                }
-            });
-        }
-    }
+            Long wasteId = waste.wasteId().id();
+            List<String> hashtags = new ArrayList<>(Optional.ofNullable(waste.hashtags())
+                    .orElse(List.of()));
 
-    private WasteIndex convertToWasteIndex(Waste waste) {
-        return WasteIndex.builder()
-                .objectID(waste.wasteId().id())
-                .wasteId(waste.wasteId().id())
-                .name(waste.name())
-                .type(waste.type())
-                .picture(waste.picture().url())
-                .views(waste.views())
-                .categories(waste.categories().stream().map(Category::tag).toList())
-                .createdDate(waste.createdDate())
-                .modifiedDate(waste.modifiedDate())
-                .build();
+            hashtags.add(waste.name());
+
+            if (hashtags.size() < MIN_SYNONYM_REQUIRED) {
+                continue;
+            }
+
+            synonyms.add(Synonym.createSynonym(String.valueOf(wasteId), hashtags));
+        }
+        wasteSearchIndex.saveSynonymsAsync(synonyms);
     }
 }

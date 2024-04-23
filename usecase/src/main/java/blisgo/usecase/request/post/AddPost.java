@@ -6,6 +6,7 @@ import lombok.Builder;
 public record AddPost(
         String title,
         String content,
+        String color,
         String thumbnail,
         String preview
 ) {

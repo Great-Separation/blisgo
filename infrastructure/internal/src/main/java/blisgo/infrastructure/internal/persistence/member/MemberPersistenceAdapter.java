@@ -16,7 +16,7 @@ import java.util.Map;
 @Component
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberMySQLAdapter implements MemberOutputPort {
+public class MemberPersistenceAdapter implements MemberOutputPort {
     private final MemberJpaRepository jpaRepository;
     private final MemberCustomRepository customRepository;
     private final MemberMapper mapper;

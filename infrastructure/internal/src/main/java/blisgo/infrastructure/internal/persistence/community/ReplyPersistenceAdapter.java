@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 @RequiredArgsConstructor
-public class ReplyMySQLAdapter implements ReplyOutputPort {
+public class ReplyPersistenceAdapter implements ReplyOutputPort {
     private final ReplyJpaRepository jpaRepository;
     private final ReplyCustomRepository customRepository;
     private final ReplyMapper mapper;

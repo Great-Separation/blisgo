@@ -29,7 +29,8 @@ public class PostInputPort implements PostCommand, PostQuery {
 
         var post = Post.create(
                 command.title(),
-                content
+                content,
+                command.color()
         );
 
         return port.create(post);
@@ -46,7 +47,8 @@ public class PostInputPort implements PostCommand, PostQuery {
         var post = Post.create(
                 command.postId(),
                 command.title(),
-                content
+                content,
+                command.color()
         );
 
         return port.update(post);

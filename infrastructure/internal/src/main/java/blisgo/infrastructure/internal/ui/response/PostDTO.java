@@ -15,6 +15,7 @@ public class PostDTO {
     private Author author;
     private String title;
     private Content content;
+    private String color;
     private Long views;
     private Long likes;
     private Long replies;

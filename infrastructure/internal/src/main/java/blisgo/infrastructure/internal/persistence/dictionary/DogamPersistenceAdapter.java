@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class DogamMySQLAdapter implements DogamOutputPort {
+public class DogamPersistenceAdapter implements DogamOutputPort {
     private final DogamJpaRepository jpaRepository;
     private final DogamCustomRepository customRepository;
     private final DogamMapper mapper;
