@@ -5,9 +5,7 @@ import blisgo.domain.dictionary.vo.DogamId;
 import blisgo.domain.dictionary.vo.WasteId;
 import blisgo.domain.member.vo.MemberId;
 import blisgo.infrastructure.internal.persistence.dictionary.mapper.DogamMapper;
-import blisgo.infrastructure.internal.persistence.dictionary.mapper.WasteMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.model.JpaDogamId;
-import blisgo.infrastructure.internal.persistence.dictionary.repository.DogamCustomRepository;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.DogamJpaRepository;
 import blisgo.usecase.port.domain.DogamOutputPort;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DogamPersistenceAdapter implements DogamOutputPort {
     private final DogamJpaRepository jpaRepository;
-    private final DogamCustomRepository customRepository;
     private final DogamMapper mapper;
-    private final WasteMapper wasteMapper;
 
     @Override
     @Transactional

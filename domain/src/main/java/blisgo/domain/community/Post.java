@@ -28,11 +28,8 @@ public class Post {
     private LocalDateTime modifiedDate;
 
     public static Post create(Long postId, String title, Content content, String color) {
-        return Post.builder()
+        return create(title, content, color).toBuilder()
                 .postId(PostId.of(postId))
-                .title(title)
-                .content(content)
-                .color(color)
                 .build();
     }
 

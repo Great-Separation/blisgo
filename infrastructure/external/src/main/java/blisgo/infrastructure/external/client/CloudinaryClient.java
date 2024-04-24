@@ -1,4 +1,4 @@
-package blisgo.infrastructure.external.uploader;
+package blisgo.infrastructure.external.client;
 
 import blisgo.usecase.port.infra.FileUploadOutputPort;
 import com.cloudinary.Cloudinary;
@@ -47,7 +47,7 @@ public class CloudinaryClient implements FileUploadOutputPort {
 
     @Override
     public URI uploadFile(Resource resource) {
-        var transformation = new Transformation()
+        var transformation = new Transformation<>()
                 .quality("auto")
                 .crop("scale")
                 .fetchFormat("webp");

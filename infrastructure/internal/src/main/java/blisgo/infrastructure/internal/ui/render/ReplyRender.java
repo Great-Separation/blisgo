@@ -2,7 +2,6 @@ package blisgo.infrastructure.internal.ui.render;
 
 import blisgo.infrastructure.internal.persistence.community.mapper.ReplyMapper;
 import blisgo.infrastructure.internal.ui.base.Router;
-import blisgo.infrastructure.internal.ui.response.ReplyDTO;
 import blisgo.usecase.request.reply.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +40,7 @@ public class ReplyRender extends Router {
         return new ModelAndView(
                 routes(Router.Folder.COMMUNITY, Router.Page.CONTENT) + fragment(Router.Fragment.REPLIES),
                 Map.ofEntries(
-                        Map.entry("replies", replies.map(mapper::toDTO).map(ReplyDTO::withTimeDiff)),
+                        Map.entry("replies", replies.map(mapper::toDTO)),
                         Map.entry("postId", postId)
                 )
         );

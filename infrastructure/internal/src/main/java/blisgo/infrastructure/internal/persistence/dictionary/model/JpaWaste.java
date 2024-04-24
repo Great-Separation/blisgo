@@ -6,7 +6,7 @@ import blisgo.infrastructure.internal.persistence.base.I18nListConverter;
 import blisgo.infrastructure.internal.persistence.common.BaseTimeEntity;
 import blisgo.infrastructure.internal.persistence.common.JpaPicture;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "waste")
 @Comment("폐기물")

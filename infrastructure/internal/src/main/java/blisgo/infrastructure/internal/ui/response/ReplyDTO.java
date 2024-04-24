@@ -1,14 +1,13 @@
 package blisgo.infrastructure.internal.ui.response;
 
 import blisgo.domain.common.Author;
-import blisgo.infrastructure.internal.ui.base.TimeDiffUtil;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReplyDTO {
     private Long replyId;
@@ -17,11 +16,5 @@ public class ReplyDTO {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    private String timeDiff;
-
-    public ReplyDTO withTimeDiff() {
-        this.timeDiff = TimeDiffUtil.calcTimeDiff(this.createdDate);
-        return this;
-    }
 }
 

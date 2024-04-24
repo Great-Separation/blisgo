@@ -30,11 +30,11 @@
     <main class="container" layout:fragment="main">
         <section id="post">
             <form id="form" th:method="${post?.postId != null} ? 'patch' : 'post'" th:action="${post?.postId != null} ? @{~/posts/{postId}(postId=${post?.postId})} : @{~/posts}">
-                <div class="card shadow-sm border-0 mx-1 .post" th:style="${'background: ' + post?.color + ';'}">
+                <div class="card shadow-sm border-0 mx-1 .post" th:style="${'background: ' + (post?.color != null ? post?.color : color) + ';'}">
                     <div class="card-header bg-light bg-opacity-50 border-0">
                         <div class="row d-flex align-items-center">
                             <div class="col"><input class="bg-transparent border-0 shadow-none form-control form-control-lg px-0 fw-bold fs-3" type="text" placeholder="제목" name="title" autocomplete="off" required="" th:value="${post?.title}" data-bs-theme="light" th:placeholder="#{community.write.heading.input.placeholder}"></div>
-                            <div class="col-auto"><input class="form-control form-control-color float-end p-1" type="color" data-bs-toggle="tooltip" data-bss-tooltip="" id="post-color" name="color" title="게시글 배경색 지정" value="#000000"></div>
+                            <div class="col-auto"><input class="form-control form-control-color float-end p-1" type="color" data-bs-toggle="tooltip" data-bss-tooltip="" id="post-color" name="color" title="게시글 배경색 지정" th:value="${post?.color != null ? post?.color : color}"></div>
                         </div>
                     </div>
                     <div class="card-body fs-5 text-black bg-light bg-opacity-75 border-0 p-1">

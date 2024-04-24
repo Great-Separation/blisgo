@@ -12,10 +12,6 @@ public interface PersistenceMapper<D, E, V> {
         return entities.stream().map(this::toDomain).toList();
     }
 
-    default List<E> toEntities(List<D> domains) {
-        return domains.stream().map(this::toEntity).toList();
-    }
-
     V toDTO(D domain);
 
     default List<V> toDTOs(List<D> domains) {

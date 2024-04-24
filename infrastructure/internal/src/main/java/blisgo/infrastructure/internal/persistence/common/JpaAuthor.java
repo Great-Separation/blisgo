@@ -1,13 +1,12 @@
 package blisgo.infrastructure.internal.persistence.common;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor(staticName = "of")
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 public class JpaAuthor {
     private String email;
 

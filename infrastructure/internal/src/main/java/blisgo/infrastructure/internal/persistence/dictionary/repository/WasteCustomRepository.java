@@ -1,7 +1,7 @@
 package blisgo.infrastructure.internal.persistence.dictionary.repository;
 
 import blisgo.domain.dictionary.vo.Category;
-import blisgo.infrastructure.internal.persistence.base.NoOffsetSliceHelper;
+import blisgo.infrastructure.internal.persistence.base.NoOffsetSliceUtil;
 import blisgo.infrastructure.internal.persistence.dictionary.model.JpaWaste;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -24,7 +23,6 @@ import static blisgo.infrastructure.internal.persistence.dictionary.model.QJpaWa
 @RequiredArgsConstructor
 public class WasteCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
-    private final JdbcTemplate jdbcTemplate;
 
     public Slice<JpaWaste> findWastesByMemberIdFromDogam(
             UUID memberId, Pageable pageable,
@@ -47,7 +45,7 @@ public class WasteCustomRepository {
                 .limit(pageable.getPageSize() + 1L)
                 .fetch();
 
-        boolean hasNext = NoOffsetSliceHelper.checkLastPage(results, pageable);
+        boolean hasNext = NoOffsetSliceUtil.checkLastPage(results, pageable);
 
         return new SliceImpl<>(results, pageable, hasNext);
     }
@@ -67,7 +65,7 @@ public class WasteCustomRepository {
                 .limit(pageable.getPageSize() + 1L)
                 .fetch();
 
-        boolean hasNext = NoOffsetSliceHelper.checkLastPage(results, pageable);
+        boolean hasNext = NoOffsetSliceUtil.checkLastPage(results, pageable);
 
         return new SliceImpl<>(results, pageable, hasNext);
     }

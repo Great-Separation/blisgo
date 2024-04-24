@@ -4,6 +4,7 @@ import blisgo.infrastructure.internal.persistence.common.BaseTimeEntity;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.Comment;
 
 @Getter
 @SuperBuilder(toBuilder = true)
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "dogam")

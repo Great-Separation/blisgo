@@ -2,6 +2,7 @@ package blisgo.infrastructure.internal.persistence.community.model;
 
 import blisgo.infrastructure.internal.persistence.common.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @Getter
 @SuperBuilder(toBuilder = true)
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "reply")

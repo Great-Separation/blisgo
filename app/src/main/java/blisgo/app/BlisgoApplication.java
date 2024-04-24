@@ -8,8 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import java.util.TimeZone;
-
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackageClasses = {
         InternalRoot.class,
@@ -19,7 +17,7 @@ import java.util.TimeZone;
 })
 public class BlisgoApplication {
     public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        /*TimeZone.setDefault(TimeZone.getTimeZone("UTC"));*/
         SpringApplication.run(BlisgoApplication.class, args);
     }
 }

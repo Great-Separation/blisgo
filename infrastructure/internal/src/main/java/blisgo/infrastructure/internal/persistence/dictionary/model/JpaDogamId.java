@@ -1,7 +1,10 @@
 package blisgo.infrastructure.internal.persistence.dictionary.model;
 
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 import java.io.Serializable;
@@ -11,7 +14,7 @@ import java.util.UUID;
 @Embeddable
 @EqualsAndHashCode
 @AllArgsConstructor(staticName = "of")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class JpaDogamId implements Serializable {
     @Comment("회원 번호(PK, FK)")
     private UUID memberId;

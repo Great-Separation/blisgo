@@ -27,8 +27,8 @@ var editor = new EditorJS({
             config: {
                 field: 'file',
                 endpoints: {
-                    byFile: '/api/cloud/upload/file',
-                    byUrl: '/api/cloud/upload/url'
+                    byFile: '/api/editor/upload/file',
+                    byUrl: '/api/editor/upload/url'
                 }
             }
         },
@@ -36,7 +36,7 @@ var editor = new EditorJS({
             class: AttachesTool,
             config: {
                 field: 'file',
-                endpoint: '/api/cloud/upload/file',
+                endpoint: '/api/editor/upload/file',
                 errorMessage: "자원이 업로드되지 않습니다"
             }
         },
@@ -44,7 +44,13 @@ var editor = new EditorJS({
             class: InlineCode,
             shortcut: 'CMD+SHIFT+M'
         },
-        linkTool: LinkTool,
+        linkTool: {
+            class:LinkTool,
+            config:{
+                endpoint: '/api/editor/link-preview',
+                errorMessage: "웹 metadata를 가져오지 못했습니다"
+            }
+        },
         list: {
             class: List,
             inlineToolbar: true,

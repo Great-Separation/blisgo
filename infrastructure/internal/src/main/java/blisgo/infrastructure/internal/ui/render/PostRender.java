@@ -111,17 +111,13 @@ public class PostRender extends Router {
                 .isLike(true)
                 .build();
 
-        if (commandUsecase.like(command)) {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.success("toast.post.like.success")
-            );
-        } else {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.error("toast.post.like.error")
-            );
-        }
+        return new ModelAndView(
+                routesToast(),
+                commandUsecase.like(command) ?
+                        toast.success("toast.post.like.success") :
+                        toast.error("toast.post.like.error")
+
+        );
     }
 
     @PostMapping("/{postId}/dislike")
@@ -132,16 +128,11 @@ public class PostRender extends Router {
                 .isLike(false)
                 .build();
 
-        if (commandUsecase.like(command)) {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.success("toast.post.unlike.success")
-            );
-        } else {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.error("toast.post.unlike.error")
-            );
-        }
+        return new ModelAndView(
+                routesToast(),
+                commandUsecase.like(command) ?
+                        toast.success("toast.post.unlike.success") :
+                        toast.error("toast.post.unlike.error")
+        );
     }
 }

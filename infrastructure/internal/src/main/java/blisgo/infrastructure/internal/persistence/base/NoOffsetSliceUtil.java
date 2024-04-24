@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @UtilityClass
-public class NoOffsetSliceHelper {
+public class NoOffsetSliceUtil {
     public static boolean checkLastPage(List<?> results, Pageable pageable) {
         if (results.size() > pageable.getPageSize()) {
             results.remove(pageable.getPageSize());

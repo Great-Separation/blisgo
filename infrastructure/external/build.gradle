@@ -24,4 +24,6 @@ dependencies {
     // natural jdbc
     implementation 'org.springframework.boot:spring-boot-starter-jdbc:+'
 
+    // 에디터 링크 미리보기 제공용 크롤링
+    implementation 'org.jsoup:jsoup:+'
 }

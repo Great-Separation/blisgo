@@ -1,6 +1,6 @@
 package blisgo.infrastructure.internal.persistence.community.repository;
 
-import blisgo.infrastructure.internal.persistence.base.NoOffsetSliceHelper;
+import blisgo.infrastructure.internal.persistence.base.NoOffsetSliceUtil;
 import blisgo.infrastructure.internal.persistence.common.JpaAuthor;
 import blisgo.infrastructure.internal.persistence.common.JpaContent;
 import blisgo.infrastructure.internal.persistence.community.model.JpaPost;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import static blisgo.infrastructure.internal.persistence.community.model.QJpaPost.jpaPost;
@@ -41,6 +40,7 @@ public class PostCustomRepository {
                 jpaPost.title,
                 contentField.as("content"),
                 memberField.as("author"),
+                jpaPost.color,
                 jpaPost.views,
                 jpaPost.likes,
                 jpaPost.modifiedDate,
@@ -57,22 +57,9 @@ public class PostCustomRepository {
                 .limit(pageable.getPageSize() + 1L)
                 .fetch();
 
-        boolean hasNext = NoOffsetSliceHelper.checkLastPage(results, pageable);
+        boolean hasNext = NoOffsetSliceUtil.checkLastPage(results, pageable);
 
         return new SliceImpl<>(results, pageable, hasNext);
-    }
-
-    public List<Long> findPostIds() {
-        return jpaQueryFactory.select(jpaPost.postId)
-                .from(jpaPost)
-                .fetch();
-    }
-
-    public boolean updateViewCount(Long postId, Long increment) {
-        return jpaQueryFactory.update(jpaPost)
-                .set(jpaPost.views, jpaPost.views.add(increment))
-                .where(jpaPost.postId.eq(postId))
-                .execute() > 0;
     }
 
     public boolean updateLike(Long postId, Boolean isLike) {

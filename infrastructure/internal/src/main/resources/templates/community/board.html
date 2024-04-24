@@ -32,8 +32,8 @@
         <section id="posts">
             <div class="list-group list-group-flush scrollarea" th:fragment="posts">
                 <!-- Start: hx-get --><a class="list-group-item list-group-item-action border-0 p-0" th:attr="hx-get='/posts?lastPostId='+${posts?.getNumberOfElements() > 0 ? posts.getContent().get(posts.getNumberOfElements()-1).postId() : ''}" hx-trigger="revealed" hx-swap="beforeend" th:if="${posts==null || posts?.hasNext()}" hx-target="#posts"></a><!-- End: hx-get --><a class="list-group-item list-group-item-action border-0 p-2" id="post" th:each="post: ${posts?.getContent()}" aria-current="true" th:href="@{~/community/{postId}(postId=${post.postId})}">
-                    <div class="hstack">
-                        <div class="vstack text-truncate px-2 pt-2">
+                    <div class="hstack shadow-sm" th:style="'border-left-style: solid;border-left-color: ' + ${post?.color != null ? post?.color : 'var(--bs-info-text-emphasis)'} + ';'">
+                        <div class="vstack text-truncate p-2">
                             <h4 class="text-truncate fw-bold" th:text="${post.title}">제목</h4>
                             <p class="text-truncate text-break" rows="2" th:text="${#strings.isEmpty(post?.content?.preview)} ? #{community.board.post.preview.empty} : ${post.content.preview}">글내용</p><div class="hstack gap-1 text-muted"><img class="img-fluid border rounded border-0 d-none d-sm-inline" data-bss-hover-animate="pulse" src="https://i.pravatar.cc/200?mg=2" width="30px" alt="프로필이미지" th:src="${post?.author?.picture?.url}"><small th:text="${post.author.name}">작성자</small><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-clock-fill">
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"></path>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
+import java.util.random.RandomGenerator;
 
 @Controller
 @RequestMapping("/community")
@@ -60,7 +61,8 @@ public class CommunityView extends Router {
         }
 
         return new ModelAndView(
-                routes(Folder.COMMUNITY, Page.WRITE)
+                routes(Folder.COMMUNITY, Page.WRITE),
+                Map.of("color", String.format("#%06x", RandomGenerator.getDefault().nextInt(0xffffff + 1)))
         );
     }
 }

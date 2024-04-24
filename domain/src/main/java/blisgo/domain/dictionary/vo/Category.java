@@ -31,7 +31,6 @@ public enum Category {
         String locale = LocaleContextHolder.getLocale().getLanguage();
         return switch (locale) {
             case "ko" -> ko;
-            case "en" -> en;
             default -> en;
         };
     }

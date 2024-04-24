@@ -4,7 +4,6 @@ import blisgo.domain.dictionary.Waste;
 import blisgo.infrastructure.internal.persistence.base.PersistenceMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.model.JpaWaste;
 import blisgo.infrastructure.internal.ui.response.WasteDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WasteMapper implements PersistenceMapper<Waste, JpaWaste, WasteDTO> {
     private final ModelMapper mapper;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public JpaWaste toEntity(Waste domain) {

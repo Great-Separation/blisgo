@@ -3,7 +3,6 @@ package blisgo.infrastructure.internal.persistence.dictionary.model;
 import blisgo.domain.dictionary.vo.Category;
 import blisgo.infrastructure.internal.persistence.base.I18nConverter;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import org.hibernate.annotations.Comment;
 @Entity
 @Table(name = "guide")
 @AllArgsConstructor(staticName = "of")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class JpaGuide {
     @Id
     @Enumerated(EnumType.STRING)

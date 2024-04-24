@@ -3,7 +3,10 @@ package blisgo.infrastructure.internal.ui.render;
 import blisgo.infrastructure.internal.persistence.dictionary.mapper.WasteMapper;
 import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.infrastructure.internal.ui.base.UIToast;
-import blisgo.usecase.request.dogam.*;
+import blisgo.usecase.request.dogam.AddDogam;
+import blisgo.usecase.request.dogam.DogamCommand;
+import blisgo.usecase.request.dogam.GetDogam;
+import blisgo.usecase.request.dogam.RemoveDogam;
 import blisgo.usecase.request.waste.WasteQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +27,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 @RequestMapping("/dogams")
 @RequiredArgsConstructor
 public class DogamRender extends Router {
-    private final DogamQuery dogamQuery;
     private final DogamCommand dogamCommand;
     private final WasteQuery wasteQuery;
     private final WasteMapper wasteMapper;
@@ -40,17 +42,12 @@ public class DogamRender extends Router {
                 .email(oidcUser.getEmail())
                 .build();
 
-        if (dogamCommand.addDogam(command)) {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.success("toast.dogam.create.success")
-            );
-        } else {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.error("toast.dogam.create.error")
-            );
-        }
+        return new ModelAndView(
+                routesToast(),
+                dogamCommand.addDogam(command) ?
+                        toast.success("toast.dogam.create.success") :
+                        toast.error("toast.dogam.create.error")
+        );
     }
 
     @DeleteMapping
@@ -63,17 +60,12 @@ public class DogamRender extends Router {
                 .email(oidcUser.getEmail())
                 .build();
 
-        if (dogamCommand.removeDogam(command)) {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.success("toast.dogam.delete.success")
-            );
-        } else {
-            return new ModelAndView(
-                    routesToast(),
-                    toast.error("toast.dogam.delete.error")
-            );
-        }
+        return new ModelAndView(
+                routesToast(),
+                dogamCommand.removeDogam(command) ?
+                        toast.success("toast.dogam.delete.success") :
+                        toast.error("toast.dogam.delete.error")
+        );
     }
 
     @GetMapping

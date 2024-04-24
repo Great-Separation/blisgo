@@ -2,7 +2,6 @@ package blisgo.infrastructure.internal.persistence.member;
 
 import blisgo.domain.member.Member;
 import blisgo.infrastructure.internal.persistence.member.mapper.MemberMapper;
-import blisgo.infrastructure.internal.persistence.member.repository.MemberCustomRepository;
 import blisgo.infrastructure.internal.persistence.member.repository.MemberJpaRepository;
 import blisgo.usecase.port.domain.MemberOutputPort;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberPersistenceAdapter implements MemberOutputPort {
     private final MemberJpaRepository jpaRepository;
-    private final MemberCustomRepository customRepository;
     private final MemberMapper mapper;
 
     @Override

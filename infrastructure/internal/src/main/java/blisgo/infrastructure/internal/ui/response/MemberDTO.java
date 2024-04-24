@@ -1,14 +1,14 @@
 package blisgo.infrastructure.internal.ui.response;
 
 import blisgo.domain.common.Picture;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberDTO {
     private UUID id;
