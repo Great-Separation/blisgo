@@ -52,23 +52,24 @@ window.onload = function () {
                             return "dictionary/" + item.wasteId;
                         },
                         templates: {
-                            detachedCancelButtonText: "X",
                             item({item, components, html}) {
                                 return html`
-                                    <a href="dictionary/${item.wasteId}" class="text-decoration-none text-body">
+                                    <a href="dictionary/${item.wasteId}" class="btn p-1">
                                         <div class="aa-ItemWrapper">
                                             <div class="aa-ItemContent"><img
                                                     src="${item.picture}"
                                                     alt="${item.name}"
-                                                    width="50"
-                                                    height="50"
+                                                    width="50px"
+                                                    height="50px"
                                             />
                                                 <div class="aa-ItemContentBody">
                                                     <div class="aa-ItemContentTitle">
-                                                        ${components.Highlight({
-                                                            hit: item,
-                                                            attribute: 'name'
-                                                        })}
+                                                        <span>
+                                                            ${components.Highlight({
+                                                                hit: item,
+                                                                attribute: 'name'
+                                                            })}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>

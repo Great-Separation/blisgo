@@ -17,7 +17,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 })
 public class BlisgoApplication {
     public static void main(String[] args) {
-        /*TimeZone.setDefault(TimeZone.getTimeZone("UTC"));*/
         SpringApplication.run(BlisgoApplication.class, args);
     }
 }
