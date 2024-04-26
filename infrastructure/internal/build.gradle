@@ -11,6 +11,7 @@ description = 'infra 내부요소로 프레임워크과 직결되는 라이브�
 dependencies {
     implementation project(':domain')
     implementation project(':usecase')
+    implementation project(':infrastructure:external')
 
     // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

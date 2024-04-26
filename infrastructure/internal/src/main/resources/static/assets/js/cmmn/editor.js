@@ -36,8 +36,7 @@ var editor = new EditorJS({
             class: AttachesTool,
             config: {
                 field: 'file',
-                endpoint: '/api/editor/upload/file',
-                errorMessage: "자원이 업로드되지 않습니다"
+                endpoint: '/api/editor/upload/file'
             }
         },
         inlineCode: {
@@ -47,8 +46,7 @@ var editor = new EditorJS({
         linkTool: {
             class:LinkTool,
             config:{
-                endpoint: '/api/editor/link-preview',
-                errorMessage: "웹 metadata를 가져오지 못했습니다"
+                endpoint: '/api/editor/link-preview'
             }
         },
         list: {
@@ -210,9 +208,6 @@ if (saveButton != null) {
         editor.save()
             .then((savedData) => {
                 document.getElementById('editorjs-content').value = JSON.stringify(savedData, null, 0);
-                var form = document.getElementById('form');
-                form.method = "post";
-                form.submit();
             })
             .catch((error) => {
                 console.error('Saving error', error);

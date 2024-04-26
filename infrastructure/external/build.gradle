@@ -6,7 +6,6 @@ description = 'infra 외부요소로 프레임워크에 귀속되지 않고 확�
 dependencies {
     implementation project(':usecase')
     implementation project(':domain')
-    implementation project(':infrastructure:internal')
 
     implementation 'org.springframework.session:spring-session-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'

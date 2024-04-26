@@ -1,10 +1,14 @@
 package blisgo.usecase.port.domain;
 
+import blisgo.domain.base.Events;
 import blisgo.domain.common.Content;
 import blisgo.domain.common.Picture;
 import blisgo.domain.community.Post;
-import blisgo.usecase.base.Events;
-import blisgo.usecase.event.PostViewedEvent;
+import blisgo.domain.community.event.PostAddEvent;
+import blisgo.domain.community.event.PostRemoveEvent;
+import blisgo.domain.community.event.PostUpdateEvent;
+import blisgo.domain.community.event.PostViewEvent;
+import blisgo.domain.community.vo.PostId;
 import blisgo.usecase.request.post.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +26,12 @@ public class PostInputPort implements PostCommand, PostQuery {
     @Override
     public boolean addPost(AddPost command) {
         Content content = Content.of(
-                command.content(),
+                command.content().replace("temp", "board"),
                 Picture.of(command.thumbnail()),
                 command.preview()
         );
+
+        Events.raise(new PostAddEvent(command.content()));
 
         var post = Post.create(
                 command.title(),
@@ -44,6 +50,8 @@ public class PostInputPort implements PostCommand, PostQuery {
                 command.preview()
         );
 
+        Events.raise(new PostUpdateEvent(PostId.of(command.postId()), command.content()));
+
         var post = Post.create(
                 command.postId(),
                 command.title(),
@@ -58,6 +66,8 @@ public class PostInputPort implements PostCommand, PostQuery {
     public boolean removePost(RemovePost command) {
         var postId = command.postId();
 
+        Events.raise(new PostRemoveEvent(PostId.of(postId)));
+
         return port.delete(postId);
     }
 
@@ -71,7 +81,10 @@ public class PostInputPort implements PostCommand, PostQuery {
 
     @Override
     public Post getPost(GetPost query) {
-        Events.raise(new PostViewedEvent(query.postId()));
+        Long postId = query.postId();
+
+        Events.raise(new PostViewEvent(PostId.of(postId)));
+
         return port.read(query.postId());
     }
 

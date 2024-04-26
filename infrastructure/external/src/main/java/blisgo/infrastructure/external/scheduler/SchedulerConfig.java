@@ -1,12 +1,14 @@
-package blisgo.infrastructure.external.base;
+package blisgo.infrastructure.external.scheduler;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
+@EnableAsync
 @EnableScheduling
 @Configuration
 @Description("스케줄러 설정")

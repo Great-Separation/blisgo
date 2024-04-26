@@ -1,4 +1,4 @@
-package blisgo.infrastructure.external.base;
+package blisgo.infrastructure.external.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
@@ -20,12 +21,12 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 import java.time.Duration;
 
-@Profile("dev")
+@Profile("prod")
 @Configuration
 @EnableRedisRepositories
 @EnableRedisHttpSession
 @EnableCaching
-public class RedisConfigDev {
+public class RedisConfigProd {
 
     @Value("${spring.data.redis.host}")
     private String host;
@@ -33,11 +34,23 @@ public class RedisConfigDev {
     @Value("${spring.data.redis.port}")
     private int port;
 
+    @Value("${spring.data.redis.username}")
+    private String username;
+
+    @Value("${spring.data.redis.password}")
+    private String password;
+
     @Bean
-    @Profile("dev")
+    @Profile("prod")
     @Description("운영 환경용 redis 접속 정보")
-    public RedisConnectionFactory redisConnectionFactoryDev() {
-        return new LettuceConnectionFactory(host, port);
+    public RedisConnectionFactory redisConnectionFactoryProd() {
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(host);
+        redisStandaloneConfiguration.setPort(port);
+        redisStandaloneConfiguration.setUsername(username);
+        redisStandaloneConfiguration.setPassword(password);
+
+        return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
     @Bean

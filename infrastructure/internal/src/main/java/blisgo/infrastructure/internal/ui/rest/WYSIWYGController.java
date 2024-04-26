@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,12 +22,13 @@ public class WYSIWYGController {
     @PostMapping("/upload/file")
     public ResponseEntity<Map<String, Object>> upload(MultipartFile file) {
         Resource resource = file.getResource();
-
+        String filename = Optional.ofNullable(file.getOriginalFilename()).orElse(file.getName());
         URI fileEndpoint = fileUploadInputPort.upload(resource);
 
         var response = Map.ofEntries(
                 Map.entry("success", 1),
-                Map.entry("file", Map.of("url", fileEndpoint.toString()))
+                Map.entry("file", Map.of("url", fileEndpoint.toString())),
+                Map.entry("caption", filename)
         );
 
         return ResponseEntity.ok(response);

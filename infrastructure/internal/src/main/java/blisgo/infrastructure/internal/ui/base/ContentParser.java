@@ -5,6 +5,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.UtilityClass;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @UtilityClass
@@ -17,6 +22,7 @@ public class ContentParser {
     private static final String BLOCKS = "blocks";
     private static final String URL = "url";
     private static final String IMAGE = "image";
+    private static final String ATTACHES = "attaches";
     private static final String PARAGRAPH = "paragraph";
     private static final String FILE = "file";
 
@@ -64,6 +70,26 @@ public class ContentParser {
         }
 
         return null;
+    }
+
+    public static List<Path> parseFilenames(JsonNode json) {
+        JsonNode blocksNode = json.get(BLOCKS);
+        List<Path> paths = new ArrayList<>();
+
+        if (blocksNode == null) {
+            return Collections.emptyList();
+        }
+
+        for (JsonNode blockNode : blocksNode) {
+            if (List.of(IMAGE, ATTACHES).contains(blockNode.get(TYPE).asText())) {
+                String url = blockNode.get(DATA).get(FILE).get(URL).asText();
+                String path = url.substring(url.lastIndexOf("/") + 1);
+
+                paths.add(Paths.get(path));
+            }
+        }
+
+        return paths;
     }
 
 

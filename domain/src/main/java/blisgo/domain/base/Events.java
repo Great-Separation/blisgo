@@ -1,4 +1,4 @@
-package blisgo.usecase.base;
+package blisgo.domain.base;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationEventPublisher;
 public class Events {
     private static ApplicationEventPublisher publisher;
 
-    static void setPublisher(ApplicationEventPublisher publisher) {
+    public static void setPublisher(ApplicationEventPublisher publisher) {
         Events.publisher = publisher;
     }
 

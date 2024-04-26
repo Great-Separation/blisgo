@@ -1,5 +1,6 @@
-package blisgo.usecase.base;
+package blisgo.infrastructure.internal.handler.base;
 
+import blisgo.domain.base.Events;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class EventsConfiguration {
+public class EventsConfig {
     private final ApplicationContext applicationContext;
 
     @Bean
