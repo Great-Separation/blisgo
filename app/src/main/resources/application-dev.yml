@@ -38,6 +38,10 @@ spring:
     baseline-on-migrate: true
     init-sqls: "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'blisgo';"
 
+  docker:
+    compose:
+      enabled: true
+
 server:
   servlet:
     session:
