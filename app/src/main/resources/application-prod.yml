@@ -1,4 +1,8 @@
 spring:
+  config:
+    activate:
+      on-profile: prod
+
   data:
     redis:
       host: ${REDISHOST}
@@ -28,6 +32,10 @@ spring:
     user: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  docker:
+    compose:
+      enabled: false
 
 server:
   servlet:
