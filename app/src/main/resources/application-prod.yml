@@ -41,4 +41,4 @@ server:
   servlet:
     session:
       cookie:
-        domain: blisgo.up.railway.app
+        domain: ${DOMAIN}
