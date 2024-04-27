@@ -1,6 +1,5 @@
-package blisgo.infrastructure.external.scheduler;
+package blisgo.infrastructure.external.ui;
 
-import blisgo.infrastructure.external.client.UnsplashClient;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,13 +1,10 @@
-package blisgo.infrastructure.external.scheduler;
+package blisgo.infrastructure.external.search;
 
 import blisgo.domain.common.Picture;
 import blisgo.domain.dictionary.Waste;
 import blisgo.domain.dictionary.vo.WasteId;
-import blisgo.infrastructure.external.client.AlgoliaClient;
-import blisgo.infrastructure.external.repository.WasteDirectDBAdapter;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import blisgo.infrastructure.external.database.WasteDirectDBAdapter;
+import blisgo.infrastructure.external.extract.JsonParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,7 +21,7 @@ import java.util.Map;
 public class SearchIndexScheduler {
     private final WasteDirectDBAdapter adapter;
     private final AlgoliaClient client;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final JsonParser jsonParser;
     private final Locale[] locales = {Locale.KOREAN, Locale.ENGLISH};
 
     @Scheduled(zone = "UTC", cron = "0 0 0 * * *")
@@ -35,8 +32,8 @@ public class SearchIndexScheduler {
             List<Waste> localizedWastes = new ArrayList<>();
             for (var map : maps) {
                 WasteId wasteId = WasteId.of(map.get("waste_id"));
-                String localizedName = getLocalizedString(map.get("name"), locale);
-                List<String> localizedHashtags = getLocalizedList(map.get("hashtags"), locale);
+                String localizedName = jsonParser.getLocalizedString(map.get("name"), locale);
+                List<String> localizedHashtags = jsonParser.getLocalizedList(map.get("hashtags"), locale);
                 Picture picture = Picture.of(map.get("picture"));
 
                 Waste waste = Waste.builder()
@@ -51,33 +48,4 @@ public class SearchIndexScheduler {
             client.batchUpdate(localizedWastes, locale);
         }
     }
-
-    private String getLocalizedString(String data, Locale locale) {
-        try {
-            JsonNode jsonNode = objectMapper.readTree(data);
-            return jsonNode.get(locale.getLanguage()).asText();
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private List<String> getLocalizedList(String data, Locale locale) {
-        final List<String> result = new ArrayList<>();
-        JsonNode jsonNode;
-        try {
-            jsonNode = objectMapper.readTree(data);
-            jsonNode = jsonNode.get(locale.getLanguage());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (jsonNode != null && jsonNode.isArray()) {
-            for (JsonNode node : jsonNode) {
-                result.add(node.asText());
-            }
-        }
-
-        return result;
-    }
-
 }

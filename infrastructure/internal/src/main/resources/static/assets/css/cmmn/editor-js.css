@@ -19,10 +19,18 @@
 }
 
 .cdx-search-field__input {
-  color: var(--bs-dark);
+  color: var(--bs-black);
 }
 
 .link-tool__title, .link-tool__description {
+  color: var(--bs-dark);
+}
+
+.cdx-marker {
   color: var(--bs-black);
+}
+
+.image-tool__caption {
+  display: none;
 }
 

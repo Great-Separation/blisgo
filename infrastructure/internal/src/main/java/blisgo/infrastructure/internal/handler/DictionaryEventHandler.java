@@ -1,7 +1,7 @@
 package blisgo.infrastructure.internal.handler;
 
 import blisgo.domain.dictionary.event.WasteViewEvent;
-import blisgo.infrastructure.external.redis.ViewCountCache;
+import blisgo.infrastructure.external.cache.ViewCountCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

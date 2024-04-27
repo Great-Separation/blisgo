@@ -1,7 +1,7 @@
 package blisgo.infrastructure.internal.ui.render;
 
+import blisgo.infrastructure.external.extract.JsonParser;
 import blisgo.infrastructure.internal.persistence.community.mapper.PostMapper;
-import blisgo.infrastructure.internal.ui.base.ContentParser;
 import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.infrastructure.internal.ui.base.UIToast;
 import blisgo.usecase.request.post.*;
@@ -26,6 +26,7 @@ public class PostRender extends Router {
     private final PostQuery queryUsecase;
     private final PostMapper mapper;
     private final UIToast toast;
+    private final JsonParser jsonParser;
 
     @GetMapping
     public ModelAndView posts(
@@ -62,9 +63,9 @@ public class PostRender extends Router {
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     public RedirectView addPost(AddPost command) {
-        var json = ContentParser.toJson(command.content());
-        String thumbnail = ContentParser.parseFirstImageUrl(json);
-        String preview = ContentParser.parseFirstParagraph(json);
+        String content = command.content();
+        String thumbnail = jsonParser.parseFirstImageUrl(content);
+        String preview = jsonParser.parseFirstParagraph(content);
 
         command = command.toBuilder()
                 .thumbnail(thumbnail)
@@ -79,9 +80,9 @@ public class PostRender extends Router {
     @PatchMapping("/{postId}")
     @PreAuthorize("isAuthenticated()")
     public RedirectView updatePost(UpdatePost command) {
-        var json = ContentParser.toJson(command.content());
-        String thumbnail = ContentParser.parseFirstImageUrl(json);
-        String preview = ContentParser.parseFirstParagraph(json);
+        String content = command.content();
+        String thumbnail = jsonParser.parseFirstImageUrl(content);
+        String preview = jsonParser.parseFirstParagraph(content);
 
         command = command.toBuilder()
                 .thumbnail(thumbnail)

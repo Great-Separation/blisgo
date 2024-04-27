@@ -1,62 +1,43 @@
 package blisgo.infrastructure.internal.persistence.base;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import blisgo.infrastructure.external.extract.JsonParser;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @Converter
+@RequiredArgsConstructor
 public class I18nListConverter implements AttributeConverter<List<String>, String> {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final JsonParser jsonContentParser;
 
     @Override
     public String convertToDatabaseColumn(List<String> attributes) {
-        Map<String, List<String>> map = new HashMap<>();
-        String locale = LocaleContextHolder.getLocale().getLanguage();
+        String language = LocaleContextHolder.getLocale().getLanguage();
 
         if (attributes == null || attributes.isEmpty()) {
             return null;
         }
-        try {
-            map.put(locale, attributes);
-            return objectMapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+
+        return jsonContentParser.toString(Map.of(language, attributes));
     }
 
     @Override
     public List<String> convertToEntityAttribute(final String dbData) {
-        final List<String> result = new ArrayList<>();
-
         if (dbData == null) {
-            return result;
+            return new ArrayList<>();
         }
 
-        JsonNode jsonNode;
-        try {
-            jsonNode = objectMapper.readTree(dbData);
-            String language = LocaleContextHolder.getLocale().getLanguage();
+        Locale locale = List.of(Locale.KOREAN, Locale.ENGLISH)
+                .contains(LocaleContextHolder.getLocale()) ?
+                LocaleContextHolder.getLocale() :
+                Locale.ENGLISH;
 
-            jsonNode = switch (language) {
-                case "ko", "en" -> jsonNode.get(Locale.of(language).getLanguage());
-                default -> jsonNode.get(Locale.ENGLISH.getLanguage());
-            };
-
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (jsonNode != null && jsonNode.isArray()) {
-            for (JsonNode node : jsonNode) {
-                result.add(node.asText());
-            }
-        }
-
-        return result;
+        return jsonContentParser.getLocalizedList(dbData, locale);
     }
 }

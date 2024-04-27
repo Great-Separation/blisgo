@@ -34,22 +34,10 @@ public class WYSIWYGController {
         return ResponseEntity.ok(response);
     }
 
-
     @GetMapping("/link-preview")
     public ResponseEntity<Map<String, Object>> linkPreview(@RequestParam String url) {
         var linkPreview = webScrapInputPort.scrapPreview(url);
 
-        var response = Map.ofEntries(
-                Map.entry("success", 1),
-                Map.entry("link", url),
-                Map.entry("meta", Map.of(
-                        "title", linkPreview.get("title"),
-                        "site_name", linkPreview.get("siteName"),
-                        "description", linkPreview.get("description"),
-                        "image", Map.of("url", linkPreview.get("imageUrl")))
-                )
-        );
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(linkPreview);
     }
 }

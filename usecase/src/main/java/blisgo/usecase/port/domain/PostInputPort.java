@@ -26,7 +26,7 @@ public class PostInputPort implements PostCommand, PostQuery {
     @Override
     public boolean addPost(AddPost command) {
         Content content = Content.of(
-                command.content().replace("temp", "board"),
+                command.content(),
                 Picture.of(command.thumbnail()),
                 command.preview()
         );

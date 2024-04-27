@@ -1,9 +1,9 @@
 package blisgo.infrastructure.external.scheduler;
 
-import blisgo.infrastructure.external.redis.ViewCountCache;
-import blisgo.infrastructure.external.repository.PostDirectDBAdapter;
-import blisgo.infrastructure.external.repository.ViewCountable;
-import blisgo.infrastructure.external.repository.WasteDirectDBAdapter;
+import blisgo.infrastructure.external.cache.ViewCountCache;
+import blisgo.infrastructure.external.database.PostDirectDBAdapter;
+import blisgo.infrastructure.external.database.ViewCountable;
+import blisgo.infrastructure.external.database.WasteDirectDBAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.scheduling.annotation.Scheduled;
