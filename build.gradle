@@ -9,11 +9,8 @@ buildscript {
 }
 
 subprojects {
-    if (name == 'infrastructure') return
-
     group = 'blisgo'
-    version = 'V4'
-
+    
     apply {
         plugin 'java'
         plugin 'org.springframework.boot'
