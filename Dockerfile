@@ -18,10 +18,10 @@ FROM openjdk:21-slim
 WORKDIR /app
 
 # 빌더 이미지에서 jar 파일만 복사
-COPY --from=builder /build/build/libs/blisgo.jar .
+COPY --from=builder /build/app/build/libs/app.jar .
 
 EXPOSE 8080
 
 # root 권한으로 실행
 USER root
-ENTRYPOINT ["java","-jar","application.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
