@@ -5,7 +5,7 @@ import java.util.StringJoiner;
 public class Router {
 
     protected String routes(Object... strings) {
-        StringJoiner sj = new StringJoiner("/", "/", "");
+        StringJoiner sj = new StringJoiner("", "/", "");
 
         for (Object str : strings) {
             sj.add(str.toString().toLowerCase());
