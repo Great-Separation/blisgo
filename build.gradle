@@ -9,7 +9,7 @@ buildscript {
 }
 
 subprojects {
-    if (name == 'infrastructure' || name == 'interfaces') return
+    if (name == 'infrastructure') return
 
     group = 'blisgo'
     version = 'V4'
