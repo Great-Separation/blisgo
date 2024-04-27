@@ -2,7 +2,7 @@
 
 echo Current directory: %cd%
 
-cd .\infrastructure\internal\src\main\resources
+cd .\app\src\main\resources
 
 if exist static (
     rmdir /s /q static
