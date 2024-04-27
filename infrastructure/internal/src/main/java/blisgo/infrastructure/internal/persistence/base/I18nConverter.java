@@ -6,6 +6,9 @@ import jakarta.persistence.Converter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.util.List;
+import java.util.Locale;
+
 @Converter
 @RequiredArgsConstructor
 public class I18nConverter implements AttributeConverter<String, String> {
@@ -22,6 +25,11 @@ public class I18nConverter implements AttributeConverter<String, String> {
             return null;
         }
 
-        return jsonParser.getLocalizedString(dbData, LocaleContextHolder.getLocale());
+        Locale locale = List.of(Locale.KOREAN, Locale.ENGLISH)
+                .contains(LocaleContextHolder.getLocale()) ?
+                LocaleContextHolder.getLocale() :
+                Locale.KOREAN;
+
+        return jsonParser.getLocalizedString(dbData, locale);
     }
 }
