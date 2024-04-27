@@ -1,4 +1,4 @@
-package blisgo.infrastructure.external.repository;
+package blisgo.infrastructure.external.database;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;

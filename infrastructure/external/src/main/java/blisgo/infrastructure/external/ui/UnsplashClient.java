@@ -1,4 +1,4 @@
-package blisgo.infrastructure.external.client;
+package blisgo.infrastructure.external.ui;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

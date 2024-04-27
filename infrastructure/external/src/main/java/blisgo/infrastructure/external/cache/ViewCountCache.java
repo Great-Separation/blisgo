@@ -1,4 +1,4 @@
-package blisgo.infrastructure.external.redis;
+package blisgo.infrastructure.external.cache;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;

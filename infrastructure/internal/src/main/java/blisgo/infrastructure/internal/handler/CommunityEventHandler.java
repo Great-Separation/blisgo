@@ -5,11 +5,10 @@ import blisgo.domain.community.event.PostAddEvent;
 import blisgo.domain.community.event.PostRemoveEvent;
 import blisgo.domain.community.event.PostUpdateEvent;
 import blisgo.domain.community.event.PostViewEvent;
-import blisgo.infrastructure.external.client.CloudinaryClient;
-import blisgo.infrastructure.external.redis.ViewCountCache;
+import blisgo.infrastructure.external.cache.ViewCountCache;
+import blisgo.infrastructure.external.extract.JsonParser;
+import blisgo.infrastructure.external.storage.CloudinaryClient;
 import blisgo.infrastructure.internal.persistence.community.PostPersistenceAdapter;
-import blisgo.infrastructure.internal.ui.base.ContentParser;
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -17,6 +16,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -26,9 +26,7 @@ public class CommunityEventHandler {
     private final ViewCountCache viewCountCache;
     private final CloudinaryClient cloudinaryClient;
     private final PostPersistenceAdapter postPersistenceAdapter;
-
-    private static final String TEMP = "temp";
-    private static final String BOARD = "board";
+    private final JsonParser jsonParser;
 
     @Async
     @EventListener
@@ -40,7 +38,8 @@ public class CommunityEventHandler {
     @EventListener
     public void handlePostAddEvent(PostAddEvent event) {
         String text = event.text();
-        parseFilePathsAndChangeStorePath(text, TEMP, BOARD);
+        List<Path> paths = jsonParser.parseFilenames(text);
+        cloudinaryClient.tagAs(paths, "stored");
     }
 
     @Async
@@ -49,10 +48,14 @@ public class CommunityEventHandler {
         Post existedPost = postPersistenceAdapter.read(event.postId().id());
 
         String existedText = existedPost.content().text();
-        parseFilePathsAndChangeStorePath(existedText, BOARD, TEMP);
+        List<Path> paths1 = jsonParser.parseFilenames(existedText);
+
+        String timeMarkedTemp = "temp".concat(":").concat(LocalDate.now().toString());
+        cloudinaryClient.tagAs(paths1, timeMarkedTemp);
 
         String updatedText = event.text();
-        parseFilePathsAndChangeStorePath(updatedText, TEMP, BOARD);
+        List<Path> paths2 = jsonParser.parseFilenames(updatedText);
+        cloudinaryClient.tagAs(paths2, "stored");
     }
 
     @Async
@@ -61,14 +64,9 @@ public class CommunityEventHandler {
         Post post = postPersistenceAdapter.read(event.postId().id());
 
         String text = post.content().text();
-        parseFilePathsAndChangeStorePath(text, BOARD, TEMP);
+        List<Path> paths = jsonParser.parseFilenames(text);
+
+        String timeMarkedTemp = "temp".concat(":").concat(LocalDate.now().toString());
+        cloudinaryClient.tagAs(paths, timeMarkedTemp);
     }
-
-    private void parseFilePathsAndChangeStorePath(String text, String from, String to) {
-        JsonNode json = ContentParser.toJson(text);
-        List<Path> paths = ContentParser.parseFilenames(json);
-
-        paths.forEach(path -> cloudinaryClient.moveFile(path, from, to));
-    }
-
 }

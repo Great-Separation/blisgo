@@ -1,4 +1,4 @@
-package blisgo.infrastructure.external.redis;
+package blisgo.infrastructure.external.cache;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;

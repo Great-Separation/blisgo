@@ -1,6 +1,6 @@
 package blisgo.infrastructure.external.scheduler;
 
-import blisgo.infrastructure.external.repository.WasteDirectDBAdapter;
+import blisgo.infrastructure.external.database.WasteDirectDBAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Description;

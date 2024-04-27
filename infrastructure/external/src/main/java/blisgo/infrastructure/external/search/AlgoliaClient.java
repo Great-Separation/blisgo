@@ -1,8 +1,6 @@
-package blisgo.infrastructure.external.client;
+package blisgo.infrastructure.external.search;
 
 import blisgo.domain.dictionary.Waste;
-import blisgo.infrastructure.external.search.WasteIndex;
-import blisgo.infrastructure.external.search.WasteIndexMapper;
 import com.algolia.search.DefaultSearchClient;
 import com.algolia.search.SearchClient;
 import com.algolia.search.SearchIndex;

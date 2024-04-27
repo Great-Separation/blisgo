@@ -1,15 +1,15 @@
 package blisgo.infrastructure.internal.persistence.base;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import blisgo.infrastructure.external.extract.JsonParser;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 @Converter
+@RequiredArgsConstructor
 public class I18nConverter implements AttributeConverter<String, String> {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final JsonParser jsonParser;
 
     @Override
     public String convertToDatabaseColumn(String attribute) {
@@ -22,16 +22,6 @@ public class I18nConverter implements AttributeConverter<String, String> {
             return null;
         }
 
-        try {
-            JsonNode jsonNode = objectMapper.readTree(dbData);
-            String locale = LocaleContextHolder.getLocale().getLanguage();
-            if (jsonNode.has(locale)) {
-                return jsonNode.get(locale).asText();
-            } else {
-                return jsonNode.get("en").asText();
-            }
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return jsonParser.getLocalizedString(dbData, LocaleContextHolder.getLocale());
     }
 }
