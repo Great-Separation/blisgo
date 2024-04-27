@@ -88,7 +88,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:8080",
-                "https://blisgo.up.railway.app"
+                "https://blisgo.up.railway.app",
+                "https://blisgov4.up.railway.app"
         ));
         configuration.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),
