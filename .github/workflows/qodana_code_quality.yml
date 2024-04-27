@@ -25,6 +25,13 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
+      - name: Validate Gradle Wrapper
+        run: chmod +x ./gradlew --version
+        working-directory: ./
+
+      - name: permission
+        run: chmod +x gradlew
+        working-directory: ./
 
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2023.3
