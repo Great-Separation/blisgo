@@ -99,7 +99,6 @@ public class JsonParser {
 
     public String getLocalizedString(final String data, final Locale locale) {
         final JsonNode json = toJson(data);
-        return json.path(locale.getLanguage())
-                .asText(json.path(Locale.KOREAN.getLanguage()).asText());
+        return json.path(locale.getLanguage()).asText();
     }
 }
