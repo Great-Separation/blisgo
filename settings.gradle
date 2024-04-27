@@ -10,4 +10,3 @@ include 'infrastructure:internal'
 findProject(':infrastructure:internal')?.name = 'internal'
 include 'infrastructure:external'
 findProject(':infrastructure:external')?.name = 'external'
-
