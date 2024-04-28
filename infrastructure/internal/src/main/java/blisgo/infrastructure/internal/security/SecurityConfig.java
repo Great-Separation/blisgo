@@ -98,7 +98,7 @@ public class SecurityConfig {
                 HttpMethod.PATCH.name(),
                 HttpMethod.DELETE.name())
         );
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
