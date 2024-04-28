@@ -1,3 +1,7 @@
+plugins {
+    id 'org.flywaydb.flyway' version '+'
+}
+
 bootJar.mainClass = 'blisgo.app.BlisgoApplication'
 bootJar.enabled = true
 
@@ -12,4 +16,11 @@ dependencies {
     // flyway migration
     implementation 'org.flywaydb:flyway-core:+'
     implementation 'org.flywaydb:flyway-mysql:+'
+}
+
+flyway {
+    url = 'jdbc:mysql://monorail.proxy.rlwy.net:19755/railway'
+    user = 'root'
+    password = 'SfYImdwPFbgrmkUosMeQkKcvBLdNcEMT'
+    locations = ['filesystem:src/main/resources/db/migration']
 }
