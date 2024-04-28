@@ -4,13 +4,14 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:+")
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:+'
+        classpath 'org.flywaydb:flyway-mysql:+'
     }
 }
 
 subprojects {
     group = 'blisgo'
-    
+
     apply {
         plugin 'java'
         plugin 'org.springframework.boot'

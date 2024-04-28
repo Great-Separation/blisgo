@@ -32,6 +32,7 @@ spring:
     user: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    validate-on-migrate: false
 
   docker:
     compose:
