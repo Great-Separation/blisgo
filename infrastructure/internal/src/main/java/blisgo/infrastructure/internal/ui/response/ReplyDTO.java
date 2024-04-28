@@ -3,7 +3,7 @@ package blisgo.infrastructure.internal.ui.response;
 import blisgo.domain.common.Author;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Builder
@@ -14,7 +14,7 @@ public class ReplyDTO {
     private Long postId;
     private Author author;
     private String content;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 }
 

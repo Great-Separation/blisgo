@@ -8,14 +8,19 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
+import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.time.OffsetDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Configuration
-@EnableJpaAuditing
+@EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
+@EnableTransactionManagement
 @EnableJpaRepositories(basePackageClasses = InternalRoot.class)
 @EntityScan(basePackageClasses = InternalRoot.class)
 public class JpaConfig {
@@ -34,4 +39,9 @@ public class JpaConfig {
         return new OidcAuditorAware();
     }
 
+    @Bean(name = "auditingDateTimeProvider")
+    @Description("도메인 중 생성일, 수정일 데이터 시각을 OffsetDateTime 으로 제어")
+    public DateTimeProvider dateTimeProvider() {
+        return () -> Optional.of(OffsetDateTime.now());
+    }
 }

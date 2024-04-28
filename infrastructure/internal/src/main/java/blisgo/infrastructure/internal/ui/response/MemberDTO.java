@@ -3,7 +3,7 @@ package blisgo.infrastructure.internal.ui.response;
 import blisgo.domain.common.Picture;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
@@ -15,7 +15,7 @@ public class MemberDTO {
     private String name;
     private String email;
     private Picture picture;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 }
 
