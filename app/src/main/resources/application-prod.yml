@@ -26,13 +26,12 @@ spring:
 
   flyway:
     enabled: true
-    baseline-on-migrate: on
+    baseline-on-migrate: true
     locations: classpath:db/migration
     url: "jdbc:${MYSQL_URL}"
     user: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    validate-on-migrate: false
 
   docker:
     compose:
