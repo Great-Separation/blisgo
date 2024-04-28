@@ -21,10 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @SecondaryAdapter
@@ -69,6 +66,7 @@ public class CloudinaryClient implements FileUploadOutputPort {
                 Map.entry("folder", "board"),
                 Map.entry("resource_type", "auto"),
                 Map.entry("transformation", transformation),
+                Map.entry("format", Objects.requireNonNull(filenameExtension)),
                 Map.entry("tags", "temp")
         );
 
