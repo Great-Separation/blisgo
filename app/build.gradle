@@ -19,8 +19,8 @@ dependencies {
 }
 
 flyway {
-    url = 'jdbc:mysql://monorail.proxy.rlwy.net:19755/railway'
-    user = 'root'
-    password = 'SfYImdwPFbgrmkUosMeQkKcvBLdNcEMT'
+    url = System.getenv("MYSQL_URL")
+    user = System.getenv("MYSQLUSER")
+    password = System.getenv("MYSQLPASSWORD")
     locations = ['filesystem:src/main/resources/db/migration']
 }
