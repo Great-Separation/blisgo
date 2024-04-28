@@ -102,6 +102,10 @@ public class CloudinaryClient implements FileUploadOutputPort {
     public void tagAs(List<Path> paths, String tag) {
         List<String> publicIds = getPublicIds(paths);
 
+        if (publicIds.isEmpty()) {
+            return;
+        }
+
         try {
             cloudinary.uploader().replaceTag(
                     tag,
