@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -18,14 +18,13 @@ import java.time.LocalDateTime;
 public class Dogam {
     private DogamId dogamId;
     private Waste waste;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 
     public static Dogam create(MemberId memberId, WasteId wasteId) {
         return Dogam.builder()
                 .dogamId(DogamId.of(memberId, wasteId))
                 .waste(Waste.builder().wasteId(wasteId).build())
-                .createdDate(LocalDateTime.now())
                 .build();
     }
 }

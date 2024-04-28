@@ -13,7 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,10 +25,10 @@ public abstract class BaseTimeEntity {
     @CreatedDate
     @Column(updatable = false, nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     @Comment("생성 시각")
-    protected LocalDateTime createdDate;
+    protected OffsetDateTime createdDate;
 
     @LastModifiedDate
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     @Comment("수정 시각")
-    protected LocalDateTime modifiedDate;
+    protected OffsetDateTime modifiedDate;
 }

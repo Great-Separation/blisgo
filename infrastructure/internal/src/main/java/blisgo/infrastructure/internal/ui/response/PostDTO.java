@@ -4,7 +4,7 @@ import blisgo.domain.common.Author;
 import blisgo.domain.common.Content;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Builder
@@ -19,6 +19,6 @@ public class PostDTO {
     private Long views;
     private Long likes;
     private Long replies;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 }

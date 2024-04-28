@@ -4,7 +4,7 @@ import blisgo.domain.common.Picture;
 import blisgo.domain.dictionary.vo.Category;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Getter
@@ -21,6 +21,6 @@ public class WasteDTO {
     private Long views;
     private List<Category> categories;
     private List<String> hashtags;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 }

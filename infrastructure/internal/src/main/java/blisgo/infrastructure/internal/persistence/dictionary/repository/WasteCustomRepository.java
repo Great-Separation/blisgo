@@ -12,7 +12,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ public class WasteCustomRepository {
 
     public Slice<JpaWaste> findWastesByMemberIdFromDogam(
             UUID memberId, Pageable pageable,
-            LocalDateTime lastDogamCreatedDate
+            OffsetDateTime lastDogamCreatedDate
     ) {
         var fields = Projections.fields(
                 JpaWaste.class,
