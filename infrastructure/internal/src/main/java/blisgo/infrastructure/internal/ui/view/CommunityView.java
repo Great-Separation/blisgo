@@ -1,6 +1,5 @@
 package blisgo.infrastructure.internal.ui.view;
 
-import blisgo.infrastructure.internal.persistence.community.mapper.PostMapper;
 import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.usecase.request.post.GetPost;
 import blisgo.usecase.request.post.PostQuery;
@@ -24,7 +23,6 @@ import java.util.random.RandomGenerator;
 @RequiredArgsConstructor
 public class CommunityView extends Router {
     private final PostQuery queryUsecase;
-    private final PostMapper mapper;
 
     @GetMapping
     public ModelAndView board() {
@@ -56,13 +54,13 @@ public class CommunityView extends Router {
             var post = queryUsecase.getPost(query);
 
             if (post != null && post.isAuthor(oidcUser.getEmail())) {
-                model.addAttribute("post", mapper.toDTO(post));
+                model.addAttribute("postId", postId);
             }
         }
 
         return new ModelAndView(
                 routes(Folder.COMMUNITY, Page.WRITE),
-                Map.of("color", String.format("#%06x", RandomGenerator.getDefault().nextInt(0xffffff + 1)))
+                Map.of("color", "#%06x".formatted(RandomGenerator.getDefault().nextInt(0xffffff + 1)))
         );
     }
 }
