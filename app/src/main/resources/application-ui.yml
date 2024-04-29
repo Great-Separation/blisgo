@@ -14,26 +14,3 @@ spring:
       maxFileSize: 10MB
   messages:
     encoding: UTF-8
-
-server:
-  servlet:
-    encoding:
-      enabled: true
-      force: true
-      charset: UTF-8
-    session:
-      tracking-modes: cookie
-      cookie:
-        http-only: false
-        secure: true
-
-  error:
-    include-stacktrace: ALWAYS
-    include-exception: true
-    path: /error
-    whitelabel:
-      enabled: true
-  compression:
-    min-response-size: 512
-    mime-types: text/html,text/plain,text/xml,text/css,application/javascript,application/json
-    enabled: true

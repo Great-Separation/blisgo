@@ -18,9 +18,24 @@ spring:
 server:
   servlet:
     session:
+      tracking-modes: cookie
       cookie:
         path: /
         name: JSESSIONID
         http-only: true
         secure: true
       timeout: 3600
+
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+
+  error:
+    include-stacktrace: ALWAYS
+    include-exception: true
+    path: /error
+    whitelabel:
+      enabled: true
+  compression:
+    enabled: true

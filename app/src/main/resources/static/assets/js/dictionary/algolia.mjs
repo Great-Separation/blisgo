@@ -1,9 +1,10 @@
-const algoliasearch = window['algoliasearch'];
-const {autocomplete, getAlgoliaResults} = window["@algolia/autocomplete-js"];
+import algoliasearch from 'https://cdn.jsdelivr.net/npm/algoliasearch/+esm';
+import {autocomplete, getAlgoliaResults} from 'https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js/+esm';
 
 const appId = 'DZSY6U0S0J';
 const apiKey = '6558cbc4f72828fe1cdad3d2a87264cb';
 const searchClient = algoliasearch(appId, apiKey);
+const debounced = debouncePromise((items) => Promise.resolve(items), 200);
 
 function debouncePromise(fn, time) {
     let timerId = undefined;
@@ -19,13 +20,11 @@ function debouncePromise(fn, time) {
     };
 }
 
-const debounced = debouncePromise((items) => Promise.resolve(items), 200);
-
-window.onload = function () {
+export function init() {
     document.body.setAttribute('data-theme', document.documentElement.getAttribute('data-bs-theme'));
     let lang = navigator.language || navigator.userLanguage;
     lang = lang.split('-')[0];
-    
+
     if ($('#autocomplete').length > 0) {
         $(autocomplete({
             container: '#autocomplete',
@@ -86,4 +85,4 @@ window.onload = function () {
             }
         }));
     }
-};
+}

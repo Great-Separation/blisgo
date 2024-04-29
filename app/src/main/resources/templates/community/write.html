@@ -23,13 +23,12 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon/512x512.png">
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/cmmn/style.css">
 </head>
 
 <body>
     <main class="container" layout:fragment="main">
-        <section id="post">
-            <form id="form" th:method="${post?.postId != null} ? 'patch' : 'post'" th:action="${post?.postId != null} ? @{~/posts/{postId}(postId=${post?.postId})} : @{~/posts}">
+        <section id="post" th:fragment="post">
+            <form id="form" th:method="${post?.postId != null} ? 'patch' : 'post'" th:action="${post?.postId != null} ? @{~/posts/{postId}(postId=${post?.postId})} : @{~/posts}" th:data-content="${post?.content?.text}" th:data-edit="${false}">
                 <div class="card shadow-sm border-0 mx-1 .post" th:style="${'background: ' + (post?.color != null ? post?.color : color) + ';'}">
                     <div class="card-header bg-light bg-opacity-50 border-0">
                         <div class="row d-flex align-items-center">
@@ -43,18 +42,9 @@
                 </div><button class="btn btn-success border rounded-circle shadow d-flex justify-content-center align-items-center position-fixed bottom-0 end-0 translate-middle p-3 m-2 border-0" data-bs-toggle="tooltip" data-bss-tooltip="" id="save-button" title="등록" sec:authorize="isAuthenticated()" type="submit" th:title="#{community.write.fab.submit.title}"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-send-fill fs-3" id="float-btn-icon">
                         <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"></path>
                     </svg></button>
-            </form><!-- Start: editorjs data load --><script th:inline="javascript">
-    /*<![CDATA[*/
-    var content = [[${post?.content?.text}]];
-    if(content==null){
-        content="{}";
-    }
-    
-    var readOnly = false;
-    /*]]>*/
-</script>
-<script th:src="@{~/assets/js/cmmn/editor.js}"></script><!-- End: editorjs data load -->
-        </section>
+            </form>
+        </section><!-- Start: hx-get -->
+        <div th:attr="hx-get='/posts/'+ (${postId} != null ? ${postId} : '') + '?edit=true'" hx-trigger="load" hx-swap="outerHTML" hx-target="#post" hx-include="[name='postId']"><input type="hidden" id="postId" name="postId" th:value="${post!=null ? post.postId : postId}"></div><!-- End: hx-get -->
     </main>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
