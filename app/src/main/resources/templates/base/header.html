@@ -38,14 +38,7 @@
         <nav class="navbar navbar-expand-lg fixed-top bg-body shadow-sm justify-content-between" id="transmenu">
             <div class="container"><a class="navbar-brand d-flex d-lg-none align-items-center logo" id="navbar-mobile-back" rel="prev" href="javascript:history.back();"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-left me-2" id="navbar-mobile-arrow">
                         <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
-                    </svg><span id="page-title">페이지</span><script>
-    var title = document.title;
-    title = title.split('-', 1);
-    document.getElementById('page-title').innerText = title;
-    if(title == "분리ㅅㄱ"){
-        document.getElementById('navbar-mobile-arrow').style.display = "none";
-    }
-</script></a><a class="navbar-brand d-none d-lg-inline logo" id="navbar-brand" th:href="@{~/}" rel="prev" th:text="#{base.header.logo}">분리ㅅㄱ</a><button data-bs-toggle="collapse" class="navbar-toggler collapsed mr-auto p-0" data-bs-target="#navbar-collapse" id="navbar-toggle"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    </svg><span id="page-title">페이지</span></a><a class="navbar-brand d-none d-lg-inline logo" id="navbar-brand" th:href="@{~/}" rel="prev" th:text="#{base.header.logo}">분리ㅅㄱ</a><button data-bs-toggle="collapse" class="navbar-toggler collapsed mr-auto p-0" data-bs-target="#navbar-collapse" id="navbar-toggle"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
@@ -94,4 +87,12 @@
             <span th:text="#{base.header.nav.theme.auto.text}">Auto</span>
         </a>
     </div>
-</div></li></ul></div></div></nav></header><script src="/assets/js/jquery.min.js"></script><script src="/assets/bootstrap/js/bootstrap.min.js"></script><script src="/assets/js/bs-init.js"></script><script src="/assets/js/community/editorjs.umd.min.js"></script><script src="/assets/js/community/jquery.timeago.min.js"></script><script src="/assets/js/community/editor.mjs" type="module"></script><script src="/assets/js/community/post-color-changer.mjs" type="module"></script><script src="/assets/js/community/time-ago.mjs" type="module"></script><script src="/assets/js/dictionary/algolia.mjs" type="module"></script><script src="/assets/js/dictionary/aos.mjs" type="module"></script></body></html>
+</div></li></ul></div></div></nav><script>
+    var title = document.title;
+    title = title.split('-', 1);
+    document.getElementById('page-title').innerText = title;
+    if(title == "분리ㅅㄱ"){
+        document.getElementById('navbar-mobile-arrow').style.display = "none";
+        document.getElementById('page-title').innerText = "";    
+    }
+</script></header><script src="/assets/js/jquery.min.js"></script><script src="/assets/bootstrap/js/bootstrap.min.js"></script><script src="/assets/js/bs-init.js"></script><script src="/assets/js/community/editorjs.umd.min.js"></script><script src="/assets/js/community/jquery.timeago.min.js"></script><script src="/assets/js/community/editor.mjs" type="module"></script><script src="/assets/js/community/post-color-changer.mjs" type="module"></script><script src="/assets/js/community/time-ago.mjs" type="module"></script><script src="/assets/js/dictionary/algolia.mjs" type="module"></script><script src="/assets/js/dictionary/aos.mjs" type="module"></script></body></html>

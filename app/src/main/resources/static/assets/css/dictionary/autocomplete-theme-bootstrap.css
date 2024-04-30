@@ -879,6 +879,7 @@ body.dark, body[data-theme=dark] {
 }
 
 .aa-DetachedCancelButton {
+  display: none;
   background: none;
   border: 0;
   border-radius: 3px;

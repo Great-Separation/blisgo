@@ -20,12 +20,11 @@
 }
 
 .aa-DetachedCancelButton {
-  font-size: 0;
+  display: none;
 }
 
-.aa-DetachedCancelButton::before {
-  content: '✕';
-  font-size: 1rem;
+.aa-ClearButton {
+  display: block;
 }
 
 main {
