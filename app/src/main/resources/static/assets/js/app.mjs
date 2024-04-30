@@ -4,7 +4,9 @@ if (path === '/' || path.startsWith('/dictionary')) {
     import('./dictionary/algolia.mjs').then(module => {
         module.init();
     });
+}
 
+if (path.startsWith('/dictionary') || path.startsWith('/profile')) {
     import('./dictionary/aos.mjs').then(module => {
         module.init();
     });
@@ -18,7 +20,7 @@ if (path.startsWith('/community/')) {
     });
 
 
-    import('./community/jquery.timeago.min.js').then(module => {
+    import('./community/jquery.timeago.min.js').then(() => {
         import('./community/time-ago.mjs').then(module => {
             module.init();
         });

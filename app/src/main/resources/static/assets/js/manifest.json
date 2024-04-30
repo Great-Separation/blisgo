@@ -10,7 +10,7 @@
   "version": "1.0.0",
   "author": "옥재욱",
   "orientation": "portrait",
-  "background_color": "#212529",
+  "background_color": "black",
   "prefer_related_applications": true,
   "screenshots": [
     {

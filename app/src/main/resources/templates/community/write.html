@@ -44,7 +44,7 @@
                     </svg></button>
             </form>
         </section><!-- Start: hx-get -->
-        <div th:attr="hx-get='/posts/'+ (${postId} != null ? ${postId} : '') + '?edit=true'" hx-trigger="load" hx-swap="outerHTML" hx-target="#post" hx-include="[name='postId']"><input type="hidden" id="postId" name="postId" th:value="${post!=null ? post.postId : postId}"></div><!-- End: hx-get -->
+        <div th:attr="hx-get='/posts/'+ ${postId} + '?edit=true'" hx-trigger="load" hx-swap="outerHTML" hx-target="#post" hx-include="[name='postId']" th:if="${postId != null}"><input type="hidden" id="postId" name="postId" th:value="${post!=null ? post.postId : postId}"></div><!-- End: hx-get -->
     </main>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
