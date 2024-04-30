@@ -89,7 +89,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:8080",
                 "https://blisgo.up.railway.app",
-                "https://blisgov4.up.railway.app"
+                "https://blisgo.org",
+                "https://www.blisgo.org"
         ));
         configuration.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),
