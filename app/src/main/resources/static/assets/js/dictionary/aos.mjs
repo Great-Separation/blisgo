@@ -1,5 +1,1 @@
-import AOS from 'https://cdn.jsdelivr.net/npm/aos/+esm';
-
-export function init() {
-    AOS.init({duration: 250, offset: 20, delay: 0, once: true});
-}
+import t from"https://cdn.jsdelivr.net/npm/aos/+esm";export function init(){t.init({duration:250,offset:20,delay:0,once:!0})}
