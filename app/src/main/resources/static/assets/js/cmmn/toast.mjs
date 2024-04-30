@@ -1,11 +1,1 @@
-document.addEventListener("htmx:afterOnLoad", function () {
-    let toastElList = [].slice.call(document.querySelectorAll('.toast'))
-    let toastList = toastElList.map(function (toastEl) {
-        return new bootstrap.Toast(toastEl, { autohide: true })
-    });
-
-    let toastMessage = document.getElementById('toast-message');
-    if (toastMessage && toastMessage.textContent.trim() !== '') {
-        toastList.forEach(toast => toast.show());
-    }
-});
+document.addEventListener("htmx:afterOnLoad",(function(){let t=[].slice.call(document.querySelectorAll(".toast")).map((function(t){return new bootstrap.Toast(t,{autohide:!0})})),e=document.getElementById("toast-message");e&&""!==e.textContent.trim()&&t.forEach((t=>t.show()))}));
