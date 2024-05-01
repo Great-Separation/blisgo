@@ -28,7 +28,7 @@ public class ViewCountScheduler {
             long viewCount = viewCountCache.getViewCount(id, domain);
 
             if (viewCount > 0 && updater.updateViewCount(id, viewCount)) {
-                viewCountCache.remove(id, domain);
+                viewCountCache.removeViewCount(id, domain);
             }
         }
     }
