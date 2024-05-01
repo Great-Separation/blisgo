@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -47,16 +48,23 @@ public class PostRender extends Router {
     }
 
     @GetMapping("/{postId}")
-    public ModelAndView post(@PathVariable Long postId) {
-        var query = GetPost.builder()
-                .postId(postId)
-                .build();
+    public ModelAndView post(
+            @PathVariable Long postId,
+            @RequestParam(required = false, defaultValue = "false") boolean edit,
+            Model model
+    ) {
+        if (postId != null) {
+            var query = GetPost.builder()
+                    .postId(postId)
+                    .build();
 
-        var post = queryUsecase.getPost(query);
+            var post = queryUsecase.getPost(query);
+
+            model.addAttribute("post", mapper.toDTO(post));
+        }
 
         return new ModelAndView(
-                routes(Folder.COMMUNITY, Page.CONTENT) + fragment(Fragment.POST),
-                Map.of("post", mapper.toDTO(post))
+                routes(Folder.COMMUNITY, edit ? Page.WRITE : Page.CONTENT) + fragment(Fragment.POST)
         );
     }
 

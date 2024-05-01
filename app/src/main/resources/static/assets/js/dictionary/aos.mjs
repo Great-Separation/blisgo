@@ -1,0 +1,1 @@
+import t from"https://cdn.jsdelivr.net/npm/aos/+esm";export function init(){t.init({duration:250,offset:20,delay:0,once:!0})}

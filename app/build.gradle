@@ -1,3 +1,7 @@
+plugins {
+    id 'org.flywaydb.flyway' version '+'
+}
+
 bootJar.mainClass = 'blisgo.app.BlisgoApplication'
 bootJar.enabled = true
 
@@ -12,4 +16,11 @@ dependencies {
     // flyway migration
     implementation 'org.flywaydb:flyway-core:+'
     implementation 'org.flywaydb:flyway-mysql:+'
+}
+
+flyway {
+    url = System.getenv("MYSQL_URL")
+    user = System.getenv("MYSQLUSER")
+    password = System.getenv("MYSQLPASSWORD")
+    locations = ['filesystem:src/main/resources/db/migration']
 }

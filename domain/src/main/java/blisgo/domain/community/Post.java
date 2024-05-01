@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -24,8 +24,8 @@ public class Post {
     private long views;
     private long likes;
     private long replies;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 
     public static Post create(Long postId, String title, Content content, String color) {
         return create(title, content, color).toBuilder()

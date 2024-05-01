@@ -3,7 +3,7 @@ package blisgo.infrastructure.internal.ui.response;
 import blisgo.domain.dictionary.Waste;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Builder
@@ -13,6 +13,6 @@ public class DogamDTO {
     private Long memberId;
     private Long wasteId;
     private Waste waste;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 }

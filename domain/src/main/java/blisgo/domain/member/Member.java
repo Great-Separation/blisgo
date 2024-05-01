@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -19,8 +19,8 @@ public class Member {
     private String name;
     private String email;
     private Picture picture;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
 
     public static Member create(String name, String email, String picture) {
         return Member.builder()

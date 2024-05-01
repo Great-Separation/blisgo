@@ -15,7 +15,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +48,7 @@ public class WastePersistenceAdapter implements WasteOutputPort {
     }
 
     @Override
-    public Slice<Waste> readWastesFromDogam(UUID memberId, Pageable pageable, LocalDateTime lastDogamCreatedDate) {
+    public Slice<Waste> readWastesFromDogam(UUID memberId, Pageable pageable, OffsetDateTime lastDogamCreatedDate) {
         return wasteCustomRepository.findWastesByMemberIdFromDogam(memberId, pageable, lastDogamCreatedDate)
                 .map(wasteMapper::toDomain);
     }

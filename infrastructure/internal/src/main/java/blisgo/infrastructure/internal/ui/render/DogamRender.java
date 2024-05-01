@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Map;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -73,10 +73,10 @@ public class DogamRender extends Router {
     public ModelAndView dogams(
             @AuthenticationPrincipal DefaultOidcUser oidcUser,
             @PageableDefault(size = 12, sort = "createdDate", direction = DESC) Pageable pageable,
-            @RequestParam(required = false) LocalDateTime lastDogamCreatedDate
+            @RequestParam(required = false) OffsetDateTime lastDogamCreatedDate
     ) {
         if (lastDogamCreatedDate == null) {
-            lastDogamCreatedDate = LocalDateTime.now();
+            lastDogamCreatedDate = OffsetDateTime.now();
         }
 
         var query = GetDogam.builder()

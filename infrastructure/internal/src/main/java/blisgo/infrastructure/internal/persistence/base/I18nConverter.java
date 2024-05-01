@@ -28,7 +28,7 @@ public class I18nConverter implements AttributeConverter<String, String> {
         Locale locale = List.of(Locale.KOREAN, Locale.ENGLISH)
                 .contains(LocaleContextHolder.getLocale()) ?
                 LocaleContextHolder.getLocale() :
-                Locale.KOREAN;
+                Locale.ENGLISH;
 
         return jsonParser.getLocalizedString(dbData, locale);
     }

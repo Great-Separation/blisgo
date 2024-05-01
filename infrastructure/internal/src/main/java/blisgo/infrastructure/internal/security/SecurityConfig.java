@@ -89,7 +89,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:8080",
                 "https://blisgo.up.railway.app",
-                "https://blisgov4.up.railway.app"
+                "https://blisgo.org",
+                "https://www.blisgo.org"
         ));
         configuration.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),
@@ -98,7 +99,7 @@ public class SecurityConfig {
                 HttpMethod.PATCH.name(),
                 HttpMethod.DELETE.name())
         );
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

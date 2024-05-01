@@ -7,7 +7,7 @@ import org.jmolecules.architecture.hexagonal.SecondaryPort;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ public interface WasteOutputPort {
 
     List<Guide> readGuides(List<Category> categories);
 
-    Slice<Waste> readWastesFromDogam(UUID memberId, Pageable pageable, LocalDateTime lastDogamCreatedDate);
+    Slice<Waste> readWastesFromDogam(UUID memberId, Pageable pageable, OffsetDateTime lastDogamCreatedDate);
 
     List<Waste> readWastesRelated(List<Category> categories);
 }

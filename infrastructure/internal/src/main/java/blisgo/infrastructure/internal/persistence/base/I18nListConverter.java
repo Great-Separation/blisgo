@@ -14,17 +14,20 @@ import java.util.Map;
 @Converter
 @RequiredArgsConstructor
 public class I18nListConverter implements AttributeConverter<List<String>, String> {
-    private final JsonParser jsonContentParser;
+    private final JsonParser jsonParser;
 
     @Override
     public String convertToDatabaseColumn(List<String> attributes) {
-        String language = LocaleContextHolder.getLocale().getLanguage();
+        Locale locale = List.of(Locale.KOREAN, Locale.ENGLISH)
+                .contains(LocaleContextHolder.getLocale()) ?
+                LocaleContextHolder.getLocale() :
+                Locale.ENGLISH;
 
         if (attributes == null || attributes.isEmpty()) {
             return null;
         }
 
-        return jsonContentParser.toString(Map.of(language, attributes));
+        return jsonParser.toString(Map.of(locale.getLanguage(), attributes));
     }
 
     @Override
@@ -36,8 +39,8 @@ public class I18nListConverter implements AttributeConverter<List<String>, Strin
         Locale locale = List.of(Locale.KOREAN, Locale.ENGLISH)
                 .contains(LocaleContextHolder.getLocale()) ?
                 LocaleContextHolder.getLocale() :
-                Locale.KOREAN;
+                Locale.ENGLISH;
 
-        return jsonContentParser.getLocalizedList(dbData, locale);
+        return jsonParser.getLocalizedList(dbData, locale);
     }
 }
