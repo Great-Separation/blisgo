@@ -16,6 +16,7 @@ subprojects {
         plugin 'java'
         plugin 'org.springframework.boot'
         plugin 'io.spring.dependency-management'
+        plugin 'jacoco'
     }
 
     repositories {
@@ -52,10 +53,44 @@ subprojects {
         developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
         // test
+        testImplementation 'org.testcontainers:junit-jupiter'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     }
 
     test {
         useJUnitPlatform()
+        finalizedBy 'jacocoTestReport'
+    }
+
+    jacoco {
+        toolVersion = '+'
+        setReportsDirectory(file("${rootDir}/.qodana/code-coverage"))
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required = true
+            html.required = false
+        }
+        finalizedBy 'jacocoTestCoverageVerification'
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                enabled = true
+                element = 'CLASS'
+
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.00
+                }
+
+                excludes = []
+            }
+        }
     }
 }
+
