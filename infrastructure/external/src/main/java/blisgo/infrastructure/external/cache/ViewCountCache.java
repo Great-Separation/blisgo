@@ -3,9 +3,10 @@ package blisgo.infrastructure.external.cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import java.util.Optional;
 import java.util.StringJoiner;
 
 @Component
@@ -14,25 +15,38 @@ import java.util.StringJoiner;
 public class ViewCountCache {
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public void increaseViewCount(Long id, String domain) {
-        ValueOperations<String, Object> ops = redisTemplate.opsForValue();
-        ops.increment(getKey(id, domain), 1);
+    public long increaseViewCount(Long id, String domain) {
+        return Optional.ofNullable(generateKey(id, domain))
+                .filter(StringUtils::hasText)
+                .map(key -> redisTemplate.opsForValue().increment(key, 1))
+                .orElse(0L);
     }
 
     public long getViewCount(Long id, String domain) {
-        var value = redisTemplate.opsForValue().get(getKey(id, domain));
-        return value == null ? 0 : Long.parseLong(value.toString());
+        return Optional.ofNullable(generateKey(id, domain))
+                .filter(StringUtils::hasText)
+                .map(key -> redisTemplate.opsForValue().get(key))
+                .map(Object::toString)
+                .map(Long::parseLong)
+                .orElse(0L);
     }
 
-    private String getKey(Long id, String domain) {
-        return new StringJoiner(":")
-                .add(domain)
-                .add(id.toString())
-                .add("views")
-                .toString();
+    public boolean removeViewCount(Long postId, String domain) {
+        return Optional.ofNullable(generateKey(postId, domain))
+                .filter(StringUtils::hasText)
+                .map(redisTemplate::delete)
+                .orElse(false);
     }
 
-    public void remove(Long postId, String domain) {
-        redisTemplate.delete(getKey(postId, domain));
+    private String generateKey(Long id, String domain) {
+        return Optional.ofNullable(domain)
+                .filter(StringUtils::hasText)
+                .flatMap(d -> Optional.ofNullable(id)
+                        .map(i -> new StringJoiner(":")
+                                .add(d)
+                                .add(i.toString())
+                                .add("views")
+                                .toString()))
+                .orElse(null);
     }
 }
