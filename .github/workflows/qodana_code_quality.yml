@@ -53,9 +53,16 @@ jobs:
 
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2023.3
+        with:
+          args: --baseline,qodana.sarif.json
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: upload Qodana results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
 
       - name: Publish result of unit test
         uses: EnricoMi/publish-unit-test-result-action@v2
