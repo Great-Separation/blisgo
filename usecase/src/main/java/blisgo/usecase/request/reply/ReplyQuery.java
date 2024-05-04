@@ -6,5 +6,6 @@ import org.springframework.data.domain.Slice;
 
 @PrimaryPort
 public interface ReplyQuery {
+
     Slice<Reply> getReplies(GetReply query);
 }

@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hashtag {
+
     private String content;
 }

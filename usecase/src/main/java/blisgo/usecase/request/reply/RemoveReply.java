@@ -1,9 +1,7 @@
 package blisgo.usecase.request.reply;
 
+import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 
 @Builder
-public record RemoveReply(
-        Long replyId
-)  {
-}
+public record RemoveReply(@Positive Long replyId) {}

@@ -5,14 +5,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
 import com.cloudinary.api.ApiResponse;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -21,13 +13,26 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @SecondaryAdapter
 @Component
 @RequiredArgsConstructor
-public class CloudinaryClient implements FileUploadOutputPort {
+public final class CloudinaryClient implements FileUploadOutputPort {
+
+    private final List<String> imageFormats = List.of("jpg", "jpeg", "png", "gif", "webp", "avif");
     private Cloudinary cloudinary;
 
     @Value("${cloudinary.cloud-name}")
@@ -39,15 +44,10 @@ public class CloudinaryClient implements FileUploadOutputPort {
     @Value("${cloudinary.api-secret}")
     private String apiSecret;
 
-    private final List<String> imageFormats = List.of("jpg", "jpeg", "png", "gif", "webp", "avif");
-
     @PostConstruct
-    private void init() {
+    public void init() {
         cloudinary = new Cloudinary(Map.ofEntries(
-                Map.entry("cloud_name", cloudName),
-                Map.entry("api_key", apiKey),
-                Map.entry("api_secret", apiSecret)
-        ));
+                Map.entry("cloud_name", cloudName), Map.entry("api_key", apiKey), Map.entry("api_secret", apiSecret)));
     }
 
     @Override
@@ -67,8 +67,7 @@ public class CloudinaryClient implements FileUploadOutputPort {
                 Map.entry("resource_type", "auto"),
                 Map.entry("transformation", transformation),
                 Map.entry("format", Objects.requireNonNull(filenameExtension)),
-                Map.entry("tags", "temp")
-        );
+                Map.entry("tags", "temp"));
 
         try {
             Files.copy(resource.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
@@ -98,7 +97,6 @@ public class CloudinaryClient implements FileUploadOutputPort {
         }
     }
 
-
     public void tagAs(List<Path> paths, String tag) {
         List<String> publicIds = getPublicIds(paths);
 
@@ -107,11 +105,7 @@ public class CloudinaryClient implements FileUploadOutputPort {
         }
 
         try {
-            cloudinary.uploader().replaceTag(
-                    tag,
-                    publicIds.toArray(String[]::new),
-                    Map.of()
-            );
+            cloudinary.uploader().replaceTag(tag, publicIds.toArray(String[]::new), Map.of());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,7 +1,12 @@
 package blisgo.infrastructure.internal.persistence.community.model;
 
 import blisgo.infrastructure.internal.persistence.common.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +25,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "reply")
 @Comment("댓글")
 public class JpaReply extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("댓글 Id")

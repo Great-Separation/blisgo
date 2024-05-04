@@ -4,6 +4,7 @@ import org.jmolecules.architecture.hexagonal.PrimaryPort;
 
 @PrimaryPort
 public interface PostCommand {
+
     boolean addPost(AddPost command);
 
     boolean updatePost(UpdatePost command);

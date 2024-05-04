@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class FileUploadInputPort {
+
     private final FileUploadOutputPort port;
 
     public URI upload(Resource resource) {

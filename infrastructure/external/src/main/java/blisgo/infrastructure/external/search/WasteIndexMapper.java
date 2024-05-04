@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WasteIndexMapper implements SearchMapper<Waste, WasteIndex> {
+
     @Override
     public WasteIndex toIndex(Waste domain) {
         return WasteIndex.builder()

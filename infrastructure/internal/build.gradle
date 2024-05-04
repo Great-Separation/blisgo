@@ -1,8 +1,3 @@
-plugins {
-    id 'org.springdoc.openapi-gradle-plugin' version '+'
-    id 'io.swagger.swaggerhub' version '+'
-}
-
 bootJar.enabled = false
 jar.enabled = true
 
@@ -12,12 +7,10 @@ dependencies {
     implementation project(':domain')
     implementation project(':usecase')
     implementation project(':infrastructure:external')
+    testImplementation project(':infrastructure:external')
 
     // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    // hibernate & jakarta validator
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // querydsl
     implementation 'com.querydsl:querydsl-jpa:5.+:jakarta'
@@ -25,6 +18,7 @@ dependencies {
 
     // mysql
     runtimeOnly 'com.mysql:mysql-connector-j'
+    testImplementation 'com.h2database:h2'
 
     // jakarta
     annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
@@ -63,27 +57,4 @@ tasks.withType(JavaCompile).configureEach {
 
 clean.doLast {
     file(querydslDir).deleteDir()
-}
-
-openApi {
-    apiDocsUrl.set('http://localhost:8080/v3/api-docs.yaml')
-    outputDir.set(file("${project.rootDir}/build/docs"))
-    outputFileName.set('swagger.yaml')
-    waitTimeInSeconds.set(10)
-    customBootRun {
-        args.set(['--spring.profiles.active=dev'])
-    }
-}
-
-import java.text.SimpleDateFormat
-
-swaggerhubUpload {
-    def dateVersion = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
-
-    api 'blisgo'
-    owner 'okjaeook'
-    version dateVersion
-    format 'yaml'
-    inputFile "${project.rootDir}/build/docs/swagger.yaml"
-    token System.getenv('SWAGGERHUB_API_KEY')
 }

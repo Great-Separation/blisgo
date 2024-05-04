@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/")
 public class HomeView extends Router {
+
     @GetMapping
     public ModelAndView index() {
         return new ModelAndView(routes(Page.INDEX));

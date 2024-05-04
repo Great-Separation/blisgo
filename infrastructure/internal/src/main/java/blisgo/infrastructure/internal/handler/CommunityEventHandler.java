@@ -9,32 +9,34 @@ import blisgo.infrastructure.external.cache.ViewCountCache;
 import blisgo.infrastructure.external.extract.JsonParser;
 import blisgo.infrastructure.external.storage.CloudinaryClient;
 import blisgo.infrastructure.internal.persistence.community.PostPersistenceAdapter;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Path;
-import java.time.LocalDate;
-import java.util.List;
-
+@Async
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class CommunityEventHandler {
+
     private final ViewCountCache viewCountCache;
+
     private final CloudinaryClient cloudinaryClient;
+
     private final PostPersistenceAdapter postPersistenceAdapter;
+
     private final JsonParser jsonParser;
 
-    @Async
     @EventListener
     public void handlePostViewedEvent(PostViewEvent event) {
         viewCountCache.increaseViewCount(event.postId().id(), "post");
     }
 
-    @Async
     @EventListener
     public void handlePostAddEvent(PostAddEvent event) {
         String text = event.text();
@@ -42,7 +44,6 @@ public class CommunityEventHandler {
         cloudinaryClient.tagAs(paths, "stored");
     }
 
-    @Async
     @EventListener
     public void handlePostUpdateEvent(PostUpdateEvent event) {
         Post existedPost = postPersistenceAdapter.read(event.postId().id());
@@ -58,7 +59,6 @@ public class CommunityEventHandler {
         cloudinaryClient.tagAs(paths2, "stored");
     }
 
-    @Async
     @EventListener
     public void handlePostRemoveEvent(PostRemoveEvent event) {
         Post post = postPersistenceAdapter.read(event.postId().id());

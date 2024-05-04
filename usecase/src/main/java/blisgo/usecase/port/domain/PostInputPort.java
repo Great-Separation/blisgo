@@ -9,55 +9,44 @@ import blisgo.domain.community.event.PostRemoveEvent;
 import blisgo.domain.community.event.PostUpdateEvent;
 import blisgo.domain.community.event.PostViewEvent;
 import blisgo.domain.community.vo.PostId;
-import blisgo.usecase.request.post.*;
+import blisgo.usecase.request.post.AddPost;
+import blisgo.usecase.request.post.GetPost;
+import blisgo.usecase.request.post.PostCommand;
+import blisgo.usecase.request.post.PostLike;
+import blisgo.usecase.request.post.PostQuery;
+import blisgo.usecase.request.post.RemovePost;
+import blisgo.usecase.request.post.UpdatePost;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostInputPort implements PostCommand, PostQuery {
+
     private final PostOutputPort port;
 
     @Override
     public boolean addPost(AddPost command) {
-        Content content = Content.of(
-                command.content(),
-                Picture.of(command.thumbnail()),
-                command.preview()
-        );
+        Content content = Content.of(command.content(), Picture.of(command.thumbnail()), command.preview());
 
         Events.raise(new PostAddEvent(command.content()));
 
-        var post = Post.create(
-                command.title(),
-                content,
-                command.color()
-        );
+        var post = Post.create(command.title(), content, command.color());
 
         return port.create(post);
     }
 
     @Override
     public boolean updatePost(UpdatePost command) {
-        Content content = Content.of(
-                command.content(),
-                Picture.of(command.thumbnail()),
-                command.preview()
-        );
+        Content content = Content.of(command.content(), Picture.of(command.thumbnail()), command.preview());
 
         Events.raise(new PostUpdateEvent(PostId.of(command.postId()), command.content()));
 
-        var post = Post.create(
-                command.postId(),
-                command.title(),
-                content,
-                command.color()
-        );
+        var post = Post.create(command.postId(), command.title(), content, command.color());
 
         return port.update(post);
     }

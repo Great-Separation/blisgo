@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ReplyMapper implements PersistenceMapper<Reply, JpaReply, ReplyDTO> {
+
     private final ModelMapper mapper;
 
     @Override

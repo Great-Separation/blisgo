@@ -16,18 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class DogamPersistenceAdapter implements DogamOutputPort {
+
     private final DogamJpaRepository jpaRepository;
+
     private final DogamMapper mapper;
 
     @Override
     @Transactional
     public boolean delete(DogamId identifier) {
-        JpaDogamId jpaDogamId = JpaDogamId.of(
-                identifier.memberId().id(),
-                identifier.wasteId().id()
-        );
+        JpaDogamId jpaDogamId =
+                JpaDogamId.of(identifier.memberId().id(), identifier.wasteId().id());
 
-        return jpaRepository.deleteByDogamId(jpaDogamId);
+        return jpaRepository.deleteByDogamId(jpaDogamId) > 0;
     }
 
     @Override
@@ -39,10 +39,7 @@ public class DogamPersistenceAdapter implements DogamOutputPort {
 
     @Override
     public boolean readExists(MemberId memberId, WasteId wasteId) {
-        JpaDogamId dogamId = JpaDogamId.of(
-                memberId.id(),
-                wasteId.id()
-        );
+        JpaDogamId dogamId = JpaDogamId.of(memberId.id(), wasteId.id());
         return jpaRepository.existsByDogamId(dogamId);
     }
 }

@@ -15,8 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class ReplyPersistenceAdapter implements ReplyOutputPort {
+
     private final ReplyJpaRepository jpaRepository;
+
     private final ReplyCustomRepository customRepository;
+
     private final ReplyMapper mapper;
 
     @Override
@@ -32,7 +35,6 @@ public class ReplyPersistenceAdapter implements ReplyOutputPort {
 
     @Override
     public Slice<Reply> read(Long postId, Pageable pageable, Long lastReplyId) {
-        return customRepository.find(pageable, postId, lastReplyId)
-                .map(mapper::toDomain);
+        return customRepository.find(pageable, postId, lastReplyId).map(mapper::toDomain);
     }
 }

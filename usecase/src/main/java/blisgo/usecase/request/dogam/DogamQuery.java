@@ -4,5 +4,6 @@ import org.jmolecules.architecture.hexagonal.PrimaryPort;
 
 @PrimaryPort
 public interface DogamQuery {
+
     boolean checkThatWasteRegisteredFromDogam(GetDogam query);
 }

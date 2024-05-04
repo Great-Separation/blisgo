@@ -7,6 +7,7 @@ import org.springframework.data.domain.Slice;
 
 @SecondaryPort
 public interface ReplyOutputPort {
+
     boolean delete(Long identifier);
 
     boolean create(Reply domain);

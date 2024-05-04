@@ -5,5 +5,6 @@ import org.jmolecules.architecture.hexagonal.PrimaryPort;
 
 @PrimaryPort
 public interface MemberQuery {
+
     Member getMember(GetMember getMemberQuery);
 }

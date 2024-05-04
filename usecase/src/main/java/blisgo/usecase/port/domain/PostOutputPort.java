@@ -1,14 +1,14 @@
 package blisgo.usecase.port.domain;
 
 import blisgo.domain.community.Post;
+import java.util.Map;
 import org.jmolecules.architecture.hexagonal.SecondaryPort;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import java.util.Map;
-
 @SecondaryPort
 public interface PostOutputPort {
+
     boolean create(Post domain);
 
     Post read(Long postId);

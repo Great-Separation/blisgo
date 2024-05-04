@@ -2,7 +2,13 @@ package blisgo.infrastructure.internal.persistence.member.model;
 
 import blisgo.infrastructure.internal.persistence.common.BaseTimeEntity;
 import blisgo.infrastructure.internal.persistence.common.JpaPicture;
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +16,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
-import java.util.UUID;
 
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -23,6 +27,7 @@ import java.util.UUID;
 @Table(name = "member")
 @Comment("회원")
 public class JpaMember extends BaseTimeEntity {
+
     @Id
     @Comment("ID")
     private UUID memberId;

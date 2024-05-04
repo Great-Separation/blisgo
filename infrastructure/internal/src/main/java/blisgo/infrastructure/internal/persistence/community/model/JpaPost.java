@@ -2,7 +2,14 @@ package blisgo.infrastructure.internal.persistence.community.model;
 
 import blisgo.infrastructure.internal.persistence.common.BaseEntity;
 import blisgo.infrastructure.internal.persistence.common.JpaContent;
-import jakarta.persistence.*;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +29,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "post")
 @Comment("게시글")
 public class JpaPost extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("게시글 postId")
@@ -51,7 +59,7 @@ public class JpaPost extends BaseEntity {
     @Version
     @ColumnDefault("1")
     @Comment("좋아요 동시성 해결을 위한 낙관적 락")
-    private Long version;
+    private Long version = 1L;
 
     public void updateInfo(JpaPost entity) {
         this.title = entity.title;

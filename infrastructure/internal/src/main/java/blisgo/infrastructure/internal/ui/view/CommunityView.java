@@ -3,6 +3,8 @@ package blisgo.infrastructure.internal.ui.view;
 import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.usecase.request.post.GetPost;
 import blisgo.usecase.request.post.PostQuery;
+import java.util.Map;
+import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,13 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
-import java.util.random.RandomGenerator;
-
 @Controller
 @RequestMapping("/community")
 @RequiredArgsConstructor
 public class CommunityView extends Router {
+
     private final PostQuery queryUsecase;
 
     @GetMapping
@@ -31,12 +31,7 @@ public class CommunityView extends Router {
 
     @GetMapping("/{postId}")
     public ModelAndView content(@PathVariable Long postId) {
-        return new ModelAndView(
-                routes(Folder.COMMUNITY, Page.CONTENT),
-                Map.ofEntries(
-                        Map.entry("postId", postId)
-                )
-        );
+        return new ModelAndView(routes(Folder.COMMUNITY, Page.CONTENT), Map.ofEntries(Map.entry("postId", postId)));
     }
 
     @GetMapping("/write")
@@ -44,12 +39,9 @@ public class CommunityView extends Router {
     public ModelAndView write(
             @AuthenticationPrincipal DefaultOidcUser oidcUser,
             @RequestParam(required = false) Long postId,
-            Model model
-    ) {
+            Model model) {
         if (postId != null) {
-            GetPost query = GetPost.builder()
-                    .postId(postId)
-                    .build();
+            GetPost query = GetPost.builder().postId(postId).build();
 
             var post = queryUsecase.getPost(query);
 
@@ -60,7 +52,6 @@ public class CommunityView extends Router {
 
         return new ModelAndView(
                 routes(Folder.COMMUNITY, Page.WRITE),
-                Map.of("color", "#%06x".formatted(RandomGenerator.getDefault().nextInt(0xffffff + 1)))
-        );
+                Map.of("color", "#%06x".formatted(RandomGenerator.getDefault().nextInt(0xffffff + 1))));
     }
 }

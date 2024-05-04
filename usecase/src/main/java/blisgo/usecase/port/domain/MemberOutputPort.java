@@ -1,12 +1,12 @@
 package blisgo.usecase.port.domain;
 
 import blisgo.domain.member.Member;
-import org.jmolecules.architecture.hexagonal.SecondaryPort;
-
 import java.util.Map;
+import org.jmolecules.architecture.hexagonal.SecondaryPort;
 
 @SecondaryPort
 public interface MemberOutputPort {
+
     boolean update(Member domain);
 
     boolean delete(String email);

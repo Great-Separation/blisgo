@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DogamMapper implements PersistenceMapper<Dogam, JpaDogam, DogamDTO> {
+
     private final ModelMapper mapper;
 
     @Override

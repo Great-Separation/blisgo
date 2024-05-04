@@ -4,19 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class JsonParser {
-    private final ObjectMapper objectMapper;
 
     private static final String TYPE = "type";
     private static final String DATA = "data";
@@ -27,6 +25,7 @@ public class JsonParser {
     private static final String ATTACHES = "attaches";
     private static final String PARAGRAPH = "paragraph";
     private static final String FILE = "file";
+    private final ObjectMapper objectMapper;
 
     public String toString(final Object object) {
         try {

@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;CASE_INSENSITIVE_IDENTIFIERS=TRUE;MODE=MySQL;INIT=RUNSCRIPT FROM 'classpath:h2-init.sql'
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+        show_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        globally_quoted_identifiers: true
+      ejb:
+        naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    database-platform: org.hibernate.dialect.MySQLDialect
+    database: h2

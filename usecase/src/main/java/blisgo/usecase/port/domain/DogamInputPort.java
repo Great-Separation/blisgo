@@ -4,7 +4,11 @@ import blisgo.domain.dictionary.Dogam;
 import blisgo.domain.dictionary.vo.DogamId;
 import blisgo.domain.dictionary.vo.WasteId;
 import blisgo.domain.member.vo.MemberId;
-import blisgo.usecase.request.dogam.*;
+import blisgo.usecase.request.dogam.AddDogam;
+import blisgo.usecase.request.dogam.DogamCommand;
+import blisgo.usecase.request.dogam.DogamQuery;
+import blisgo.usecase.request.dogam.GetDogam;
+import blisgo.usecase.request.dogam.RemoveDogam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class DogamInputPort implements DogamCommand, DogamQuery {
+
     private final DogamOutputPort port;
 
     @Override

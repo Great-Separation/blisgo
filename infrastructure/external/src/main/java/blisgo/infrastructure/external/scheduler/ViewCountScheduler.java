@@ -13,8 +13,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Description("캐시에 저장된 조회수를 DB에 갱신하는 스케줄러")
 public class ViewCountScheduler {
+
     private final ViewCountCache viewCountCache;
+
     private final PostDirectDBAdapter postDirectDBAdapter;
+
     private final WasteDirectDBAdapter wasteDirectDBAdapter;
 
     @Scheduled(fixedRate = 60000)

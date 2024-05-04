@@ -5,23 +5,26 @@ import blisgo.domain.dictionary.Waste;
 import blisgo.domain.dictionary.vo.WasteId;
 import blisgo.infrastructure.external.database.WasteDirectDBAdapter;
 import blisgo.infrastructure.external.extract.JsonParser;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 @Component
 @RequiredArgsConstructor
 @Description("검색 인덱스를 갱신하는 스케줄러")
 public class SearchIndexScheduler {
+
     private final WasteDirectDBAdapter adapter;
+
     private final AlgoliaClient client;
+
     private final JsonParser jsonParser;
+
     private final Locale[] locales = {Locale.KOREAN, Locale.ENGLISH};
 
     @Scheduled(zone = "UTC", cron = "0 0 0 * * *")

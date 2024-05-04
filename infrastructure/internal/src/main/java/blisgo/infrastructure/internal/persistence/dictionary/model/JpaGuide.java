@@ -2,7 +2,13 @@ package blisgo.infrastructure.internal.persistence.dictionary.model;
 
 import blisgo.domain.dictionary.vo.Category;
 import blisgo.infrastructure.internal.persistence.base.I18nConverter;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +20,7 @@ import org.hibernate.annotations.Comment;
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
 public class JpaGuide {
+
     @Id
     @Enumerated(EnumType.STRING)
     @Comment("카테고리(PK)")
