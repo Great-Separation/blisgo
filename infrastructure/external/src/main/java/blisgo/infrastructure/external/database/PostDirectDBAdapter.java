@@ -1,14 +1,14 @@
 package blisgo.infrastructure.external.database;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 @RequiredArgsConstructor
 public class PostDirectDBAdapter implements ViewCountable {
+
     private final JdbcTemplate jdbcTemplate;
 
     @Override

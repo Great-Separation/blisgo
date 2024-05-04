@@ -1,16 +1,16 @@
 package blisgo.infrastructure.external.extract;
 
 import blisgo.usecase.port.infra.WebScrapOutputPort;
+import java.io.IOException;
+import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.Map;
-
 @Component
 public class WebScrapper implements WebScrapOutputPort {
+
     public Map<String, Object> scrapPreview(String url) {
         validateUrl(url);
         Document doc = getDocument(url);
@@ -22,13 +22,17 @@ public class WebScrapper implements WebScrapOutputPort {
         return Map.ofEntries(
                 Map.entry("success", 1),
                 Map.entry("link", url),
-                Map.entry("meta", Map.of(
-                        "title", title,
-                        "site_name", url,
-                        "description", description,
-                        "image", Map.of("url", imageUrl))
-                )
-        );
+                Map.entry(
+                        "meta",
+                        Map.of(
+                                "title",
+                                title,
+                                "site_name",
+                                url,
+                                "description",
+                                description,
+                                "image",
+                                Map.of("url", imageUrl))));
     }
 
     private void validateUrl(String url) {

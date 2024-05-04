@@ -2,21 +2,26 @@ package blisgo.infrastructure.internal.ui.rest;
 
 import blisgo.usecase.port.infra.FileUploadInputPort;
 import blisgo.usecase.port.infra.WebScrapInputPort;
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.net.URI;
 import java.util.Map;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/editor")
 public class WYSIWYGController {
+
     private final FileUploadInputPort fileUploadInputPort;
+
     private final WebScrapInputPort webScrapInputPort;
 
     @PostMapping("/upload/file")
@@ -28,8 +33,7 @@ public class WYSIWYGController {
         var response = Map.ofEntries(
                 Map.entry("success", 1),
                 Map.entry("file", Map.of("url", fileEndpoint.toString())),
-                Map.entry("caption", filename)
-        );
+                Map.entry("caption", filename));
 
         return ResponseEntity.ok(response);
     }

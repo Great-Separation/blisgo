@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PostMapper implements PersistenceMapper<Post, JpaPost, PostDTO> {
+
     private final ModelMapper mapper;
 
     @Override
@@ -26,9 +27,5 @@ public class PostMapper implements PersistenceMapper<Post, JpaPost, PostDTO> {
     @Override
     public PostDTO toDTO(Post domain) {
         return mapper.map(domain, PostDTO.class);
-    }
-
-    public Post toDomain(PostDTO dto) {
-        return mapper.map(dto, Post.class);
     }
 }

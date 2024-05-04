@@ -1,5 +1,9 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'org.flywaydb.flyway' version '+'
+    id 'org.springdoc.openapi-gradle-plugin' version '+'
+    id 'io.swagger.swaggerhub' version '+'
 }
 
 bootJar.mainClass = 'blisgo.app.BlisgoApplication'
@@ -16,6 +20,10 @@ dependencies {
     // flyway migration
     implementation 'org.flywaydb:flyway-core:+'
     implementation 'org.flywaydb:flyway-mysql:+'
+
+    // monitor
+    //implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    //implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
 flyway {
@@ -23,4 +31,25 @@ flyway {
     user = System.getenv("MYSQLUSER")
     password = System.getenv("MYSQLPASSWORD")
     locations = ['filesystem:src/main/resources/db/migration']
+}
+
+openApi {
+    apiDocsUrl.set('http://localhost:8080/v3/api-docs.yaml')
+    outputDir.set(file("${project.rootDir}/build/docs"))
+    outputFileName.set('swagger.yaml')
+    waitTimeInSeconds.set(10)
+    customBootRun {
+        args.set(['--spring.profiles.active=dev'])
+    }
+}
+
+swaggerhubUpload {
+    def dateVersion = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
+
+    api 'blisgo'
+    owner 'okjaeook'
+    version dateVersion
+    format 'yaml'
+    inputFile "${project.rootDir}/build/docs/swagger.yaml"
+    token System.getenv('SWAGGERHUB_API_KEY')
 }

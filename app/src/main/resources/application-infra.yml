@@ -39,3 +39,15 @@ server:
       enabled: true
   compression:
     enabled: true
+
+# apm disabled due to infra bill
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#  endpoint:
+#    metrics:
+#      enabled: true
+#    prometheus:
+#      enabled: true

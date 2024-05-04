@@ -16,8 +16,9 @@ import org.hibernate.annotations.Comment;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JpaContent {
+
     @Comment("글 내용")
-    @Column(columnDefinition = "JSON")
+    @Column(columnDefinition = "json")
     private String text;
 
     @Embedded

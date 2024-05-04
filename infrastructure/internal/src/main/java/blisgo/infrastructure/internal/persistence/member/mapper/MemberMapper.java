@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MemberMapper implements PersistenceMapper<Member, JpaMember, MemberDTO> {
+
     private final ModelMapper mapper;
 
     @Override

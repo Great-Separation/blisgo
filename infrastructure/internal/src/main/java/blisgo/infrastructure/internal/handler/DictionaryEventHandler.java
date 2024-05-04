@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DictionaryEventHandler {
+
     private final ViewCountCache viewCountCache;
 
     @EventListener
     public void handleWasteViewedEvent(WasteViewEvent event) {
         viewCountCache.increaseViewCount(event.wasteId(), "waste");
     }
-
 }

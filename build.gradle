@@ -1,12 +1,17 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '+'
+    id 'org.flywaydb.flyway' version '+'
+    id 'io.spring.dependency-management' version '+'
+    id 'com.palantir.java-format' version '+'
+    id 'jacoco-report-aggregation'
+    id 'jvm-test-suite'
+}
 
-    dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:+'
-        classpath 'org.flywaydb:flyway-mysql:+'
-    }
+bootJar.enabled = false
+
+repositories {
+    mavenCentral()
 }
 
 subprojects {
@@ -16,7 +21,9 @@ subprojects {
         plugin 'java'
         plugin 'org.springframework.boot'
         plugin 'io.spring.dependency-management'
-        plugin 'jacoco'
+        plugin 'com.palantir.java-format'
+        plugin 'jacoco-report-aggregation'
+        plugin 'jvm-test-suite'
     }
 
     repositories {
@@ -24,6 +31,8 @@ subprojects {
     }
 
     dependencies {
+        jacocoAggregation project(":app")
+
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
         // componentScan
@@ -56,24 +65,59 @@ subprojects {
         testImplementation 'org.testcontainers:junit-jupiter'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+        testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:+'
+        testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-jackson:+'
+        testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-jakarta-validation:+'
+
+        // hibernate & jakarta validator
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
     }
+
+    def QDomains = []
+    for (qPattern in '*.QA'..'*.QZ') {
+        QDomains.add(qPattern + '*')
+    }
+
+    def jacocoExcludePatterns = [
+            "**/*Application*",
+            "**/*Config*",
+            "**/*Exception*",
+            "**/*Request*",
+            "**/*Response*",
+            "**/*DTO*",
+            "**/*Port*",
+            "**/*Command*",
+            "**/*Query*",
+            "**/test/**",
+            "**/resources/**",
+            "**/Jpa*",
+            "**/*Entity",
+    ]
 
     test {
         useJUnitPlatform()
-        finalizedBy 'jacocoTestReport'
+        finalizedBy jacocoTestReport
     }
 
     jacoco {
-        toolVersion = '+'
+        toolVersion = "+"
         setReportsDirectory(file("${rootDir}/.qodana/code-coverage"))
     }
 
     jacocoTestReport {
+        dependsOn test
         reports {
             xml.required = true
             html.required = false
         }
-        finalizedBy 'jacocoTestCoverageVerification'
+        afterEvaluate {
+            classDirectories.setFrom(
+                    files(classDirectories.files.collect {
+                        fileTree(dir: it, excludes: jacocoExcludePatterns + QDomains)
+                    }))
+        }
+
+        finalizedBy jacocoTestCoverageVerification
     }
 
     jacocoTestCoverageVerification {

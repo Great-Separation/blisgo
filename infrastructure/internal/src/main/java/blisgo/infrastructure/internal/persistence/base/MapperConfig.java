@@ -9,12 +9,14 @@ import org.springframework.context.annotation.Description;
 
 @Configuration
 public class MapperConfig {
+
     @Bean
     @Description("ModelMapper 설정")
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.registerModule(new RecordModule());
-        modelMapper.getConfiguration()
+        modelMapper
+                .getConfiguration()
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
                 .setFieldMatchingEnabled(true)
                 .setCollectionsMergeEnabled(false)

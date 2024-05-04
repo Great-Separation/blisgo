@@ -9,17 +9,17 @@ import blisgo.domain.member.vo.MemberId;
 import blisgo.usecase.request.dogam.GetDogam;
 import blisgo.usecase.request.waste.GetWaste;
 import blisgo.usecase.request.waste.WasteQuery;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WasteInputPort implements WasteQuery {
+
     private final WasteOutputPort port;
 
     @Override
@@ -40,7 +40,8 @@ public class WasteInputPort implements WasteQuery {
 
     @Override
     public Slice<Waste> getWastesFromDogam(GetDogam query) {
-        return port.readWastesFromDogam(MemberId.of(query.email()).id(), query.pageable(), query.lastDogamCreatedDate());
+        return port.readWastesFromDogam(
+                MemberId.of(query.email()).id(), query.pageable(), query.lastDogamCreatedDate());
     }
 
     @Override

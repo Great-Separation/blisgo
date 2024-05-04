@@ -1,18 +1,18 @@
 package blisgo.infrastructure.external.cache;
 
+import java.util.Optional;
+import java.util.StringJoiner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.Optional;
-import java.util.StringJoiner;
-
 @Component
 @RequiredArgsConstructor
 @Description("게시물 조회수 캐시")
 public class ViewCountCache {
+
     private final RedisTemplate<String, Object> redisTemplate;
 
     public long increaseViewCount(Long id, String domain) {
@@ -41,12 +41,11 @@ public class ViewCountCache {
     private String generateKey(Long id, String domain) {
         return Optional.ofNullable(domain)
                 .filter(StringUtils::hasText)
-                .flatMap(d -> Optional.ofNullable(id)
-                        .map(i -> new StringJoiner(":")
-                                .add(d)
-                                .add(i.toString())
-                                .add("views")
-                                .toString()))
+                .flatMap(d -> Optional.ofNullable(id).map(i -> new StringJoiner(":")
+                        .add(d)
+                        .add(i.toString())
+                        .add("views")
+                        .toString()))
                 .orElse(null);
     }
 }

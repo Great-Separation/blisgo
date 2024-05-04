@@ -5,7 +5,8 @@ import blisgo.infrastructure.internal.persistence.dictionary.model.JpaDogamId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DogamJpaRepository extends JpaRepository<JpaDogam, Long> {
-    boolean deleteByDogamId(JpaDogamId dogamId);
+
+    long deleteByDogamId(JpaDogamId dogamId);
 
     boolean existsByDogamId(JpaDogamId dogamId);
 }

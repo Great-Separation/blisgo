@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Description("쓰레기 인기도를 갱신하는 스케줄러")
 public class WastePopularityScheduler {
+
     private final WasteDirectDBAdapter wasteMySQLAdapter;
 
     @Scheduled(zone = "UTC", cron = "0 */1 * * * *")

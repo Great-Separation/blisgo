@@ -25,6 +25,7 @@ public enum Category {
     PRO_FACILITY("전문시설", "Professional facility");
 
     private final String ko;
+
     private final String en;
 
     public String tag() {
@@ -34,5 +35,4 @@ public enum Category {
             default -> en;
         };
     }
-
 }

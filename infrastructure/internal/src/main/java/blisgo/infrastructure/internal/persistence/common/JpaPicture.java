@@ -14,6 +14,7 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JpaPicture {
+
     @URL(protocol = "https")
     @Comment("이미지")
     private String url;

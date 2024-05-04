@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CustomServletConfig implements WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> {
+
     @Override
     public void customize(ConfigurableServletWebServerFactory factory) {
         MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);

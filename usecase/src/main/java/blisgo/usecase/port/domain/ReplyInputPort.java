@@ -2,7 +2,11 @@ package blisgo.usecase.port.domain;
 
 import blisgo.domain.community.Reply;
 import blisgo.domain.community.vo.PostId;
-import blisgo.usecase.request.reply.*;
+import blisgo.usecase.request.reply.AddReply;
+import blisgo.usecase.request.reply.GetReply;
+import blisgo.usecase.request.reply.RemoveReply;
+import blisgo.usecase.request.reply.ReplyCommand;
+import blisgo.usecase.request.reply.ReplyQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ReplyInputPort implements ReplyCommand, ReplyQuery {
+
     private final ReplyOutputPort port;
 
     @Override

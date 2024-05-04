@@ -18,6 +18,7 @@ import org.hibernate.annotations.Comment;
 @Table(name = "dogam")
 @Comment("도감")
 public class JpaDogam extends BaseTimeEntity {
+
     @EmbeddedId
     private JpaDogamId dogamId;
 }

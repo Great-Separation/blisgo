@@ -8,6 +8,7 @@ import org.jmolecules.architecture.hexagonal.SecondaryPort;
 
 @SecondaryPort
 public interface DogamOutputPort {
+
     boolean delete(DogamId identifier);
 
     boolean create(Dogam domain);

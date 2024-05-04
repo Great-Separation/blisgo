@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequiredArgsConstructor
 public class MemberView extends Router {
+
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
     public String profile() {

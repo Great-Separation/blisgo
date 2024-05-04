@@ -3,16 +3,20 @@ package blisgo.infrastructure.external.ui;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-
 @Component
+@RequiredArgsConstructor
 public class UnsplashClient {
+
     private static final RestClient restClient = RestClient.create();
+
+    private final ObjectMapper objectMapper;
 
     @Value("${unsplash.host}")
     private String host;
@@ -29,22 +33,18 @@ public class UnsplashClient {
     @Value("${unsplash.options}")
     private String options;
 
-    public byte[] bringImage() throws JsonProcessingException {
-        String imageUrl = bringImageUrl();
-
+    public byte[] bringImage(String imageUrl) {
         URI uri = UriComponentsBuilder.fromUriString(imageUrl)
                 .queryParam("options", options)
                 .build()
                 .toUri();
 
-        var response = restClient.get()
-                .uri(uri)
-                .retrieve();
+        var response = restClient.get().uri(uri).retrieve();
 
         return response.body(byte[].class);
     }
 
-    private String bringImageUrl() throws JsonProcessingException {
+    public String bringImageUrl() throws JsonProcessingException {
         URI uri = UriComponentsBuilder.newInstance()
                 .scheme("https")
                 .host(host)
@@ -54,15 +54,10 @@ public class UnsplashClient {
                 .build()
                 .toUri();
 
-        var response = restClient.get()
-                .uri(uri)
-                .retrieve();
+        var response = restClient.get().uri(uri).retrieve();
 
-        JsonNode jsonObj = new ObjectMapper().readTree(response.body(String.class));
+        JsonNode jsonObj = objectMapper.readTree(response.body(String.class));
 
-        return jsonObj.get("urls")
-                .get("raw")
-                .asText()
-                .concat(options);
+        return jsonObj.get("urls").get("raw").asText().concat(options);
     }
 }

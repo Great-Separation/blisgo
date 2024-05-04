@@ -23,15 +23,35 @@ public class Router {
     }
 
     protected enum Folder {
-        COMMUNITY, DICTIONARY, BASE, MEMBER
+        COMMUNITY,
+        DICTIONARY,
+        BASE,
+        MEMBER
     }
 
     protected enum Page {
-        INDEX, PROFILE, CATALOGUE, INFO, BOARD, CONTENT, WRITE, LAYOUT, TOAST, EDIT
+        INDEX,
+        PROFILE,
+        CATALOGUE,
+        INFO,
+        BOARD,
+        CONTENT,
+        WRITE,
+        LAYOUT,
+        TOAST,
+        EDIT
     }
 
     public enum Fragment {
-        POSTS, DOGAMS, MEMBER, POST, DICTIONARIES, WASTE, WASTES, WASTE_RELATED, TOAST, REPLIES
+        POSTS,
+        DOGAMS,
+        MEMBER,
+        POST,
+        DICTIONARIES,
+        WASTE,
+        WASTES,
+        WASTE_RELATED,
+        TOAST,
+        REPLIES
     }
-
 }

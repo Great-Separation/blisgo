@@ -1,16 +1,12 @@
 package blisgo.usecase.request.waste;
 
 import blisgo.domain.dictionary.vo.Category;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import java.util.List;
 import lombok.Builder;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 @Builder
 public record GetWaste(
-        Pageable pageable,
-        Long wasteId,
-        Long lastWasteId,
-        List<Category> categories
-) {
-}
+        Pageable pageable, @NotNull @Positive Long wasteId, @Positive Long lastWasteId, List<Category> categories) {}
