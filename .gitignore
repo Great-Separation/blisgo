@@ -40,3 +40,6 @@ out/
 
 ### fixturemonkey ###
 .jqwik-database
+
+### test report ###
+!/.qodana/code-coverage/test/jacocoTestReport.xml

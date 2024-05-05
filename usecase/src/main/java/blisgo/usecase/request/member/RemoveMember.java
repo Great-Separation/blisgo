@@ -1,7 +1,8 @@
 package blisgo.usecase.request.member;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 
-@Builder
-public record RemoveMember(@Email String email) {}
+@Builder(toBuilder = true)
+public record RemoveMember(@NotEmpty @Email String email) {}

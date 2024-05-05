@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import blisgo.infrastructure.external.cache.ViewCountCache;
 import blisgo.infrastructure.external.database.PostDirectDBAdapter;
 import blisgo.infrastructure.external.database.WasteDirectDBAdapter;
-import blisgo.infrastructure.external.fixture.FixtureMonkeySingleton;
+import blisgo.infrastructure.external.fixture.FixtureFactory;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Import;
 @ExtendWith(MockitoExtension.class)
 class ViewCountSchedulerTest {
 
-    private final FixtureMonkey fixtureMonkey = FixtureMonkeySingleton.getInstance();
+    private final FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @Mock
     private ViewCountCache viewCountCache;

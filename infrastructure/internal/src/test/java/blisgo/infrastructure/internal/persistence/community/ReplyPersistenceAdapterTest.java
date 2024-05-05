@@ -13,7 +13,6 @@ import blisgo.infrastructure.internal.persistence.community.mapper.ReplyMapper;
 import blisgo.infrastructure.internal.persistence.community.repository.ReplyCustomRepository;
 import blisgo.infrastructure.internal.persistence.community.repository.ReplyJpaRepository;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.FieldReflectionArbitraryIntrospector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -48,7 +47,7 @@ import org.springframework.test.context.jdbc.Sql;
 class ReplyPersistenceAdapterTest {
 
     private final int REPEAT = 10;
-    FixtureMonkey fixtureMonkey = FixtureFactory.create(FieldReflectionArbitraryIntrospector.INSTANCE);
+    FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @Autowired
     private ReplyJpaRepository replyJpaRepository;
@@ -70,7 +69,7 @@ class ReplyPersistenceAdapterTest {
     @DisplayName("댓글 생성")
     void create() {
         Reply reply = fixtureMonkey.giveMeOne(Reply.class);
-        replyPersistenceAdapter.create(reply);
+        assertTrue(replyPersistenceAdapter.create(reply));
     }
 
     @Nested

@@ -5,7 +5,7 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 import blisgo.infrastructure.internal.persistence.community.mapper.ReplyMapper;
 import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.usecase.request.reply.AddReply;
-import blisgo.usecase.request.reply.GetReply;
+import blisgo.usecase.request.reply.GetReplies;
 import blisgo.usecase.request.reply.RemoveReply;
 import blisgo.usecase.request.reply.ReplyCommand;
 import blisgo.usecase.request.reply.ReplyQuery;
@@ -39,7 +39,7 @@ public class ReplyRender extends Router {
             @RequestParam Long postId,
             @RequestParam(required = false, defaultValue = "0") Long lastReplyId,
             @PageableDefault(sort = "createdDate", direction = ASC) Pageable pageable) {
-        var query = GetReply.builder()
+        var query = GetReplies.builder()
                 .postId(postId)
                 .lastReplyId(lastReplyId)
                 .pageable(pageable)

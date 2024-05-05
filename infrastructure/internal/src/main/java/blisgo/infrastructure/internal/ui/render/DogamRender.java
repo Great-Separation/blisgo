@@ -9,7 +9,7 @@ import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.infrastructure.internal.ui.base.UIToast;
 import blisgo.usecase.request.dogam.AddDogam;
 import blisgo.usecase.request.dogam.DogamCommand;
-import blisgo.usecase.request.dogam.GetDogam;
+import blisgo.usecase.request.dogam.GetDogams;
 import blisgo.usecase.request.dogam.RemoveDogam;
 import blisgo.usecase.request.waste.WasteQuery;
 import java.time.OffsetDateTime;
@@ -75,7 +75,7 @@ public class DogamRender extends Router {
             lastDogamCreatedDate = OffsetDateTime.now();
         }
 
-        var query = GetDogam.builder()
+        var query = GetDogams.builder()
                 .email(oidcUser.getEmail())
                 .pageable(pageable)
                 .lastDogamCreatedDate(lastDogamCreatedDate)

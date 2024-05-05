@@ -11,6 +11,7 @@ import blisgo.domain.community.event.PostViewEvent;
 import blisgo.domain.community.vo.PostId;
 import blisgo.usecase.request.post.AddPost;
 import blisgo.usecase.request.post.GetPost;
+import blisgo.usecase.request.post.GetPosts;
 import blisgo.usecase.request.post.PostCommand;
 import blisgo.usecase.request.post.PostLike;
 import blisgo.usecase.request.post.PostQuery;
@@ -78,7 +79,7 @@ public class PostInputPort implements PostCommand, PostQuery {
     }
 
     @Override
-    public Slice<Post> getPosts(GetPost query) {
-        return port.read(Map.of("lastPostId", query.postId()), query.pageable());
+    public Slice<Post> getPosts(GetPosts query) {
+        return port.read(Map.of("lastPostId", query.lastPostId()), query.pageable());
     }
 }

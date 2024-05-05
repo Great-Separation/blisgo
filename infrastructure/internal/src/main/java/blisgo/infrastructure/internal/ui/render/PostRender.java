@@ -10,6 +10,7 @@ import blisgo.infrastructure.internal.ui.base.Router;
 import blisgo.infrastructure.internal.ui.base.UIToast;
 import blisgo.usecase.request.post.AddPost;
 import blisgo.usecase.request.post.GetPost;
+import blisgo.usecase.request.post.GetPosts;
 import blisgo.usecase.request.post.PostCommand;
 import blisgo.usecase.request.post.PostLike;
 import blisgo.usecase.request.post.PostQuery;
@@ -20,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,7 +54,7 @@ public class PostRender extends Router {
     public ModelAndView posts(
             @PageableDefault(sort = "createdDate", direction = DESC) Pageable pageable,
             @RequestParam(required = false, defaultValue = "" + Long.MAX_VALUE) Long lastPostId) {
-        var query = GetPost.builder().pageable(pageable).postId(lastPostId).build();
+        var query = GetPosts.builder().pageable(pageable).lastPostId(lastPostId).build();
 
         var posts = queryUsecase.getPosts(query);
 
@@ -62,13 +65,18 @@ public class PostRender extends Router {
 
     @GetMapping("/{postId}")
     public ModelAndView post(
-            @PathVariable Long postId,
+            @PathVariable long postId,
             @RequestParam(required = false, defaultValue = "false") boolean edit,
+            @AuthenticationPrincipal DefaultOidcUser oidcUser,
             Model model) {
-        if (postId != null) {
+        if (postId > 0) {
             var query = GetPost.builder().postId(postId).build();
 
             var post = queryUsecase.getPost(query);
+
+            if (oidcUser != null && !post.isAuthor(oidcUser.getEmail())) {
+                edit = false;
+            }
 
             model.addAttribute("post", mapper.toDTO(post));
         }
@@ -126,9 +134,9 @@ public class PostRender extends Router {
                         : toast.popup(ERROR, "toast.post.like.error"));
     }
 
-    @PostMapping("/{postId}/dislike")
+    @DeleteMapping("/{postId}/like")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView unlike(@PathVariable Long postId) {
+    public ModelAndView dislike(@PathVariable Long postId) {
         var command = PostLike.builder().postId(postId).isLike(false).build();
 
         return new ModelAndView(

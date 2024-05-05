@@ -13,7 +13,6 @@ import blisgo.infrastructure.internal.persistence.base.MapperConfig;
 import blisgo.infrastructure.internal.persistence.member.mapper.MemberMapper;
 import blisgo.infrastructure.internal.persistence.member.repository.MemberJpaRepository;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.FieldReflectionArbitraryIntrospector;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,8 +44,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql(statements = "TRUNCATE TABLE member;")
 class MemberPersistenceAdapterTest {
 
-    private final int REPEAT = 10;
-    FixtureMonkey fixtureMonkey = FixtureFactory.create(FieldReflectionArbitraryIntrospector.INSTANCE);
+    FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @Autowired
     private MemberJpaRepository memberJpaRepository;

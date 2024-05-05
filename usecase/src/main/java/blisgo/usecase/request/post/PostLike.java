@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 
-@Builder
-public record PostLike(@Positive Long postId, @NotNull Boolean isLike) {}
+@Builder(toBuilder = true)
+public record PostLike(@NotNull @Positive Long postId, @NotNull Boolean isLike) {}

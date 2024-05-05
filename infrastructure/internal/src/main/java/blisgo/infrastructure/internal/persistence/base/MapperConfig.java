@@ -20,6 +20,7 @@ public class MapperConfig {
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
                 .setFieldMatchingEnabled(true)
                 .setCollectionsMergeEnabled(false)
+                .setSkipNullEnabled(true)
                 .setMatchingStrategy(MatchingStrategies.STANDARD);
 
         return modelMapper;

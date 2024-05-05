@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 
-@Builder
+@Builder(toBuilder = true)
 public record UpdateMember(
-        @Email String email, @NotEmpty String name, @Pattern(regexp = Constants.HTTP_PROTOCOL) String picture) {}
+        @NotEmpty @Email String email,
+        @NotEmpty String name,
+        @Pattern(regexp = Constants.HTTP_PROTOCOL) String picture) {}

@@ -1,25 +1,30 @@
 package blisgo.usecase.request.waste;
 
 import blisgo.domain.dictionary.Waste;
+import blisgo.domain.dictionary.validation.GetWasteValid;
 import blisgo.domain.dictionary.vo.Category;
 import blisgo.domain.dictionary.vo.Guide;
-import blisgo.usecase.request.dogam.GetDogam;
+import blisgo.usecase.request.dogam.GetDogams;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import org.jmolecules.architecture.hexagonal.PrimaryPort;
 import org.springframework.data.domain.Slice;
+import org.springframework.validation.annotation.Validated;
 
 @PrimaryPort
+@Validated
 public interface WasteQuery {
 
-    Slice<Waste> getWastes(GetWaste query);
+    Slice<@Valid Waste> getWastes(@Valid GetWastes query);
 
-    Waste getWaste(GetWaste query);
+    @Valid
+    @Validated(GetWasteValid.class)
+    Waste getWaste(@Valid GetWaste query);
 
-    List<Guide> getGuides(List<Category> categories);
+    List<@Valid Guide> getGuides(@NotNull List<Category> categories);
 
-    Slice<Waste> getWastesFromDogam(GetDogam query);
+    Slice<@Valid Waste> getWastesFromDogam(@Valid GetDogams query);
 
-    List<Waste> getWastesRelated(List<Category> categories);
-
-    List<Waste> getWastesRelated(GetWaste query);
+    List<@Valid Waste> getWastesRelated(@NotNull List<Category> categories);
 }

@@ -1,14 +1,10 @@
 package blisgo.infrastructure.internal.ui.view;
 
 import blisgo.infrastructure.internal.ui.base.Router;
-import blisgo.usecase.request.post.GetPost;
-import blisgo.usecase.request.post.PostQuery;
 import java.util.Map;
 import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class CommunityView extends Router {
 
-    private final PostQuery queryUsecase;
-
     @GetMapping
     public ModelAndView board() {
         return new ModelAndView(routes(Folder.COMMUNITY, Page.BOARD));
@@ -36,18 +30,9 @@ public class CommunityView extends Router {
 
     @GetMapping("/write")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView write(
-            @AuthenticationPrincipal DefaultOidcUser oidcUser,
-            @RequestParam(required = false) Long postId,
-            Model model) {
+    public ModelAndView write(@RequestParam(required = false) Long postId, Model model) {
         if (postId != null) {
-            GetPost query = GetPost.builder().postId(postId).build();
-
-            var post = queryUsecase.getPost(query);
-
-            if (post != null && post.isAuthor(oidcUser.getEmail())) {
-                model.addAttribute("postId", postId);
-            }
+            model.addAttribute("postId", postId);
         }
 
         return new ModelAndView(

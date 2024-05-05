@@ -14,7 +14,6 @@ import blisgo.infrastructure.internal.persistence.community.mapper.PostMapper;
 import blisgo.infrastructure.internal.persistence.community.repository.PostCustomRepository;
 import blisgo.infrastructure.internal.persistence.community.repository.PostJpaRepository;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.FieldReflectionArbitraryIntrospector;
 import java.util.Map;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +49,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql(statements = "TRUNCATE TABLE post RESTART IDENTITY;")
 class PostPersistenceAdapterTest {
 
-    final FixtureMonkey fixtureMonkey = FixtureFactory.create(FieldReflectionArbitraryIntrospector.INSTANCE);
+    final FixtureMonkey fixtureMonkey = FixtureFactory.create();
     final int REPEAT = 10;
 
     @Autowired

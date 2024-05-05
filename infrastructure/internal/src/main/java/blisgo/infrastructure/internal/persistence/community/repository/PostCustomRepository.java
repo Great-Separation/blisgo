@@ -39,6 +39,7 @@ public class PostCustomRepository {
                 jpaPost.views,
                 jpaPost.likes,
                 jpaPost.modifiedDate,
+                jpaPost.createdDate,
                 jpaReply.count().as("replies"));
 
         var results = jpaQueryFactory
@@ -83,6 +84,7 @@ public class PostCustomRepository {
                 jpaPost.color,
                 jpaPost.views,
                 jpaPost.likes,
+                jpaPost.createdDate,
                 jpaPost.modifiedDate,
                 jpaReply.count().as("replies"));
 

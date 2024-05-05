@@ -15,7 +15,6 @@ import blisgo.usecase.port.domain.WasteInputPort;
 import blisgo.usecase.port.domain.WasteOutputPort;
 import blisgo.usecase.request.waste.GetWaste;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +24,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.event.ApplicationEvents;
 import org.springframework.test.context.event.RecordApplicationEvents;
@@ -35,7 +33,7 @@ import org.springframework.test.context.event.RecordApplicationEvents;
 @RecordApplicationEvents
 class DictionaryEventHandlerTest {
 
-    final FixtureMonkey fixtureMonkey = FixtureFactory.create(ConstructorPropertiesArbitraryIntrospector.INSTANCE);
+    final FixtureMonkey fixtureMonkey = FixtureFactory.create();
     final int REPEAT = 10;
 
     @MockBean
@@ -60,8 +58,6 @@ class DictionaryEventHandlerTest {
         var command = fixtureMonkey
                 .giveMeBuilder(GetWaste.class)
                 .set("wasteId", Math.abs(RandomGenerator.getDefault().nextLong()))
-                .set("pageable", Pageable.ofSize(10))
-                .build()
                 .sample();
 
         wasteInputPort.getWaste(command);

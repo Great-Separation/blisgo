@@ -7,7 +7,6 @@ dependencies {
     implementation project(':domain')
     implementation project(':usecase')
     implementation project(':infrastructure:external')
-    testImplementation project(':infrastructure:external')
 
     // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -29,6 +28,7 @@ dependencies {
 
     // spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 
     // 게시판 json 글 저장용
     implementation 'com.fasterxml.jackson.core:jackson-databind:+'

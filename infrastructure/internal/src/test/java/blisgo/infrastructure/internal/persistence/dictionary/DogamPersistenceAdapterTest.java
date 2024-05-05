@@ -3,7 +3,6 @@ package blisgo.infrastructure.internal.persistence.dictionary;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blisgo.domain.dictionary.Dogam;
-import blisgo.domain.dictionary.Waste;
 import blisgo.domain.dictionary.vo.DogamId;
 import blisgo.domain.dictionary.vo.WasteId;
 import blisgo.domain.member.vo.MemberId;
@@ -15,7 +14,6 @@ import blisgo.infrastructure.internal.persistence.base.MapperConfig;
 import blisgo.infrastructure.internal.persistence.dictionary.mapper.DogamMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.DogamJpaRepository;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.FieldReflectionArbitraryIntrospector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -47,7 +45,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql(statements = "TRUNCATE TABLE dogam RESTART IDENTITY;")
 class DogamPersistenceAdapterTest {
 
-    final FixtureMonkey fixtureMonkey = FixtureFactory.create(FieldReflectionArbitraryIntrospector.INSTANCE);
+    final FixtureMonkey fixtureMonkey = FixtureFactory.create();
     final int REPEAT = 10;
 
     @Autowired
@@ -95,7 +93,6 @@ class DogamPersistenceAdapterTest {
             Dogam dogam = fixtureMonkey
                     .giveMeBuilder(Dogam.class)
                     .set("dogamId", dogamId)
-                    .set("waste", Waste.builder().wasteId(wasteId).build())
                     .sample();
 
             dogamPersistenceAdapter.create(dogam);
