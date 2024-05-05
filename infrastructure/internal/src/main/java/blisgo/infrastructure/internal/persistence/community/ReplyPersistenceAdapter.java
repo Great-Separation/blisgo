@@ -23,8 +23,8 @@ public class ReplyPersistenceAdapter implements ReplyOutputPort {
     private final ReplyMapper mapper;
 
     @Override
-    public boolean delete(Long identifier) {
-        return jpaRepository.deleteByReplyId(identifier) > 0;
+    public boolean delete(Long replyId) {
+        return jpaRepository.deleteByReplyId(replyId) > 0;
     }
 
     @Override

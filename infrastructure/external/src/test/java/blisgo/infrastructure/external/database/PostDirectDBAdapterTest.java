@@ -9,7 +9,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import blisgo.infrastructure.external.fixture.FixtureMonkeySingleton;
+import blisgo.infrastructure.external.fixture.FixtureFactory;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @SpringBootTest(classes = PostDirectDBAdapter.class)
 class PostDirectDBAdapterTest {
 
-    private final FixtureMonkey fixtureMonkey = FixtureMonkeySingleton.getInstance();
+    private final FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @MockBean
     private JdbcTemplate jdbcTemplate;

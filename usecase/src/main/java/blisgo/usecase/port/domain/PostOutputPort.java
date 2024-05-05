@@ -17,7 +17,7 @@ public interface PostOutputPort {
 
     boolean update(Post domain);
 
-    boolean delete(Long identifier);
+    boolean delete(Long postId);
 
     boolean updateLike(Long postId, Boolean isLike);
 }

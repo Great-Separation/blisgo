@@ -8,7 +8,6 @@ import blisgo.infrastructure.internal.fixture.FixtureFactory;
 import blisgo.infrastructure.internal.persistence.base.MapperConfig;
 import blisgo.infrastructure.internal.persistence.dictionary.model.JpaWaste;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.FieldReflectionArbitraryIntrospector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = {MapperConfig.class, WasteMapper.class})
 class WasteMapperTest {
 
-    final FixtureMonkey fixtureMonkey = FixtureFactory.create(FieldReflectionArbitraryIntrospector.INSTANCE);
+    final FixtureMonkey fixtureMonkey = FixtureFactory.create();
     final int REPEAT = 10;
 
     @Autowired

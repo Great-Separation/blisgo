@@ -10,7 +10,7 @@ import static org.mockito.BDDMockito.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import blisgo.infrastructure.external.fixture.FixtureMonkeySingleton;
+import blisgo.infrastructure.external.fixture.FixtureFactory;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.type.TypeReference;
 import java.util.List;
@@ -27,7 +27,7 @@ import org.springframework.jdbc.core.RowMapper;
 @SpringBootTest(classes = WasteDirectDBAdapter.class)
 class WasteDirectDBAdapterTest {
 
-    private final FixtureMonkey fixtureMonkey = FixtureMonkeySingleton.getInstance();
+    private final FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @Autowired
     public WasteDirectDBAdapter wasteDirectDBAdapter;

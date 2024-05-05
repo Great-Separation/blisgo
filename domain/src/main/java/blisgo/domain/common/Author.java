@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Author {
+
     @Email
     @NotNull
     private String email;

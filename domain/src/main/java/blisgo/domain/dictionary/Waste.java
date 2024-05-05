@@ -1,6 +1,7 @@
 package blisgo.domain.dictionary;
 
 import blisgo.domain.common.Picture;
+import blisgo.domain.dictionary.validation.GetWasteValid;
 import blisgo.domain.dictionary.vo.Category;
 import blisgo.domain.dictionary.vo.WasteId;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,37 +22,39 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Waste {
 
-    @NotNull
+    @NotNull(groups = {GetWasteValid.class})
     private WasteId wasteId;
 
-    @NotEmpty
+    @NotEmpty(groups = {GetWasteValid.class})
     private String name;
 
-    @NotEmpty
+    @NotEmpty(groups = {GetWasteValid.class})
     private String type;
 
-    @NotNull
+    @NotNull(groups = {GetWasteValid.class})
     private Picture picture;
 
-    @NotEmpty
     private String treatment;
 
     @PositiveOrZero
-    @NotNull
+    @NotNull(groups = {GetWasteValid.class})
     private Short popularity;
 
     @PositiveOrZero
+    @NotNull(groups = {GetWasteValid.class})
     private Long views;
 
-    @NotEmpty
+    @NotNull(groups = {GetWasteValid.class})
     private List<Category> categories;
 
-    @NotNull
+    @NotNull(groups = {GetWasteValid.class})
     private List<String> hashtags;
 
     @PastOrPresent
+    @NotNull(groups = {GetWasteValid.class})
     private OffsetDateTime createdDate;
 
     @PastOrPresent
+    @NotNull(groups = {GetWasteValid.class})
     private OffsetDateTime modifiedDate;
 }

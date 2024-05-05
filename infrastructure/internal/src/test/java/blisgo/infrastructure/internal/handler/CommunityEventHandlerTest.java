@@ -22,7 +22,6 @@ import blisgo.usecase.request.post.GetPost;
 import blisgo.usecase.request.post.RemovePost;
 import blisgo.usecase.request.post.UpdatePost;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.event.ApplicationEvents;
 import org.springframework.test.context.event.RecordApplicationEvents;
@@ -53,7 +51,7 @@ class CommunityEventHandlerTest {
     @InjectMocks
     PostInputPort postInputPort;
 
-    FixtureMonkey fixtureMonkey = FixtureFactory.create(ConstructorPropertiesArbitraryIntrospector.INSTANCE);
+    FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @BeforeEach
     void setUp() {
@@ -68,7 +66,6 @@ class CommunityEventHandlerTest {
         var command = fixtureMonkey
                 .giveMeBuilder(GetPost.class)
                 .set("postId", Math.abs(RandomGenerator.getDefault().nextLong()))
-                .set("pageable", Pageable.ofSize(10))
                 .build()
                 .sample();
 

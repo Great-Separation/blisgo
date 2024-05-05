@@ -8,7 +8,7 @@ import static org.mockito.Mockito.anyList;
 import static org.mockito.Mockito.times;
 
 import blisgo.domain.dictionary.Waste;
-import blisgo.infrastructure.external.fixture.FixtureMonkeySingleton;
+import blisgo.infrastructure.external.fixture.FixtureFactory;
 import com.algolia.search.SearchIndex;
 import com.algolia.search.models.settings.IndexSettings;
 import com.algolia.search.models.settings.SetSettingsResponse;
@@ -29,7 +29,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class AlgoliaClientTest {
 
-    private final FixtureMonkey fixtureMonkey = FixtureMonkeySingleton.getInstance();
+    private final FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @Mock
     private WasteIndexMapper mapper;

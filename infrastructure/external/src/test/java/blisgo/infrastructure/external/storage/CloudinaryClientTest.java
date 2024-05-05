@@ -7,7 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import blisgo.infrastructure.external.fixture.FixtureMonkeySingleton;
+import blisgo.infrastructure.external.fixture.FixtureFactory;
 import com.cloudinary.Api;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Uploader;
@@ -33,7 +33,7 @@ import org.springframework.core.io.Resource;
 @ExtendWith(MockitoExtension.class)
 class CloudinaryClientTest {
 
-    private final FixtureMonkey fixtureMonkey = FixtureMonkeySingleton.getInstance();
+    private final FixtureMonkey fixtureMonkey = FixtureFactory.create();
 
     @Mock
     private Resource resource;

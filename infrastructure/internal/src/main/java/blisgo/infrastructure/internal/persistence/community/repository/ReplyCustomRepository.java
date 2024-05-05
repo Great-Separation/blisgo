@@ -25,7 +25,12 @@ public class ReplyCustomRepository {
                 Projections.fields(JpaAuthor.class, jpaMember.email, jpaMember.name, jpaMember.picture.as("picture"));
 
         var fields = Projections.fields(
-                JpaReply.class, jpaReply.replyId, jpaReply.content, jpaReply.createdDate, joinMember.as("author"));
+                JpaReply.class,
+                jpaReply.replyId,
+                jpaReply.content,
+                jpaReply.createdDate,
+                jpaReply.modifiedDate,
+                joinMember.as("author"));
 
         var results = jpaQueryFactory
                 .select(fields)

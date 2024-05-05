@@ -1,5 +1,6 @@
 package blisgo.domain.dictionary.vo;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Guide {
 
+    @NotNull
     private Category category;
 
     private String content;

@@ -17,7 +17,6 @@ import blisgo.infrastructure.internal.persistence.dictionary.repository.GuideJpa
 import blisgo.infrastructure.internal.persistence.dictionary.repository.WasteCustomRepository;
 import blisgo.infrastructure.internal.persistence.dictionary.repository.WasteJpaRepository;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.FieldReflectionArbitraryIntrospector;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -59,7 +58,7 @@ import org.springframework.test.context.jdbc.Sql;
 class WastePersistenceAdapterTest {
 
     final RandomGenerator randomGenerator = RandomGenerator.getDefault();
-    final FixtureMonkey fixtureMonkey = FixtureFactory.create(FieldReflectionArbitraryIntrospector.INSTANCE);
+    final FixtureMonkey fixtureMonkey = FixtureFactory.create();
     final int REPEAT = 10;
 
     @Autowired

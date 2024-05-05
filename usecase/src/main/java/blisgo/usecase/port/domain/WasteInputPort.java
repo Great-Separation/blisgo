@@ -6,8 +6,9 @@ import blisgo.domain.dictionary.event.WasteViewEvent;
 import blisgo.domain.dictionary.vo.Category;
 import blisgo.domain.dictionary.vo.Guide;
 import blisgo.domain.member.vo.MemberId;
-import blisgo.usecase.request.dogam.GetDogam;
+import blisgo.usecase.request.dogam.GetDogams;
 import blisgo.usecase.request.waste.GetWaste;
+import blisgo.usecase.request.waste.GetWastes;
 import blisgo.usecase.request.waste.WasteQuery;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class WasteInputPort implements WasteQuery {
     private final WasteOutputPort port;
 
     @Override
-    public Slice<Waste> getWastes(GetWaste query) {
+    public Slice<Waste> getWastes(GetWastes query) {
         return port.read(query.pageable(), query.lastWasteId());
     }
 
@@ -39,7 +40,7 @@ public class WasteInputPort implements WasteQuery {
     }
 
     @Override
-    public Slice<Waste> getWastesFromDogam(GetDogam query) {
+    public Slice<Waste> getWastesFromDogam(GetDogams query) {
         return port.readWastesFromDogam(
                 MemberId.of(query.email()).id(), query.pageable(), query.lastDogamCreatedDate());
     }
@@ -47,10 +48,5 @@ public class WasteInputPort implements WasteQuery {
     @Override
     public List<Waste> getWastesRelated(List<Category> categories) {
         return port.readWastesRelated(categories);
-    }
-
-    @Override
-    public List<Waste> getWastesRelated(GetWaste query) {
-        return port.readWastesRelated(query.categories());
     }
 }

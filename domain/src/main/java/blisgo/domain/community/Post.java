@@ -3,6 +3,8 @@ package blisgo.domain.community;
 import blisgo.domain.base.Constants;
 import blisgo.domain.common.Author;
 import blisgo.domain.common.Content;
+import blisgo.domain.community.validation.GetPostValid;
+import blisgo.domain.community.validation.GetPostsValid;
 import blisgo.domain.community.vo.PostId;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -22,19 +24,19 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
 
-    @NotNull
+    @NotNull(groups = {GetPostValid.class, GetPostsValid.class})
     private PostId postId;
 
-    @NotEmpty
+    @NotEmpty(groups = {GetPostValid.class, GetPostsValid.class})
     private String title;
 
-    @NotNull
+    @NotNull(groups = {GetPostValid.class, GetPostsValid.class})
     private Author author;
 
-    @NotNull
+    @NotNull(groups = {GetPostValid.class, GetPostsValid.class})
     private Content content;
 
-    @NotEmpty
+    @NotEmpty(groups = {GetPostValid.class, GetPostsValid.class})
     @Pattern(regexp = Constants.HEX_COLOR_PATTERN)
     private String color;
 
@@ -47,9 +49,11 @@ public class Post {
     @PositiveOrZero
     private long replies;
 
+    @NotNull(groups = {GetPostValid.class, GetPostsValid.class})
     @PastOrPresent
     private OffsetDateTime createdDate;
 
+    @NotNull(groups = {GetPostValid.class, GetPostsValid.class})
     @PastOrPresent
     private OffsetDateTime modifiedDate;
 

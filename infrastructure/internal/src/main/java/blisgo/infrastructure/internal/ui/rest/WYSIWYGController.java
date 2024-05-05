@@ -8,6 +8,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class WYSIWYGController {
     private final WebScrapInputPort webScrapInputPort;
 
     @PostMapping("/upload/file")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Map<String, Object>> upload(MultipartFile file) {
         Resource resource = file.getResource();
         String filename = Optional.ofNullable(file.getOriginalFilename()).orElse(file.getName());
@@ -39,6 +41,7 @@ public class WYSIWYGController {
     }
 
     @GetMapping("/link-preview")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Map<String, Object>> linkPreview(@RequestParam String url) {
         var linkPreview = webScrapInputPort.scrapPreview(url);
 

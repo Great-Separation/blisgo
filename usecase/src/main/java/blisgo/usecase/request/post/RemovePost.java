@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 
-@Builder
-public record RemovePost(@Positive @NotNull Long postId) {}
+@Builder(toBuilder = true)
+public record RemovePost(@NotNull @Positive Long postId) {}

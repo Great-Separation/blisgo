@@ -92,11 +92,15 @@ subprojects {
             "**/resources/**",
             "**/Jpa*",
             "**/*Entity",
+            "**/*EventHandler",
+            "**/*Converter",
+
     ]
 
     test {
         useJUnitPlatform()
         finalizedBy jacocoTestReport
+        classpath += files(project(':app').sourceSets.main.resources.srcDirs)
     }
 
     jacoco {

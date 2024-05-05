@@ -64,8 +64,8 @@ public class PostPersistenceAdapter implements PostOutputPort {
 
     @Override
     @Transactional
-    public boolean delete(Long identifier) {
-        return jpaRepository.deleteByPostId(identifier) > 0;
+    public boolean delete(Long postId) {
+        return jpaRepository.deleteByPostId(postId) > 0;
     }
 
     @Transactional
