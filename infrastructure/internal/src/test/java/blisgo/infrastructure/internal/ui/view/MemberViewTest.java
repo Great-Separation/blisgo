@@ -1,6 +1,7 @@
 package blisgo.infrastructure.internal.ui.view;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -44,7 +45,7 @@ class MemberViewTest extends Router {
     @Test
     @DisplayName("member login 페이지 호출")
     void profile() throws Exception {
-        mvc.perform(get("/profile").with(oidcLogin()))
+        mvc.perform(get("/profile").with(oidcLogin()).with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name(routes(Folder.MEMBER, Page.PROFILE)));
     }

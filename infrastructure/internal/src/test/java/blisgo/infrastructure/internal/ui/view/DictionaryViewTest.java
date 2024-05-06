@@ -1,6 +1,7 @@
 package blisgo.infrastructure.internal.ui.view;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -38,7 +39,7 @@ class DictionaryViewTest extends Router {
     @Test
     @DisplayName("dictionary 페이지 호출")
     void dictionary() throws Exception {
-        mvc.perform(get("/dictionary"))
+        mvc.perform(get("/dictionary").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name(routes(Folder.DICTIONARY, Page.CATALOGUE)));
     }
@@ -48,7 +49,7 @@ class DictionaryViewTest extends Router {
     void product() throws Exception {
         var wasteId = randomGenerator.nextLong(1, Long.MAX_VALUE);
 
-        mvc.perform(get("/dictionary/" + wasteId))
+        mvc.perform(get("/dictionary/" + wasteId).with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name(routes(Folder.DICTIONARY, Page.INFO)))
                 .andExpect(model().attribute("wasteId", wasteId));

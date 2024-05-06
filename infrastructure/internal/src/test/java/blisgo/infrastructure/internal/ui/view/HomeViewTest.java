@@ -1,6 +1,7 @@
 package blisgo.infrastructure.internal.ui.view;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -34,7 +35,7 @@ class HomeViewTest extends Router {
     @Test
     @DisplayName("index 페이지 호출")
     void index() throws Exception {
-        mvc.perform(get("/"))
+        mvc.perform(get("/").with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name(routes(Page.INDEX)));
     }
@@ -42,6 +43,7 @@ class HomeViewTest extends Router {
     @Test
     @DisplayName("auth0 redirect")
     void login() throws Exception {
-        mvc.perform(get("/login")).andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+        mvc.perform(get("/login").with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
     }
 }

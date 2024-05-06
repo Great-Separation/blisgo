@@ -1,6 +1,7 @@
 package blisgo.infrastructure.internal.ui.view;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -38,7 +39,7 @@ class CommunityViewTest extends Router {
     @Test
     @DisplayName("community board 페이지 호출")
     void board() throws Exception {
-        mvc.perform(get("/community"))
+        mvc.perform(get("/community").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name(routes(Folder.COMMUNITY, Page.BOARD)));
     }
@@ -48,7 +49,7 @@ class CommunityViewTest extends Router {
     void content() throws Exception {
         var postId = randomGenerator.nextLong(1, Long.MAX_VALUE);
 
-        mvc.perform(get("/community/" + postId))
+        mvc.perform(get("/community/" + postId).with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name(routes(Folder.COMMUNITY, Page.CONTENT)))
                 .andExpect(model().attribute("postId", postId));
@@ -59,7 +60,9 @@ class CommunityViewTest extends Router {
     void write() throws Exception {
         var postId = randomGenerator.nextLong(1, Long.MAX_VALUE);
 
-        mvc.perform(get("/community/write").param("postId", Long.toString(postId)))
+        mvc.perform(get("/community/write")
+                        .param("postId", Long.toString(postId))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name(routes(Folder.COMMUNITY, Page.WRITE)))
                 .andExpect(model().attribute("postId", postId));

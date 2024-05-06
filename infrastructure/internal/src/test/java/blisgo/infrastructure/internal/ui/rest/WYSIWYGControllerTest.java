@@ -63,7 +63,7 @@ class WYSIWYGControllerTest {
     @Test
     @DisplayName("파일 업로드")
     void upload() throws Exception {
-        URI uri = URI.create(fixtureMonkey.giveMeOne(String.class));
+        URI uri = URI.create("http://example.com");
         given(fileUploadInputPort.upload(any())).willReturn(uri);
 
         MockMultipartFile file =
