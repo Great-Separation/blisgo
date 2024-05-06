@@ -76,11 +76,8 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:8080",
-                "https://blisgo.up.railway.app",
-                "https://blisgo.org",
-                "https://www.blisgo.org"));
+        configuration.setAllowedOrigins(
+                List.of("http://localhost:8080", "https://blisgo.org", "https://www.blisgo.org"));
         configuration.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
