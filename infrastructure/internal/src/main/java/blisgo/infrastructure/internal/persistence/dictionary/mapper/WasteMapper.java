@@ -5,6 +5,7 @@ import blisgo.infrastructure.internal.persistence.base.PersistenceMapper;
 import blisgo.infrastructure.internal.persistence.dictionary.model.JpaWaste;
 import blisgo.infrastructure.internal.ui.response.WasteDTO;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +34,7 @@ public class WasteMapper implements PersistenceMapper<Waste, JpaWaste, WasteDTO>
             if (hashtagPersistBag.startsWith("[") && hashtagPersistBag.endsWith("]")) {
                 var strings = hashtagPersistBag.replaceAll("[\\[\\]]", "").split(",");
 
-                for (String s : strings) {
-                    if (!s.isBlank()) {
-                        hashtags.add(s.trim());
-                    }
-                }
+                Arrays.stream(strings).filter(s -> !s.isBlank()).forEach(s -> hashtags.add(s.trim()));
             }
 
             Collections.sort(hashtags);
