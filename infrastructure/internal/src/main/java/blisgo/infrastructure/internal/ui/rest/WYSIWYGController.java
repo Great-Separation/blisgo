@@ -40,6 +40,15 @@ public class WYSIWYGController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/upload/url")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Map<String, Object>> upload(String file) {
+        var response = Map.ofEntries(
+                Map.entry("success", 1), Map.entry("file", Map.of("url", file)), Map.entry("caption", file));
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/link-preview")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Map<String, Object>> linkPreview(@RequestParam String url) {

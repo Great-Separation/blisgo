@@ -2,6 +2,7 @@ package blisgo.infrastructure.internal.security;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.StringJoiner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +41,17 @@ public class SecurityConfig {
             headers.httpStrictTransportSecurity(
                     hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000));
             headers.xssProtection(Customizer.withDefaults());
-            headers.contentSecurityPolicy(
-                    contentSecurityPolicyConfig -> contentSecurityPolicyConfig.policyDirectives("form-action 'self'"));
+            headers.contentSecurityPolicy(csp -> csp.policyDirectives(new StringJoiner(";")
+                    .add("connect-src 'self' https://cdn.jsdelivr.net")
+                    .add("style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net")
+                    .add("script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net")
+                    .add("form-action 'self'")
+                    .add("object-src 'none'")
+                    .add("media-src 'none'")
+                    .add("img-src 'self' data: https: http://www.w3.org/2000/svg")
+                    .add("font-src 'self'")
+                    .add("manifest-src 'self'")
+                    .toString()));
         });
 
         http.oauth2Login(oauth2Login -> oauth2Login
