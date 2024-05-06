@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -35,8 +36,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
-        http.headers(headers -> headers.httpStrictTransportSecurity(
-                hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)));
+        http.headers(headers -> {
+            headers.httpStrictTransportSecurity(
+                    hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000));
+            headers.xssProtection(Customizer.withDefaults());
+            headers.contentSecurityPolicy(
+                    contentSecurityPolicyConfig -> contentSecurityPolicyConfig.policyDirectives("form-action 'self'"));
+        });
 
         http.oauth2Login(oauth2Login -> oauth2Login
                 .loginPage("/oauth2/authorization/okta")
