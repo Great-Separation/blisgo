@@ -12,6 +12,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class SecurityConfig {
 
     private final CustomOidcUserService customOidcUserService;
+    private final SessionRegistry sessionRegistry;
 
     @Value("${okta.oauth2.issuer}")
     private String issuer;
@@ -71,7 +73,8 @@ public class SecurityConfig {
                 .clearAuthentication(true)
                 .addLogoutHandler(logoutHandler()));
 
-        http.sessionManagement(session -> session.maximumSessions(1).maxSessionsPreventsLogin(true));
+        http.sessionManagement(session ->
+                session.maximumSessions(1).maxSessionsPreventsLogin(false).sessionRegistry(sessionRegistry));
 
         return http.build();
     }
@@ -79,10 +82,12 @@ public class SecurityConfig {
     private LogoutHandler logoutHandler() {
         return (request, response, authentication) -> {
             try {
-                String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .build()
-                        .toUriString();
-                response.sendRedirect(issuer + "v2/logout?client_id=" + clientId + "&returnTo=" + baseUrl);
+                if (!response.isCommitted()) {
+                    String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                            .build()
+                            .toUriString();
+                    response.sendRedirect(issuer + "v2/logout?client_id=" + clientId + "&returnTo=" + baseUrl);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

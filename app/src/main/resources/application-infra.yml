@@ -6,6 +6,8 @@ okta:
     audience: https://${AUTH0_DOMAIN}/userinfo
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   security:
     oauth2:
       resourceserver:
