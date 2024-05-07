@@ -42,7 +42,7 @@ public class SecurityConfig {
                     hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000));
             headers.xssProtection(Customizer.withDefaults());
             headers.contentSecurityPolicy(csp -> csp.policyDirectives(new StringJoiner(";")
-                    .add("connect-src 'self' https://cdn.jsdelivr.net")
+                    .add("connect-src 'self' https:")
                     .add("style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net")
                     .add("script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net")
                     .add("form-action 'self'")
