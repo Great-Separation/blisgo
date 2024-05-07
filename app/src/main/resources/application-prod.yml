@@ -42,3 +42,6 @@ server:
     session:
       cookie:
         domain: ${DOMAIN}
+  error:
+    whitelabel:
+      enabled: false
