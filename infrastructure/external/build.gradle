@@ -7,8 +7,8 @@ dependencies {
     implementation project(':usecase')
     implementation project(':domain')
 
-    implementation 'org.springframework.session:spring-session-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // standalone redis
+    implementation 'io.lettuce:lettuce-core:+'
 
     // file uploader
     implementation 'com.cloudinary:cloudinary-core:+'

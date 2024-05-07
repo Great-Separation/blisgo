@@ -1,10 +1,12 @@
 package blisgo.infrastructure.external.cache;
 
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.sync.RedisCommands;
+import jakarta.annotation.PostConstruct;
 import java.util.Optional;
 import java.util.StringJoiner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -13,20 +15,25 @@ import org.springframework.util.StringUtils;
 @Description("게시물 조회수 캐시")
 public class ViewCountCache {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final StatefulRedisConnection<String, String> connection;
+    private RedisCommands<String, String> syncCommands;
+
+    @PostConstruct
+    private void init() {
+        syncCommands = connection.sync();
+    }
 
     public long increaseViewCount(Long id, String domain) {
         return Optional.ofNullable(generateKey(id, domain))
                 .filter(StringUtils::hasText)
-                .map(key -> redisTemplate.opsForValue().increment(key, 1))
+                .map(syncCommands::incr)
                 .orElse(0L);
     }
 
     public long getViewCount(Long id, String domain) {
         return Optional.ofNullable(generateKey(id, domain))
                 .filter(StringUtils::hasText)
-                .map(key -> redisTemplate.opsForValue().get(key))
-                .map(Object::toString)
+                .map(syncCommands::get)
                 .map(Long::parseLong)
                 .orElse(0L);
     }
@@ -34,7 +41,7 @@ public class ViewCountCache {
     public boolean removeViewCount(Long postId, String domain) {
         return Optional.ofNullable(generateKey(postId, domain))
                 .filter(StringUtils::hasText)
-                .map(redisTemplate::delete)
+                .map(key -> syncCommands.del(key) > 0)
                 .orElse(false);
     }
 

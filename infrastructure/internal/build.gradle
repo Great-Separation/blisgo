@@ -43,6 +43,10 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:+'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // spring data redis
+    implementation 'org.springframework.session:spring-session-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 def querydslDir = "${project.projectDir}/build/generated/querydsl"
