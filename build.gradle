@@ -6,12 +6,18 @@ plugins {
     id 'com.palantir.java-format' version '+'
     id 'jacoco-report-aggregation'
     id 'jvm-test-suite'
+    id 'org.owasp.dependencycheck' version '+'
 }
 
 bootJar.enabled = false
 
 repositories {
     mavenCentral()
+}
+
+dependencyCheck {
+    failBuildOnCVSS = 7
+    suppressionFiles = ['suppressions.xml']
 }
 
 subprojects {
@@ -91,9 +97,9 @@ subprojects {
             "**/test/**",
             "**/resources/**",
             "**/Jpa*",
-            "**/*Entity",
-            "**/*EventHandler",
-            "**/*Converter",
+            "**/*Entity*",
+            "**/*EventHandler*",
+            "**/*Converter*",
 
     ]
 
