@@ -17,10 +17,6 @@ dependencies {
     implementation project(':infrastructure:external')
     implementation project(':domain')
 
-    // flyway migration
-    implementation 'org.flywaydb:flyway-core:+'
-    implementation 'org.flywaydb:flyway-mysql:+'
-
     // monitor
     //implementation 'org.springframework.boot:spring-boot-starter-actuator'
     //implementation 'io.micrometer:micrometer-registry-prometheus'

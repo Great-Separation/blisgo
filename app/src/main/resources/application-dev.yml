@@ -8,17 +8,28 @@ spring:
       enabled: true
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/blisgo"
-    username: root
-    password: root
-
+    hikari:
+      source:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: "jdbc:mysql://localhost:3306/blisgo"
+        read-only: false
+        username: root
+        password: root
+        port: 3306
+      replica:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: "jdbc:mysql://localhost:3307/blisgo"
+        read-only: true
+        username: root
+        password: root
+        port: 3307
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
         enable_lazy_load_no_trans: true
         format_sql: true
         highlight_sql: true
@@ -28,16 +39,10 @@ spring:
         naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
   thymeleaf:
     cache: false
-
   data:
     redis:
       host: localhost
       port: 6379
-
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-    init-sqls: "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'blisgo';"
 
   docker:
     compose:

@@ -1,0 +1,6 @@
+SET GLOBAL server_id = 3;
+CHANGE REPLICATION SOURCE TO SOURCE_HOST ='host.docker.internal', SOURCE_USER ='replication', SOURCE_PASSWORD ='root', SOURCE_LOG_FILE ='binlog.000004', SOURCE_LOG_POS = 158;
+START REPLICA USER='replication' PASSWORD='root';
+
+
+START REPLICA;

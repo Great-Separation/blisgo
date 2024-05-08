@@ -47,6 +47,10 @@ dependencies {
     // spring data redis
     implementation 'org.springframework.session:spring-session-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+// flyway migration
+    implementation 'org.flywaydb:flyway-core:+'
+    implementation 'org.flywaydb:flyway-mysql:+'
 }
 
 def querydslDir = "${project.projectDir}/build/generated/querydsl"

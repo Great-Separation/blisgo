@@ -1,12 +1,30 @@
 services:
-  mysql:
+  mysql-source:
     image: mysql:latest
-    container_name: blisgo-db
+    container_name: blisgo-db-source
     environment:
       - MYSQL_DATABASE=blisgo
       - MYSQL_ROOT_PASSWORD=root
+      - SERVER_ID=1
+      - LOG_BIN=mysql-bin
     ports:
       - 3306:3306
+    restart: always
+
+  mysql-replica:
+    depends_on:
+      - mysql-source
+    image: mysql:latest
+    container_name: blisgo-db-replica
+    environment:
+      - MYSQL_DATABASE=blisgo
+      - MYSQL_ROOT_PASSWORD=root
+      - SERVER_ID=2
+      - LOG_BIN=mysql-bin
+      - RELAY_LOG=mysql-relay-bin
+    ports:
+      - 3307:3306
+    restart: always
 
   redis:
     image: redis:latest
