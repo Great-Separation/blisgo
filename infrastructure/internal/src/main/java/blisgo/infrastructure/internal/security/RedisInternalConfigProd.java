@@ -11,7 +11,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 
 @Profile("prod")
 @Configuration
-public class RedisInternalConnectionProd {
+public class RedisInternalConfigProd {
 
     @Value("${spring.data.redis.host}")
     private String host;

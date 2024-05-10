@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 
 @Profile({"dev", "test"})
 @Configuration
-public class RedisInternalConnectionDev {
+public class RedisInternalConfigDev {
 
     @Value("${spring.data.redis.host}")
     private String host;
