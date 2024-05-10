@@ -1,1 +1,1 @@
-export function init(){let t=document.getElementById("post-color"),e=document.querySelector(".card");null!=t&&t.addEventListener("input",(function(){e.style.backgroundColor=this.value}))}
+export function init(){document.addEventListener("htmx:afterSwap",(function(){let t=document.getElementById("post-color"),e=document.querySelector(".card");null!=t&&t.addEventListener("input",(function(){e.style.backgroundColor=this.value}))}))}

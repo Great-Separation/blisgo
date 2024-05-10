@@ -17,6 +17,7 @@ import blisgo.usecase.request.post.PostQuery;
 import blisgo.usecase.request.post.RemovePost;
 import blisgo.usecase.request.post.UpdatePost;
 import java.util.Map;
+import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -80,6 +81,9 @@ public class PostRender extends Router {
 
             model.addAttribute("post", mapper.toDTO(post));
         }
+
+        model.addAttribute(
+                "color", "#%06x".formatted(RandomGenerator.getDefault().nextInt(0xffffff + 1)));
 
         return new ModelAndView(routes(Folder.COMMUNITY, edit ? Page.WRITE : Page.CONTENT) + fragment(Fragment.POST));
     }

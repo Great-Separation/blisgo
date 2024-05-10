@@ -2,7 +2,6 @@ package blisgo.infrastructure.internal.ui.view;
 
 import blisgo.infrastructure.internal.ui.base.Router;
 import java.util.Map;
-import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -35,8 +34,6 @@ public class CommunityView extends Router {
             model.addAttribute("postId", postId);
         }
 
-        return new ModelAndView(
-                routes(Folder.COMMUNITY, Page.WRITE),
-                Map.of("color", "#%06x".formatted(RandomGenerator.getDefault().nextInt(0xffffff + 1))));
+        return new ModelAndView(routes(Folder.COMMUNITY, Page.WRITE));
     }
 }
